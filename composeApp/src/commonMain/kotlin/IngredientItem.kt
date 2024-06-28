@@ -3,7 +3,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,14 +36,14 @@ fun IngredientItem(
         text = {
             CupertinoText(
                 text = ingredient.title,
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.h6,
                 fontSize = 18.sp
             )
         },
         trailing = {
             CupertinoText(
                 text = ingredient.quantity,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.body2,
                 fontSize = 14.sp
             )
         }

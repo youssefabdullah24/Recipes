@@ -56,12 +56,17 @@ kotlin {
             implementation(libs.coil.core)
             implementation(libs.coil.compose)
             implementation(libs.coil.ktor)
+
             // Ktor
             implementation(libs.ktor.client.core)
+
             // Cupertino
             implementation(libs.cupertino)
+
             // ComposeIcons
             implementation(libs.composeIcons.fontAwesome)
+
+
 
         }
     }

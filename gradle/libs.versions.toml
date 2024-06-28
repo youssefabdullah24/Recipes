@@ -20,7 +20,6 @@ ktor = "2.3.11"
 foundationAndroid = "1.6.8"
 composeIcons = "1.1.0"
 
-
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,11 +31,7 @@ import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
 import compose.icons.fontawesomeicons.regular.Heart
 import compose.icons.fontawesomeicons.regular.User
-import io.github.alexzhirkevich.cupertino.CupertinoIcon
-import io.github.alexzhirkevich.cupertino.CupertinoIconButton
-import io.github.alexzhirkevich.cupertino.CupertinoText
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+
 
 data class Recipe(
     val title: String,
@@ -41,13 +40,11 @@ data class Recipe(
     val servings: String,
     val type: String,
     //val description: String,
-    //val ingredients: List<String>,
-    //val steps: List<String>
+    val ingredients: List<Ingredient>,
+    val instructions: List<Instruction>
 )
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalCupertinoApi::class,
-    ExperimentalFoundationApi::class
-)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun RecipeItem(
     recipe: Recipe,
@@ -83,7 +80,7 @@ fun RecipeItem(
                )
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                CupertinoText(
+                Text(
                     modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                     text = recipe.title,
                     style = MaterialTheme.typography.h6,
@@ -112,10 +109,10 @@ fun RecipeItem(
                         value = recipe.type
                     )
 
-                    CupertinoIconButton(
+                    IconButton(
                         modifier = Modifier.size(32.dp),
                         onClick = { /* TODO: Handle click event */}){
-                        CupertinoIcon(
+                        Icon(
                             modifier = Modifier.fillMaxSize().padding(4.dp),
                             imageVector = FontAwesomeIcons.Regular.Heart,
                             contentDescription = "Add to Favorites"
@@ -141,14 +138,14 @@ fun RecipeDetailRow(
 ) {
     Row(modifier = modifier.height(18.dp),
         verticalAlignment = Alignment.CenterVertically) {
-        CupertinoIcon(
-            tint = CupertinoTheme.colorScheme.accent,
+        Icon(
+            tint = MaterialTheme.colors.primary,
             modifier = Modifier.size(16.dp),
             imageVector = icon,
             contentDescription = label
         )
         Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-        CupertinoText(
+        Text(
             modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
             text = value,
             textAlign = TextAlign.Center,

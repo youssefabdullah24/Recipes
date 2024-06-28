@@ -1,11 +1,19 @@
+package org.example.recipes
+
+import AppTheme
+import Ingredient
+import Instruction
+import Recipe
+import RecipeScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
+
 
 @Composable
-@Preview
-fun App() {
+@Preview(showBackground = true)
+fun RecipeScreenPreview() {
     AppTheme {
         RecipeScreen(
             recipe = Recipe(
@@ -17,7 +25,7 @@ fun App() {
                 instructions = listOf(
                     Instruction(
                         step = 9625,
-                        displayText = "Step1",
+                        displayText = "convallis",
                         startTime = 4250,
                         endTime = 7643,
                         appliance = "penatibus",
@@ -48,25 +56,24 @@ fun App() {
                 ingredients = listOf(
                     Ingredient(
                         title = "mi",
-                        image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.aMYg-LP-qBIn8RHS-1DDCQHaE7%26pid%3DApi%26h%3D160&f=1&ipt=faadb6a4a6a46bff0399c3db49b2019c943aad4f56a58df1ab28d28dc193f5fb&ipo=images",
+                        image = "vulputate",
                         quantity = "ubique"
                     ), Ingredient(
                         title = "mi",
-                        image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.aMYg-LP-qBIn8RHS-1DDCQHaE7%26pid%3DApi%26h%3D160&f=1&ipt=faadb6a4a6a46bff0399c3db49b2019c943aad4f56a58df1ab28d28dc193f5fb&ipo=images",
+                        image = "vulputate",
                         quantity = "ubique"
                     ), Ingredient(
                         title = "mi",
-                        image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.aMYg-LP-qBIn8RHS-1DDCQHaE7%26pid%3DApi%26h%3D160&f=1&ipt=faadb6a4a6a46bff0399c3db49b2019c943aad4f56a58df1ab28d28dc193f5fb&ipo=images",
+                        image = "vulputate",
                         quantity = "ubique"
                     ), Ingredient(
                         title = "mi",
-                        image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.aMYg-LP-qBIn8RHS-1DDCQHaE7%26pid%3DApi%26h%3D160&f=1&ipt=faadb6a4a6a46bff0399c3db49b2019c943aad4f56a58df1ab28d28dc193f5fb&ipo=images",
+                        image = "vulputate",
                         quantity = "ubique"
                     )
                 )
             ), modifier = Modifier.fillMaxSize()
         )
-
     }
 
 }
