@@ -16,7 +16,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +30,7 @@ import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
 import compose.icons.fontawesomeicons.regular.Heart
 import compose.icons.fontawesomeicons.regular.User
+import io.github.alexzhirkevich.cupertino.CupertinoText
 
 
 data class Recipe(
@@ -80,7 +80,7 @@ fun RecipeItem(
                )
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Text(
+                CupertinoText(
                     modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                     text = recipe.title,
                     style = MaterialTheme.typography.h6,
@@ -145,7 +145,7 @@ fun RecipeDetailRow(
             contentDescription = label
         )
         Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-        Text(
+        CupertinoText(
             modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
             text = value,
             textAlign = TextAlign.Center,

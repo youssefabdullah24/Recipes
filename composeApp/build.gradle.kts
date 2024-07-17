@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    kotlin("plugin.serialization") version "1.9.10"
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
@@ -33,15 +34,18 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.coil.client.okhttp)
-            implementation(libs.ktor.client.okhttp)
+            //implementation(libs.ktor.client.okhttp)
 
 
         }
         iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
+            //implementation(libs.ktor.client.darwin)
 
         }
         commonMain.dependencies {
+            // Network module
+            implementation(project(":core:network"))
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -58,7 +62,11 @@ kotlin {
             implementation(libs.coil.ktor)
 
             // Ktor
-            implementation(libs.ktor.client.core)
+/*            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.encoding)*/
 
             // Cupertino
             implementation(libs.cupertino)
@@ -111,5 +119,6 @@ android {
 }
 dependencies {
     implementation(libs.androidx.foundation.android)
+    implementation(libs.kotlin.coroutines)
 }
 

@@ -12,7 +12,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+        SummerBerryCakeScreen()
+        //App()
         }
     }
 }

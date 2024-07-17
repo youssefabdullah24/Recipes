@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +30,7 @@ fun RecipeScreen(
     recipe: Recipe,
     modifier: Modifier
 ) {
+    val totalSteps = recipe.instructions.size
 
     // TODO: replace with CollapsingToolbar
     // TODO: add Buttons
@@ -45,7 +46,7 @@ fun RecipeScreen(
             contentScale = ContentScale.FillBounds,
             contentDescription = recipe.title
         )
-        Text(
+        CupertinoText(
             modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
             text = recipe.title,
             maxLines = 1,
@@ -54,11 +55,10 @@ fun RecipeScreen(
             fontSize = 16.sp,
             color = Color.Black
         )
-        Text(text = recipe.type + " / " + recipe.duration)
+        CupertinoText(text = recipe.type + " / " + recipe.duration)
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyColumn(modifier = Modifier.padding(8.dp)) {
-
             item {
                 Column(modifier = modifier) {
                     CupertinoText(
@@ -94,7 +94,6 @@ fun RecipeScreen(
             item {
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            val totalSteps = recipe.instructions.size
 
             item {
                 Column(modifier = modifier) {
