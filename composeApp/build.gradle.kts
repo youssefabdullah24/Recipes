@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("plugin.serialization") version "1.9.10"
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
@@ -38,10 +37,12 @@ kotlin {
 
 
         }
+
         iosMain.dependencies {
             //implementation(libs.ktor.client.darwin)
 
         }
+
         commonMain.dependencies {
             // Network module
             implementation(project(":core:network"))
@@ -61,8 +62,11 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.ktor)
 
+            // Koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
             // Ktor
-/*            implementation(libs.ktor.client.core)
+            /*implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
