@@ -72,7 +72,7 @@ kotlin {
 }
 
 buildkonfig {
-    packageName = "com.example.recipes.core.network"
+    packageName = "org.example.recipes.core.network"
     // objectName = "YourAwesomeConfig"
     // exposeObjectWithName = "YourAwesomePublicConfig"
 

@@ -1,4 +1,5 @@
 package org.example.recipes
+/*
 
 import AppTheme
 import Ingredient
@@ -26,4 +27,4 @@ fun IngredientItemPreview() {
             )
         }
     }
-}
+}*/

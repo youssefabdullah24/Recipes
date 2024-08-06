@@ -19,7 +19,7 @@ val networkModule = module {
                     level = LogLevel.ALL
                     logger = object : Logger {
                         override fun log(message: String) {
-                            println(message)
+                            println("~~ ktor DEBUG ~~\n$message")
                         }
 
                     }
@@ -29,6 +29,7 @@ val networkModule = module {
                     json(Json {
                         prettyPrint = true
                         isLenient = true
+                        ignoreUnknownKeys = true
                     })
                 }
             }

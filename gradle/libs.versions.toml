@@ -23,7 +23,8 @@ uiToolingPreview = "1.6.8"
 ktor = "2.3.12"
 koin = "3.6.0-wasm-alpha2"
 buildKonfig = "0.15.1"
-
+viewModel = "2.8.0"
+koin-viewModel = "1.2.0-Beta4"
 
 [libraries]
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiToolingPreview" }
@@ -39,6 +40,7 @@ androidx-material = { group = "com.google.android.material", name = "material", 
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewModel" }
 
 coil-core = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil-core" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-core" }
@@ -57,6 +59,7 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-viewModel" }
 
 
 cupertino = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha04" }

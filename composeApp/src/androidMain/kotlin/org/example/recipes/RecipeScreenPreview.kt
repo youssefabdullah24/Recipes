@@ -1,15 +1,6 @@
 package org.example.recipes
 
-import AppTheme
-import Ingredient
-import Instruction
-import Recipe
-import RecipeScreen
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-
+/*
 
 @Composable
 @Preview(showBackground = true)
@@ -76,4 +67,4 @@ fun RecipeScreenPreview() {
         )
     }
 
-}
+}*/

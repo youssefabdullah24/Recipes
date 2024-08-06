@@ -1,7 +1,7 @@
 package org.example.recipes
 
 import AppTheme
-import SearchBar
+import org.example.recipes.core.ui.SearchBar
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface

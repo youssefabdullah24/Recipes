@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.CupertinoText
+import org.example.recipes.core.ui.ChipItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 data class FilterSection(val title: String, val filters: List<String>)

@@ -47,6 +47,15 @@ kotlin {
             // Network module
             implementation(project(":core:network"))
 
+            // Data module
+            implementation(project(":core:data"))
+
+            // Model module
+            implementation(project(":core:model"))
+
+            // Ui module
+            implementation(project(":core:ui"))
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -60,23 +69,18 @@ kotlin {
             // Coil
             implementation(libs.coil.core)
             implementation(libs.coil.compose)
-            implementation(libs.coil.ktor)
 
             // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            // Ktor
-            /*implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.client.encoding)*/
+            implementation(libs.koin.viewModel)
+
+
+            // ViewModel
+            implementation(libs.viewmodel)
 
             // Cupertino
             implementation(libs.cupertino)
-
-            // ComposeIcons
-            implementation(libs.composeIcons.fontAwesome)
 
 
 

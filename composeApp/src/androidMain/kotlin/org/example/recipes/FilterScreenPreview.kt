@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun FilterScreenPreview() {
     AppTheme {
         Surface {
             FilterScreen(

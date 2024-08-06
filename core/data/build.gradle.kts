@@ -34,12 +34,13 @@ kotlin {
         }
 
         iosMain.dependencies {
-            implementation(project(":core:network"))
-            implementation(libs.koin.core)
+
         }
 
         commonMain.dependencies {
-
+            implementation(project(":core:network"))
+            implementation(project(":core:model"))
+            implementation(libs.koin.core)
         }
     }
 }

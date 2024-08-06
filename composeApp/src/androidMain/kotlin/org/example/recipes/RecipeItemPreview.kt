@@ -1,21 +1,6 @@
 package org.example.recipes
 
-import AppTheme
-import Ingredient
-import Instruction
-import Recipe
-import RecipeItem
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-
-@Preview(
+/*@Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showSystemUi = true)
 @Composable
@@ -88,4 +73,4 @@ fun PreviewRecipeItem() {
             }
         }
     }
-}
+}*/

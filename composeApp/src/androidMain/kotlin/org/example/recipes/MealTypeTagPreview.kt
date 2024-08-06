@@ -1,7 +1,7 @@
 package org.example.recipes
 
 import AppTheme
-import ChipItem
+import org.example.recipes.core.ui.ChipItem
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable

@@ -1,4 +1,5 @@
 package org.example.recipes
+/*
 
 import AppTheme
 import Instruction
@@ -42,4 +43,4 @@ fun InstructionItemPreview() {
             )
         }
     }
-}
+}*/
