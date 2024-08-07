@@ -1,3 +1,5 @@
+package org.example.recipes.feature.recipe
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee

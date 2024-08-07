@@ -1,8 +1,8 @@
 package org.example.recipes
 
 import AppTheme
-import FilterScreen
-import FilterSection
+import org.example.recipes.feature.filter.FilterScreen
+import org.example.recipes.feature.filter.FilterSection
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 fun FilterScreenPreview() {
     AppTheme {
         Surface {
-            FilterScreen(
+            org.example.recipes.feature.filter.FilterScreen(
                 modifier = Modifier.padding(16.dp),
                 filterSections = listOf(
-                    FilterSection(
+                    org.example.recipes.feature.filter.FilterSection(
                         "Cuisine",
                         listOf(
                             "ItalianPAPII",
@@ -31,7 +31,7 @@ fun FilterScreenPreview() {
                             "British"
                         )
                     ),
-                    FilterSection(
+                    org.example.recipes.feature.filter.FilterSection(
                         "Cuisine",
                         listOf(
                             "Italian",
@@ -43,7 +43,7 @@ fun FilterScreenPreview() {
                             "British"
                         )
                     ),
-                    FilterSection(
+                    org.example.recipes.feature.filter.FilterSection(
                         "Cuisine",
                         listOf(
                             "Italian",
@@ -55,7 +55,7 @@ fun FilterScreenPreview() {
                             "British"
                         )
                     ),
-                    FilterSection(
+                    org.example.recipes.feature.filter.FilterSection(
                         "Cuisine",
                         listOf(
                             "Italian",
@@ -66,7 +66,7 @@ fun FilterScreenPreview() {
                             "Mexican",
                             "British"
                         )
-                    ), FilterSection(
+                    ), org.example.recipes.feature.filter.FilterSection(
                         "Cuisine",
                         listOf(
                             "Italian",

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
 }
@@ -22,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "filter"
             isStatic = true
         }
     }
@@ -44,20 +44,6 @@ kotlin {
         }
 
         commonMain.dependencies {
-            // Explore module
-            implementation(project(":feature:explore"))
-
-            // Filter module
-            implementation(project(":feature:filter"))
-
-            // Recipe module
-            implementation(project(":feature:recipe"))
-
-            // Recipes module
-            implementation(project(":feature:recipes"))
-
-            // Network module
-            implementation(project(":core:network"))
 
             // Data module
             implementation(project(":core:data"))
@@ -76,20 +62,20 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             // Coroutines
-           // implementation(libs.kotlin.coroutines)
+            implementation(libs.kotlin.coroutines)
 
             // Coil
-            //implementation(libs.coil.core)
-            //implementation(libs.coil.compose)
+            implementation(libs.coil.core)
+            implementation(libs.coil.compose)
 
             // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-           // implementation(libs.koin.viewModel)
+            implementation(libs.koin.viewModel)
 
 
             // ViewModel
-          //  implementation(libs.viewmodel)
+            implementation(libs.viewmodel)
 
             // Cupertino
             implementation(libs.cupertino)
@@ -101,20 +87,13 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.recipes"
+    namespace = "org.example.recipes.feature.filter"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
-    defaultConfig {
-        applicationId = "org.example.recipes"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

@@ -1,6 +1,6 @@
 package org.example.recipes
 
-import ExploreScreen
+import org.example.recipes.feature.explore.ExploreScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,14 +11,14 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun ExploreScreenPreview() {
-    ExploreScreen(
+    org.example.recipes.feature.explore.ExploreScreen(
         quickSearchItems = listOf(
-            QuickSearchItem("Test","Test"),
-            QuickSearchItem("Test","Test"),
-            QuickSearchItem("Test","Test"),
-            QuickSearchItem("Test","Test"),
-            QuickSearchItem("Test","Test"),
-            QuickSearchItem("Test","Test")
+            QuickSearchItem("Test", "Test"),
+            QuickSearchItem("Test", "Test"),
+            QuickSearchItem("Test", "Test"),
+            QuickSearchItem("Test", "Test"),
+            QuickSearchItem("Test", "Test"),
+            QuickSearchItem("Test", "Test")
         ),
         popularTags = listOf(
             "a",
