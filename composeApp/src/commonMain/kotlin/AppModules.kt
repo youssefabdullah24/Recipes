@@ -1,3 +1,4 @@
+import org.example.racipes.feature.recipes.di.viewModelModule
 import org.example.recipes.core.data.di.dataModule
 import org.example.recipes.core.network.di.networkModule
 import org.koin.core.context.startKoin

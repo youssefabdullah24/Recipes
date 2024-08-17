@@ -23,7 +23,7 @@ data class RecipeDto(
     @SerialName("compilations")
     val compilations: List<CompilationDto> = listOf(),
     @SerialName("cook_time_minutes")
-    val cookTimeMinutes: Int = 0,
+    val cookTimeMinutes: Int? = 0,
     @SerialName("country")
     val country: String = "",
     @SerialName("created_at")
@@ -31,7 +31,7 @@ data class RecipeDto(
     @SerialName("credits")
     val credits: List<CreditDto> = listOf(),
     @SerialName("description")
-    val description: String = "",
+    val description: String? = "",
     @SerialName("draft_status")
     val draftStatus: String = "",
     @SerialName("facebook_posts")
@@ -99,7 +99,7 @@ data class RecipeDto(
     @SerialName("topics")
     val topics: List<TopicDto> = listOf(),
     @SerialName("total_time_minutes")
-    val totalTimeMinutes: Int = 0,
+    val totalTimeMinutes: Int? = 0,
     @SerialName("total_time_tier")
     val totalTimeTier: TotalTimeTierDto? = null,
     @SerialName("updated_at")

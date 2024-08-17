@@ -4,6 +4,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -11,7 +12,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import io.github.alexzhirkevich.cupertino.CupertinoText
 import org.example.recipes.core.model.Ingredient
 
 
@@ -35,14 +35,14 @@ fun IngredientItem(
             )
         },
         text = {
-            CupertinoText(
+            Text(
                 text = ingredient.name,
                 style = MaterialTheme.typography.h6,
                 fontSize = 18.sp
             )
         },
         trailing = {
-            CupertinoText(
+            Text(
                 text = ingredient.measurement.quantity,
                 style = MaterialTheme.typography.body2,
                 fontSize = 14.sp

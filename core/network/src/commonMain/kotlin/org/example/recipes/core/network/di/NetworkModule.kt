@@ -11,6 +11,10 @@ import org.example.recipes.core.network.IApiService
 import org.example.recipes.core.network.api.ApiService
 import org.koin.dsl.module
 
+/*
+import org.koin.dsl.module
+*/
+
 val networkModule = module {
     single<IApiService> {
         ApiService(

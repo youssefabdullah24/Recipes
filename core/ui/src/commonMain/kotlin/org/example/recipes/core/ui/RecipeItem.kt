@@ -15,8 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,11 +32,14 @@ import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
 import compose.icons.fontawesomeicons.regular.Heart
 import compose.icons.fontawesomeicons.regular.User
-import io.github.alexzhirkevich.cupertino.CupertinoText
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class,
+    ExperimentalAdaptiveApi::class
+)
 @Composable
 fun RecipeItem(
     recipe: Recipe,
@@ -49,32 +52,35 @@ fun RecipeItem(
         onClick = { onClick(recipe) }
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
-                .fillMaxHeight()) {
-               AsyncImage(
-                   modifier = Modifier.fillMaxWidth()
-                       .fillMaxHeight(0.5f),
-                   contentScale = ContentScale.FillBounds,
-                   model = recipe.image,
-                   contentDescription = recipe.title,
-                   onLoading = {
-                       // TODO: Show a loading indicator while the image is loading
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            AsyncImage(
+                modifier = Modifier.fillMaxWidth()
+                    .fillMaxHeight(0.5f),
+                contentScale = ContentScale.Crop,
+                model = recipe.image,
+                contentDescription = recipe.title,
+                onLoading = {
+                    // TODO: Show a loading indicator while the image is loading
 
-                   },
-                   onError = {
-                       // TODO: Handle any errors that occur while loading the image
+                },
+                onError = {
+                    // TODO: Handle any errors that occur while loading the image
 
-                   }
-               )
+                }
+            )
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                CupertinoText(
+                Text(
                     modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                     text = recipe.title,
                     style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1)
+                    maxLines = 1
+                )
 
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
                 RecipeDetailRow(
@@ -89,7 +95,7 @@ fun RecipeItem(
                     value = recipe.servings
                 )
                 Spacer(modifier = Modifier.padding(vertical = 4.dp))
-                Row(modifier = Modifier.fillMaxWidth()){
+                Row(modifier = Modifier.fillMaxWidth()) {
                     RecipeDetailRow(
                         modifier = Modifier.weight(1f),
                         icon = FontAwesomeIcons.Regular.Bookmark,
@@ -97,9 +103,9 @@ fun RecipeItem(
                         value = recipe.type
                     )
 
-                    IconButton(
+                    AdaptiveIconButton(
                         modifier = Modifier.size(32.dp),
-                        onClick = { /* TODO: Handle click event */}){
+                        onClick = { /* TODO: Handle click event */ }) {
                         Icon(
                             modifier = Modifier.fillMaxSize().padding(4.dp),
                             imageVector = FontAwesomeIcons.Regular.Heart,
@@ -124,8 +130,10 @@ fun RecipeDetailRow(
     label: String,
     value: String
 ) {
-    Row(modifier = modifier.height(18.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = modifier.height(18.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(
             tint = MaterialTheme.colors.primary,
             modifier = Modifier.size(16.dp),
@@ -133,11 +141,12 @@ fun RecipeDetailRow(
             contentDescription = label
         )
         Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-        CupertinoText(
+        Text(
             modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
             text = value,
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
-            maxLines = 1)
+            maxLines = 1
+        )
     }
 }

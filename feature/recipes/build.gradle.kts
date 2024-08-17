@@ -44,14 +44,12 @@ kotlin {
         }
 
         commonMain.dependencies {
+            implementation(project(":navigation"))
 
-            // Data module
             implementation(project(":core:data"))
 
-            // Model module
             implementation(project(":core:model"))
 
-            // Ui module
             implementation(project(":core:ui"))
 
             implementation(compose.runtime)
@@ -61,26 +59,25 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Coroutines
             implementation(libs.kotlin.coroutines)
 
-            // Coil
             implementation(libs.coil.core)
             implementation(libs.coil.compose)
 
-            // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.viewModel)
 
-
-            // ViewModel
             implementation(libs.viewmodel)
 
-            // Cupertino
             implementation(libs.cupertino)
 
+            implementation(libs.voyager.screenModel)
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.tabNavigator)
+         //   implementation(libs.voyager.koin)
 
+            implementation(libs.kermit)
 
         }
     }

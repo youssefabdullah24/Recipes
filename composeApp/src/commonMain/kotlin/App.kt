@@ -1,17 +1,62 @@
+
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.example.racipes.feature.recipes.RecipesScreen
+import cafe.adriel.voyager.core.registry.ScreenRegistry
+import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabNavigator
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import org.example.racipes.feature.recipes.RecipesTab
+import org.example.racipes.feature.recipes.navigation.featureRecipesScreenModule
+import org.example.recipes.feature.explore.ExploreTab
+import org.example.recipes.feature.explore.navigation.featureExploreScreenModule
+import org.example.recipes.feature.recipe_details.navigation.featureRecipeDetailsScreenModule
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun App() {
     AppTheme {
-        RecipesScreen(
-            onRecipeClick = {},
-            onQuickSearchItemClick = {},
-            modifier = Modifier.fillMaxSize()
-        )
+        ScreenRegistry {
+            featureRecipeDetailsScreenModule()
+            featureRecipesScreenModule()
+            featureExploreScreenModule()
+        }
 
+        TabNavigator(tab = RecipesTab) {
+            AdaptiveScaffold(modifier = Modifier.fillMaxSize(),
+                content = { CurrentTab() },
+                bottomBar = {
+                    AdaptiveNavigationBar {
+                        TabNavigationItem(tab = RecipesTab)
+                        TabNavigationItem(tab = ExploreTab)
+                    }
+                }
+            )
+        }
     }
 }
 
+
+@OptIn(ExperimentalAdaptiveApi::class)
+@Composable
+private fun RowScope.TabNavigationItem(tab: Tab) {
+    val tabNavigator = LocalTabNavigator.current
+
+    AdaptiveNavigationBarItem(
+        selected = tabNavigator.current == tab,
+        onClick = { tabNavigator.current = tab },
+        icon = {
+            Icon(
+                painter = tab.options.icon!!,
+                contentDescription = tab.options.title
+            )
+        },
+    )
+}

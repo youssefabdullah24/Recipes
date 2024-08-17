@@ -13,14 +13,6 @@ plugins {
 fun getLocalProperty(key: String): String {
     val properties = gradleLocalProperties(project.rootDir)
     return if (properties.containsKey(key)) { properties.getProperty(key) } else { "" }
-    /*if (Files.exists(Paths.get("${project.rootDir}/local.properties"))) {
-        // load buildkonfig.flavor if exists
-        val localProperties = Properties()
-        localProperties.load(FileInputStream("${project.rootDir}/local.properties"))
-        if (localProperties.containsKey(key)) {
-        }
-    }
-    return ""*/
 }
 
 kotlin {
@@ -66,6 +58,9 @@ kotlin {
 
             // Koin
             implementation(libs.koin.core)
+
+            implementation(libs.kermit)
+
 
         }
     }

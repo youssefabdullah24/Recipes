@@ -41,6 +41,9 @@ kotlin {
             implementation(project(":core:network"))
             implementation(project(":core:model"))
             implementation(libs.koin.core)
+
+            implementation(libs.kermit)
+
         }
     }
 }

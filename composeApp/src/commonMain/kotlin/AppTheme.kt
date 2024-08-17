@@ -12,27 +12,6 @@ fun AppTheme(
     theme: Theme = determineTheme(),
     content: @Composable () -> Unit
 ) {
-   /* {
-        MaterialTheme(
-            colorScheme = if (useDarkTheme) {
-                androidx.compose.material3.darkColorScheme()
-            } else {
-                androidx.compose.material3.lightColorScheme()
-            },
-            content = it
-        )
-    }
-    {
-        CupertinoTheme(
-            colorScheme = if (useDarkTheme) {
-                darkColorScheme()
-            } else {
-                lightColorScheme()
-            },
-            content = it
-        )
-
-    }*/
     AdaptiveTheme(
         target = theme,
         material = MaterialThemeSpec.Default(),

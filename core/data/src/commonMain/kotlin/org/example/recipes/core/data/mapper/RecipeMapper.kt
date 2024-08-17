@@ -13,8 +13,8 @@ fun RecipeDto.toDomain(): Recipe {
     return Recipe(
         id = this.id,
         title = this.name,
-        description = this.description,
-        duration =  this.cookTimeMinutes.toString(),//if (this.cookTimeMinutes != 0) this.cookTimeMinutes.toString() else this.tags.first { it.id == 64472 }.displayName,
+        description = this.description ?: "",
+        duration = if(this.totalTimeMinutes != 0) { "${this.totalTimeMinutes} mins"} else{ this.totalTimeTier?.displayTier} ?: this.tags.firstOrNull { it.id == 8091744 || it.id == 64472 || it.id == 8091748}?.displayName ?: "",
         image = this.thumbnailUrl,
         servings = this.yields,
         type = this.tags.first { it.type == "meal" }.displayName,
@@ -52,7 +52,11 @@ fun RecipeDto.toDomain(): Recipe {
         tags = this.tags.map { Tag(it.id, it.displayName, it.type) },
         updatedAt = this.updatedAt,
         createdAt = this.createdAt,
-        ratings = Triple(this.userRatings.countPositive, this.userRatings.countNegative, this.userRatings.score)
+        ratings = Triple(
+            this.userRatings.countPositive,
+            this.userRatings.countNegative,
+            this.userRatings.score
+        )
 
     )
 }

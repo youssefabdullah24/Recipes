@@ -8,6 +8,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.SlidersH
-import io.github.alexzhirkevich.cupertino.CupertinoText
 
 
 @Composable
@@ -37,7 +37,7 @@ fun SearchBar(
                 contentDescription = "Search"
             )
             Spacer(modifier = Modifier.width(8.dp))
-            CupertinoText(
+            Text(
                 modifier = Modifier.alpha(0.6f)
                     .clickable { onSearchClicked() },
                 text = "What are you craving?"

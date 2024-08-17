@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.CupertinoText
 import org.example.recipes.core.ui.ChipItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -45,7 +45,7 @@ fun FilterSection(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        CupertinoText(
+        Text(
             text = filterSection.title,
             style = MaterialTheme.typography.h6
         )

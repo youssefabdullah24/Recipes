@@ -32,40 +32,24 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.coil.client.okhttp)
-            //implementation(libs.ktor.client.okhttp)
-
+            implementation(libs.androidx.foundation.android)
 
         }
 
         iosMain.dependencies {
-            //implementation(libs.ktor.client.darwin)
 
         }
 
         commonMain.dependencies {
-            // Explore module
+            implementation(project(":navigation"))
             implementation(project(":feature:explore"))
-
-            // Filter module
             implementation(project(":feature:filter"))
-
-            // Recipe module
-            implementation(project(":feature:recipe"))
-
-            // Recipes module
+            implementation(project(":feature:recipe_details"))
             implementation(project(":feature:recipes"))
 
-            // Network module
             implementation(project(":core:network"))
-
-            // Data module
             implementation(project(":core:data"))
-
-            // Model module
             implementation(project(":core:model"))
-
-            // Ui module
             implementation(project(":core:ui"))
 
             implementation(compose.runtime)
@@ -75,25 +59,13 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Coroutines
-           // implementation(libs.kotlin.coroutines)
-
-            // Coil
-            //implementation(libs.coil.core)
-            //implementation(libs.coil.compose)
-
-            // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-           // implementation(libs.koin.viewModel)
 
-
-            // ViewModel
-          //  implementation(libs.viewmodel)
-
-            // Cupertino
             implementation(libs.cupertino)
 
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.tabNavigator)
 
 
         }
@@ -136,9 +108,5 @@ android {
         debugImplementation(compose.uiTooling)
 
     }
-}
-dependencies {
-    implementation(libs.androidx.foundation.android)
-    implementation(libs.kotlin.coroutines)
 }
 

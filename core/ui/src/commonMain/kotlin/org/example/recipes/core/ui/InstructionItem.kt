@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -13,7 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.alexzhirkevich.cupertino.CupertinoText
 import org.example.recipes.core.model.Direction
 
 
@@ -24,7 +24,7 @@ fun Instructions(
 ) {
     val totalSteps = instructions.size
     Column(modifier = modifier) {
-        CupertinoText(
+        Text(
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
@@ -55,7 +55,7 @@ fun Instructions(
 @Composable
 fun InstructionItem(instruction: Direction, totalSteps: Int) {
     Column(modifier = Modifier.padding(vertical = 4.dp).fillMaxWidth()) {
-        CupertinoText(
+        Text(
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
@@ -77,6 +77,6 @@ fun InstructionItem(instruction: Direction, totalSteps: Int) {
 
             modifier = Modifier.padding(bottom = 4.dp)
         )
-        CupertinoText(text = instruction.text)
+        Text(text = instruction.text)
     }
 }

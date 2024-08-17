@@ -14,34 +14,62 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.CupertinoText
-import org.example.recipes.core.model.QuickSearchItem
+import cafe.adriel.voyager.core.registry.ScreenRegistry
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.example.recipes.navigation.Routes
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
-@Composable
-fun RecipesScreen(
-    onRecipeClick: (Recipe) -> Unit,
-    onQuickSearchItemClick: (QuickSearchItem) -> Unit,
-    viewModel: RecipesViewModel = koinViewModel(),
-    modifier: Modifier = Modifier
-) {
-    val uiState by viewModel.uiState.collectAsState()
-    RecipesScreen(
-        uiState = uiState,
-        onRecipeClick = onRecipeClick,
-        modifier = modifier
-    )
+
+object RecipesTab : Tab {
+
+    @Composable
+    override fun Content() {
+        Navigator(RecipesScreen())
+    }
+
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(
+            0u,
+            "Recipes",
+            rememberVectorPainter(Icons.Default.Home)
+        )
+
+}
+
+class RecipesScreen : Screen {
+    @Composable
+    override fun Content() {
+        val screenModel = koinViewModel<RecipesViewModel>()
+        val uiState by screenModel.state.collectAsState()
+        val navigator = LocalNavigator.currentOrThrow
+
+        RecipesScreen(
+            modifier = Modifier.fillMaxSize(),
+            uiState = uiState,
+            onRecipeClick = {
+                navigator.push(ScreenRegistry.get(Routes.RecipeDetailsScreenRoute(it)))
+            }
+        )
+    }
+
 }
 
 @Composable
@@ -50,8 +78,8 @@ fun RecipesScreen(
     onRecipeClick: (Recipe) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when {
-        uiState.isLoading -> {
+    when (uiState) {
+        is RecipesUiState.Loading -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -62,20 +90,20 @@ fun RecipesScreen(
 
         }
 
-        uiState.errorMsg != null -> {
+        is RecipesUiState.Error -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = uiState.errorMsg!!
+                    text = uiState.message
                 )
             }
 
         }
 
-        else -> {
+        is RecipesUiState.Success -> {
             LazyColumn(modifier = modifier) {
                 item {
-                    CupertinoText(
+                    Text(
                         text = "Recipes",
                         modifier = Modifier.padding(
                             start = 16.dp,
@@ -102,7 +130,7 @@ fun RecipesScreen(
                 item { Spacer(modifier = Modifier.height(8.dp)) }
 
                 item {
-                    CupertinoText(
+                    Text(
                         text = "Trending now",
                         modifier = Modifier.padding(
                             start = 16.dp,
@@ -132,7 +160,7 @@ fun RecipesScreen(
                 item { Spacer(modifier = Modifier.height(8.dp)) }
 
                 item {
-                    CupertinoText(
+                    Text(
                         text = "Top video recipes",
                         modifier = Modifier.padding(
                             start = 16.dp,
@@ -149,7 +177,7 @@ fun RecipesScreen(
                     ) {
                         items(uiState.recipes) {
                             RecipeItem(
-                                modifier = Modifier.size(280.dp,240.dp),
+                                modifier = Modifier.size(280.dp, 240.dp),
                                 recipe = it,
                                 onClick = onRecipeClick
                             )

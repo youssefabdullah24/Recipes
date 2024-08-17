@@ -17,6 +17,7 @@ class ApiService(
             url(BuildKonfig.baseUrl + "/recipes/list?from=0&size=20")
             header(BuildKonfig.apiKeyHeader, BuildKonfig.apiKey)
             header(BuildKonfig.apiHostHeader, BuildKonfig.apiHost)
+            //parameter("sort", "approved_at:desc")
         }.body()
 
     }

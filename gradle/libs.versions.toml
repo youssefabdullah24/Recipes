@@ -3,7 +3,7 @@ agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.0"
+androidx-activityCompose = "1.9.1"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 androidx-core-ktx = "1.13.1"
@@ -21,10 +21,12 @@ composeIcons = "1.1.0"
 jetbrainsKotlinJvm = "1.9.0"
 uiToolingPreview = "1.6.8"
 ktor = "2.3.12"
-koin = "3.6.0-wasm-alpha2"
+koin = "4.0.0-RC1"
+koin-compose = "1.2.0-beta4"
 buildKonfig = "0.15.1"
 viewModel = "2.8.0"
-koin-viewModel = "1.2.0-Beta4"
+voyager = "1.1.0-beta02"
+kermit = "2.0.4"
 
 [libraries]
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiToolingPreview" }
@@ -59,13 +61,20 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
-koin-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-viewModel" }
-
+koin-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 
 cupertino = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha04" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
+voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
+
+kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import io.github.alexzhirkevich.cupertino.CupertinoText
 import org.example.recipes.core.model.Recipe
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -53,7 +53,7 @@ fun TrendingItem(
                 modifier = Modifier.padding(top = 42.dp)
             ) {
                 Spacer(modifier = Modifier.height(42.dp)) // Space to match the image overlap
-                CupertinoText(
+                Text(
                     text = recipe.title,
                     style = MaterialTheme.typography.h6,
                     fontWeight = FontWeight.Bold,
@@ -61,12 +61,12 @@ fun TrendingItem(
                     modifier = Modifier.basicMarquee(Int.MAX_VALUE)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                CupertinoText(
+                Text(
                     text = recipe.type,
                     fontSize = 16.sp,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                CupertinoText(
+                Text(
                     modifier = Modifier.alpha(0.6f),
                     text = recipe.duration,
                     fontSize = 14.sp,
@@ -76,7 +76,7 @@ fun TrendingItem(
         AsyncImage(
             model = recipe.image,
             contentDescription = recipe.title,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .size(160.dp)

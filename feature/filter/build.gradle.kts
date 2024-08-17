@@ -80,6 +80,8 @@ kotlin {
             // Cupertino
             implementation(libs.cupertino)
 
+            implementation(libs.kermit)
+
 
 
         }
