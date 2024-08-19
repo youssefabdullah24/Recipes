@@ -13,7 +13,7 @@ data class RecipeDto(
     @SerialName("beauty_url")
     val beautyUrl: String? = "",
     @SerialName("brand")
-    val brand: String? = "",
+    val brand: BrandDto? = null,
     @SerialName("brand_id")
     val brandId: String? = "",
     @SerialName("buzz_id")
