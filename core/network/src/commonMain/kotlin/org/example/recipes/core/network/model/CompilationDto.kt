@@ -49,5 +49,5 @@ data class CompilationDto(
     @SerialName("video_id")
     val videoId: Int = 0,
     @SerialName("video_url")
-    val videoUrl: String = ""
+    val videoUrl: String? = null
 )

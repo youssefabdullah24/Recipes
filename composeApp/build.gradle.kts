@@ -43,7 +43,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":navigation"))
             implementation(project(":feature:explore"))
-            implementation(project(":feature:filter"))
+            implementation(project(":feature:search"))
             implementation(project(":feature:recipe_details"))
             implementation(project(":feature:recipes"))
 

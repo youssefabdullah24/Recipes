@@ -3,13 +3,15 @@ package org.example.racipes.feature.recipes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.Recipe
 
-
+// todo: add UseCase
 class RecipesViewModel(private val repository: IRecipesRepository) : ViewModel()
 /* StateScreenModel<RecipesUiState>(RecipesUiState.Loading)*/ {
     private var mutableState = MutableStateFlow<RecipesUiState>(RecipesUiState.Loading)
@@ -19,7 +21,7 @@ class RecipesViewModel(private val repository: IRecipesRepository) : ViewModel()
     }
 
     private fun getRecipes() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 repository.getHomeRecipes()
             }.onSuccess { recipes ->

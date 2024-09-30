@@ -6,15 +6,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import org.example.recipes.core.model.Ingredient
 import org.example.recipes.core.model.Measurement
 
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+@Preview
 @Composable
 fun IngredientItemPreview() {
     Surface {

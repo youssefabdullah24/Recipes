@@ -1,5 +1,6 @@
 package org.example.recipes.feature.recipe_details
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -68,8 +69,8 @@ fun RecipeDetailsScreen(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .fillMaxWidth()
+                .animateContentSize()
                 .height(imageHeight + with(density) { scrollOffset.value.toDp() })
-            // .fillMaxHeight(0.6f)
         )
 
         // Scrollable Content

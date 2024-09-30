@@ -3,6 +3,7 @@ package org.example.recipes.core.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
@@ -13,32 +14,40 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import org.example.recipes.core.model.QuickSearchItem
+import org.example.recipes.core.model.QuickSearchTag
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun QuickSearchItem(
-    quickSearchItem: QuickSearchItem,
-    onClick: (QuickSearchItem) -> Unit,
+fun QuickSearchComposable(
+    quickSearchTag: QuickSearchTag,
+    onClick: (QuickSearchTag) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    Card(onClick = { onClick(quickSearchItem) }, modifier = modifier) {
+    Card(onClick = { onClick(quickSearchTag) },
+        modifier = modifier) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AsyncImage(
-                modifier = Modifier.size(100.dp).clip(CircleShape),
-                model = quickSearchItem.image,
-                contentDescription = quickSearchItem.title,
-                contentScale = ContentScale.FillBounds
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape),
+                model = quickSearchTag.image,
+                contentDescription = quickSearchTag.title,
+                contentScale = ContentScale.FillWidth
             )
-            Text(text = quickSearchItem.title)
+            Text(text = quickSearchTag.title,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Black)
         }
     }
 }

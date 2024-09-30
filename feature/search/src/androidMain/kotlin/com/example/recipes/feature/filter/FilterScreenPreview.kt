@@ -11,10 +11,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilterScreenPreview() {
     Surface {
-        org.example.recipes.feature.filter.FilterScreen(
+        org.example.recipes.feature.search.FilterScreen(
             modifier = Modifier.padding(16.dp),
             filterSections = listOf(
-                org.example.recipes.feature.filter.FilterSection(
+                org.example.recipes.feature.search.FilterSection(
                     "Cuisine",
                     listOf(
                         "ItalianPAPII",
@@ -27,7 +27,7 @@ fun FilterScreenPreview() {
                         "British"
                     )
                 ),
-                org.example.recipes.feature.filter.FilterSection(
+                org.example.recipes.feature.search.FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -39,7 +39,7 @@ fun FilterScreenPreview() {
                         "British"
                     )
                 ),
-                org.example.recipes.feature.filter.FilterSection(
+                org.example.recipes.feature.search.FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -51,7 +51,7 @@ fun FilterScreenPreview() {
                         "British"
                     )
                 ),
-                org.example.recipes.feature.filter.FilterSection(
+                org.example.recipes.feature.search.FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -62,7 +62,7 @@ fun FilterScreenPreview() {
                         "Mexican",
                         "British"
                     )
-                ), org.example.recipes.feature.filter.FilterSection(
+                ), org.example.recipes.feature.search.FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",

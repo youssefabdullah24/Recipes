@@ -27,6 +27,8 @@ buildKonfig = "0.15.1"
 viewModel = "2.8.0"
 voyager = "1.1.0-beta02"
 kermit = "2.0.4"
+paging = "3.3.0-alpha02-0.5.1"
+
 
 [libraries]
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiToolingPreview" }
@@ -75,6 +77,9 @@ voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", vers
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
+
+paging = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

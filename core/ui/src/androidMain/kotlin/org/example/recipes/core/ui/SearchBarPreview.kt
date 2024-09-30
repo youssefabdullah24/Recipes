@@ -4,17 +4,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview
 @Composable
 fun SearchBarPreview() {
-    SearchBar(onSearchClicked = {},
+    SearchBarComposable(
+        onSearchClicked = {},
         modifier = Modifier
             .fillMaxWidth()
-            .height(32.dp)) {
-
-    }
+            .height(50.dp), isActive = false, onQueryChange = {}, onSearch = {}, content = {}
+    )
 }

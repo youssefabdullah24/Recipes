@@ -1,56 +1,59 @@
 package org.example.recipes.core.ui
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
+
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.dp
-import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.SlidersH
+import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
+import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveWidget
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 
 
+@OptIn(
+    ExperimentalCupertinoApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalAdaptiveApi::class
+)
 @Composable
-fun SearchBar(
+fun SearchBarComposable(
     modifier: Modifier = Modifier,
+    isActive: Boolean = false,
+    query: String = "",
     onSearchClicked: () -> Unit,
-    onFilterClicked: () -> Unit
+    onQueryChange: (String) -> Unit,
+    onSearch: (String) -> Unit,
+    content: @Composable ColumnScope.() -> Unit = {}
 ) {
-    Card {
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp)
-                    .alpha(0.6f),
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search"
+    AdaptiveWidget(
+        material = {
+            SearchBar(
+                modifier = modifier,
+                query = query,
+                placeholder = { Text("Search") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search"
+                    )
+                },
+                active = isActive,
+                onQueryChange = onQueryChange,
+                onSearch = onSearch,
+                onActiveChange = { onSearchClicked() },
+                content = content
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                modifier = Modifier.alpha(0.6f)
-                    .clickable { onSearchClicked() },
-                text = "What are you craving?"
-            )
-            Spacer(Modifier.weight(1f))
-            Icon(
-                modifier = Modifier.size(24.dp)
-                    .alpha(0.6f)
-                    .clickable { onFilterClicked() },
-                imageVector = FontAwesomeIcons.Solid.SlidersH,
-                contentDescription = "Filter"
+        },
+        cupertino = {
+            CupertinoSearchTextField(
+                onValueChange = {
+
+                }, value = ""
             )
         }
-    }
-
+    )
 }

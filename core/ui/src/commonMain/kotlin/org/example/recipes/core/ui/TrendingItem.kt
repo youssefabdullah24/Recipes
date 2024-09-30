@@ -28,9 +28,62 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import org.example.recipes.core.model.Recipe
+import org.example.recipes.core.model.*
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@OptIn(ExperimentalFoundationApi::class)
+@Preview
+@Composable
+fun PreviewTrendingItem() {
+    TrendingItem(
+        recipe = Recipe(
+            id = 6787,
+            title = "prompta",
+            description = "definitiones",
+            duration = "maiestatis",
+            image = "felis",
+            servings = "cu",
+            type = "urna",
+            nutrition = Nutrition(
+                calories = 7559,
+                carbohydrates = 6609,
+                fat = 4724,
+                fiber = 2238,
+                protein = 5096,
+                sugar = 8438
+            ),
+            directions = listOf(
+                Direction(
+                    id = 8009,
+                    position = 7746,
+                    startTime = 1365,
+                    endTime = 6603,
+                    appliance = null,
+                    temperature = null,
+                    text = "posse"
+
+                )
+            ),
+            ingredients = listOf(
+                Ingredient(
+                    position = 8729, measurement = Measurement(
+                        name = "Reed Chapman",
+                        abbreviation = "fringilla",
+                        quantity = "ad"
+                    ), name = "Catherine Wilkins"
+                )
+            ),
+            videoUrl = null,
+            tags = listOf(),
+            updatedAt = 6534,
+            createdAt = 1387,
+            ratings = Triple(1, 2, 3.0)
+        ),
+        onClick = {},
+        modifier = Modifier.size(500.dp)
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun TrendingItem(
     recipe: Recipe,
@@ -42,7 +95,7 @@ fun TrendingItem(
             onClick = { onClick(recipe) },
             modifier = Modifier
                 .fillMaxSize()
-                .align(Alignment.BottomCenter)
+                .align(Alignment.Center)
                 .padding(top = 80.dp), // Add padding to leave space for the image overlap
             shape = RoundedCornerShape(16.dp),
             elevation = 4.dp
@@ -76,7 +129,7 @@ fun TrendingItem(
         AsyncImage(
             model = recipe.image,
             contentDescription = recipe.title,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .size(160.dp)

@@ -48,7 +48,7 @@ object RecipesTab : Tab {
         @Composable
         get() = TabOptions(
             0u,
-            "Recipes",
+            "Home",
             rememberVectorPainter(Icons.Default.Home)
         )
 

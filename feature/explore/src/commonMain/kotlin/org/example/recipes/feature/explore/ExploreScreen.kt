@@ -1,10 +1,8 @@
 package org.example.recipes.feature.explore
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,19 +16,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import org.example.recipes.core.model.QuickSearchItem
-import org.example.recipes.core.ui.ChipItem
-import org.example.recipes.core.ui.QuickSearchItem
-import org.example.recipes.core.ui.SearchBar
+import com.example.recipes.navigation.Routes
+import org.example.recipes.core.model.QuickSearchTag
+import org.example.recipes.core.ui.QuickSearchComposable
+import org.example.recipes.core.ui.SearchBarComposable
+import org.koin.compose.viewmodel.koinViewModel
 
 
 object ExploreTab : Tab {
@@ -55,110 +57,101 @@ class ExploreRoute : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
+        val screenModel = koinViewModel<ExploreViewModel>()
+        val quickSearchTags by screenModel.state.collectAsState()
 
         ExploreScreen(
             modifier = Modifier.fillMaxSize(),
-            quickSearchItems = listOf(
-                QuickSearchItem("aa", "rr"),
-                QuickSearchItem("bb", "rr"),
-                QuickSearchItem("cc", "rr"),
-                QuickSearchItem("dd", "rr")
-            ),
-            popularTags = listOf(
-                "aa",
-                "bb",
-                "cc",
-                "dd",
-                "ee",
-                "ff",
-                "gg",
-                "hh",
-                "ii",
-                "jj",
-                "kk",
-                "ll",
-                "mm",
-                "nn",
-                "oo",
-                "pp",
-                "qq",
-                "rr",
-                "ss",
-                "tt",
-                "uu",
-                "vv",
-                "ww",
-                "xx",
-                "yy",
-                "zz"
-            ),
+            quickSearchTags = quickSearchTags,
+            onSearchBarClick = {
+                navigator.push(ScreenRegistry.get(Routes.SearchScreenRoute))
+            },
             onQuickSearchItemClick = {
-
+                // Handle quick search item click
             }
         )
     }
-
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+
 @Composable
 fun ExploreScreen(
     modifier: Modifier = Modifier,
-    quickSearchItems: List<QuickSearchItem>,
-    popularTags: List<String>,
-    onQuickSearchItemClick: (QuickSearchItem) -> Unit
+    quickSearchTags: List<QuickSearchTag>,
+    onSearchBarClick: () -> Unit,
+    onQuickSearchItemClick: (QuickSearchTag) -> Unit
 ) {
-    // TODO: ht4of eh ely mmkn t3rdo fl filter mn tags/list fl api lma yft7 4a4t el filter
-    //  mmkn brdo tst3ml el "type" ely fl tags w t2smhom sections
-    //  msln section cuisine feh "british" "italian" "mexican" etc..
+    // TODO: add cuisine row
     Column(modifier = modifier) {
         Text(
             text = "Explore",
-            modifier = Modifier.padding(start = 16.dp, top = 32.dp),
+            modifier = Modifier.padding(
+                start = 16.dp,
+                top = 32.dp
+            ),
             style = MaterialTheme.typography.h4
         )
-        SearchBar(modifier = Modifier
+
+
+        SearchBarComposable(modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(16.dp), {}, {})
+            .padding(16.dp),
+            onSearchClicked = onSearchBarClick, onSearch = {}, onQueryChange = {})
+        Spacer(modifier = Modifier.size(16.dp))
         Text(
             text = "Quick search",
-            modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+            modifier = Modifier.padding(
+                start = 16.dp,
+                top = 8.dp
+            ),
             style = MaterialTheme.typography.h6
         )
+
+
         LazyVerticalGrid(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
             columns = GridCells.Fixed(3),
-            modifier = Modifier.padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(quickSearchItems.size) {
-                QuickSearchItem(
-                    modifier = Modifier.size(200.dp),
-                    quickSearchItem = quickSearchItems[it],
+            items(quickSearchTags.size) {
+                QuickSearchComposable(
+                    modifier = Modifier.wrapContentSize()
+                        .padding(
+                            8.dp,
+                            12.dp
+                        ),
+                    quickSearchTag = quickSearchTags[it],
                     onClick = onQuickSearchItemClick
                 )
             }
         }
-        Text(
-            text = "Popular Tags",
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.h6
-        )
-        // TODO: display defined number of chips, adding to the end +Num
-        //  https://developer.android.com/develop/ui/compose/layouts/flow#lazy-flow
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            popularTags.forEach {
-                ChipItem(
-                    modifier = Modifier.wrapContentSize(),
-                    title = it
-                )
-            }
-        }
+
+        /*  item {
+              Text(
+                  text = "Popular Tags",
+                  modifier = Modifier.padding(16.dp),
+                  style = MaterialTheme.typography.h6
+              )
+          }
+          // TODO: display defined number of chips, adding to the end +Num
+          //  https://developer.android.com/develop/ui/compose/layouts/flow#lazy-flow
+          item {
+              FlowRow(
+                  modifier = Modifier
+                      .fillMaxWidth()
+                      .wrapContentHeight()
+                      .padding(horizontal = 16.dp),
+                  horizontalArrangement = Arrangement.spacedBy(8.dp),
+              ) {
+                  popularTags.forEach {
+                      ChipItem(
+                          modifier = Modifier.wrapContentSize(),
+                          title = it
+                      )
+                  }
+              }
+          }*/
     }
 }

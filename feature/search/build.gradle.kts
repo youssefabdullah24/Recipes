@@ -44,14 +44,10 @@ kotlin {
         }
 
         commonMain.dependencies {
-
-            // Data module
+            implementation(project(":navigation"))
             implementation(project(":core:data"))
-
-            // Model module
             implementation(project(":core:model"))
 
-            // Ui module
             implementation(project(":core:ui"))
 
             implementation(compose.runtime)
@@ -61,27 +57,26 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Coroutines
             implementation(libs.kotlin.coroutines)
-
-            // Coil
+            implementation(libs.viewmodel)
             implementation(libs.coil.core)
             implementation(libs.coil.compose)
 
-            // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.viewModel)
 
 
-            // ViewModel
             implementation(libs.viewmodel)
 
-            // Cupertino
             implementation(libs.cupertino)
 
             implementation(libs.kermit)
 
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.screenModel)
+
+            implementation(libs.paging)
 
 
         }
@@ -89,7 +84,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.recipes.feature.filter"
+    namespace = "org.example.recipes.feature.search"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")

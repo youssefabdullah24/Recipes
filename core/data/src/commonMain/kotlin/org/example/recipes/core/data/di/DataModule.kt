@@ -8,4 +8,16 @@ val dataModule = module {
     single<IRecipesRepository> {
         RecipesRepository(get())
     }
+
+   /* factory { (apiService: ApiService, query: String) ->
+        RecipesPagingSource(apiService, query)
+    }
+
+    factory { params ->
+        RecipesPagingSource(
+            apiService = params.get(),
+            query = params.get()
+        )
+    }*/
 }
+
