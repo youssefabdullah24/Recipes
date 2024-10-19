@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class IngredientDto(
     @SerialName("created_at")
-    val createdAt: Int = 0,
+    val createdAt: Int? = 0,
     @SerialName("display_plural")
-    val displayPlural: String = "",
+    val displayPlural: String? = "",
     @SerialName("display_singular")
-    val displaySingular: String = "",
+    val displaySingular: String? = "",
     @SerialName("id")
-    val id: Int = 0,
+    val id: Int? = 0,
     @SerialName("name")
-    val name: String = "",
+    val name: String? = "",
     @SerialName("updated_at")
-    val updatedAt: Int = 0
+    val updatedAt: Int? = 0
 )

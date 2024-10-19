@@ -7,11 +7,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class HackDto(
     @SerialName("end_index")
-    val endIndex: Int = 0,
+    val endIndex: Int? = 0,
     @SerialName("id")
-    val id: Int = 0,
+    val id: Int? = 0,
     @SerialName("match")
-    val match: String = "",
+    val match: String? = "",
     @SerialName("start_index")
-    val startIndex: Int = 0
+    val startIndex: Int? = 0
 )

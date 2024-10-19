@@ -7,17 +7,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NutritionDto(
     @SerialName("calories")
-    val calories: Int = 0,
+    val calories: Int? = 0,
     @SerialName("carbohydrates")
-    val carbohydrates: Int = 0,
+    val carbohydrates: Int? = 0,
     @SerialName("fat")
-    val fat: Int = 0,
+    val fat: Int? = 0,
     @SerialName("fiber")
-    val fiber: Int = 0,
+    val fiber: Int? = 0,
     @SerialName("protein")
-    val protein: Int = 0,
+    val protein: Int? = 0,
     @SerialName("sugar")
-    val sugar: Int = 0,
+    val sugar: Int? = 0,
     @SerialName("updated_at")
-    val updatedAt: String = ""
+    val updatedAt: String? = ""
 )

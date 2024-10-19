@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TopicDto(
     @SerialName("name")
-    val name: String = "",
+    val name: String? = "",
     @SerialName("slug")
-    val slug: String = ""
+    val slug: String? = ""
 )

@@ -7,13 +7,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MeasuringUnitDto(
     @SerialName("abbreviation")
-    val abbreviation: String = "",
+    val abbreviation: String? = "",
     @SerialName("display_plural")
-    val displayPlural: String = "",
+    val displayPlural: String? = "",
     @SerialName("display_singular")
-    val displaySingular: String = "",
+    val displaySingular: String? = "",
     @SerialName("name")
-    val name: String = "",
+    val name: String? = "",
     @SerialName("system")
-    val system: String = ""
+    val system: String? = ""
 )

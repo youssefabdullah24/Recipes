@@ -9,5 +9,5 @@ data class CreditDto(
     @SerialName("name")
     val name: String? = null,
     @SerialName("type")
-    val type: String = ""
+    val type: String? = ""
 )

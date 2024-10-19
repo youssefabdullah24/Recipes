@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MeasurementDto(
     @SerialName("id")
-    val id: Int = 0,
+    val id: Int? = 0,
     @SerialName("quantity")
-    val quantity: String = "",
+    val quantity: String? = "",
     @SerialName("unit")
-    val measuringUnit: MeasuringUnitDto = MeasuringUnitDto()
+    val measuringUnit: MeasuringUnitDto? = MeasuringUnitDto()
 )

@@ -7,17 +7,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ComponentDto(
     @SerialName("extra_comment")
-    val extraComment: String = "",
+    val extraComment: String? = "",
     @SerialName("id")
-    val id: Int = 0,
+    val id: Int? = 0,
     @SerialName("ingredient")
-    val ingredient: IngredientDto = IngredientDto(),
+    val ingredient: IngredientDto? = IngredientDto(),
     @SerialName("measurements")
-    val measurements: List<MeasurementDto> = listOf(),
+    val measurements: List<MeasurementDto>? = listOf(),
     @SerialName("position")
-    val position: Int = 0,
+    val position: Int? = 0,
     @SerialName("raw_text")
-    val rawText: String = "",
+    val rawText: String? = "",
     @SerialName("hacks")
     val hacks: List<HackDto>? = listOf()
 )

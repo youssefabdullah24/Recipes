@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TotalTimeTierDto(
     @SerialName("display_tier")
-    val displayTier: String = "",
+    val displayTier: String? = "",
     @SerialName("tier")
-    val tier: String = ""
+    val tier: String? = ""
 )
