@@ -2,6 +2,7 @@ package org.example.recipes.core.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +40,8 @@ import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class,
+@OptIn(ExperimentalMaterialApi::class,
+    ExperimentalFoundationApi::class,
     ExperimentalAdaptiveApi::class
 )
 @Composable
@@ -56,21 +60,33 @@ fun RecipeItem(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            AsyncImage(
-                modifier = Modifier.fillMaxWidth()
-                    .fillMaxHeight(0.5f),
-                contentScale = ContentScale.Crop,
-                model = recipe.image,
-                contentDescription = recipe.title,
-                onLoading = {
-                    // TODO: Show a loading indicator while the image is loading
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f)) {
+                AsyncImage(
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    model = recipe.image,
+                    contentDescription = recipe.title,
+                    onLoading = {
+                        // TODO: Show a loading indicator while the image is loading
 
-                },
-                onError = {
-                    // TODO: Handle any errors that occur while loading the image
+                    },
+                    onError = {
+                        // TODO: Handle any errors that occur while loading the image
 
+                    }
+                )
+                recipe.videoUrl?.let {
+                    Icon(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(8.dp),
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = "Play Video"
+                    )
                 }
-            )
+            }
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Text(
@@ -81,7 +97,6 @@ fun RecipeItem(
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
-
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
                 RecipeDetailRow(
                     icon = FontAwesomeIcons.Regular.Clock,
@@ -102,7 +117,6 @@ fun RecipeItem(
                         label = "Type",
                         value = recipe.type
                     )
-
                     AdaptiveIconButton(
                         modifier = Modifier.size(32.dp),
                         onClick = { /* TODO: Handle click event */ }) {
@@ -114,8 +128,6 @@ fun RecipeItem(
                     }
 
                 }
-
-
             }
         }
     }

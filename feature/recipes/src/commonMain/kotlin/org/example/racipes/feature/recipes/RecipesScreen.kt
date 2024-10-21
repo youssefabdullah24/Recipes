@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +35,7 @@ import com.example.recipes.navigation.Routes
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
+import org.example.recipes.core.ui.VideoPlayer
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -120,7 +122,11 @@ fun RecipesScreen(
                     ) {
                         items(uiState.recipes) {
                             RecipeItem(
-                                modifier = Modifier.size(280.dp, 240.dp),
+                                modifier = Modifier
+                                    .size(
+                                        280.dp,
+                                        240.dp
+                                    ),
                                 recipe = it,
                                 onClick = onRecipeClick
                             )

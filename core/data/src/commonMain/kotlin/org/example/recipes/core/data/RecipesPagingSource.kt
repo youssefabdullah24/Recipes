@@ -22,9 +22,9 @@ class RecipesPagingSource(
         return try {
             val response = apiService.getRecipesPage(query, from, limit)
             PagingSourceLoadResultPage(
-                data = response.results,
+                data = response.results ?: emptyList(),
                 prevKey = if (from == 0) null else from - limit,
-                nextKey = if (from >= response.count) null else from + limit
+                nextKey = if (from >= (response.count ?: -1)) null else from + limit
             )
 
         } catch (e: Exception) {

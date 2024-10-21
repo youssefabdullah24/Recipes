@@ -1,7 +1,8 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -11,8 +12,12 @@ plugins {
 }
 
 fun getLocalProperty(key: String): String {
-    val properties = gradleLocalProperties(project.rootDir)
-    return if (properties.containsKey(key)) { properties.getProperty(key) } else { "" }
+    val properties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    return properties.getProperty(key, "")
 }
 
 kotlin {
@@ -25,7 +30,7 @@ kotlin {
 
     listOf(
         iosX64(),
-        iosArm64(),
+        //iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {

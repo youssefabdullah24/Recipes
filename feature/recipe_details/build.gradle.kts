@@ -18,7 +18,7 @@ kotlin {
 
     listOf(
         iosX64(),
-        iosArm64(),
+        //iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
@@ -33,7 +33,6 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.coil.client.okhttp)
-            //implementation(libs.ktor.client.okhttp)
 
 
         }
@@ -45,11 +44,8 @@ kotlin {
 
         commonMain.dependencies {
             implementation(project(":navigation"))
-
             implementation(project(":core:data"))
-
             implementation(project(":core:model"))
-
             implementation(project(":core:ui"))
 
             implementation(compose.runtime)
@@ -74,7 +70,6 @@ kotlin {
 
             implementation(libs.voyager.screenModel)
             implementation(libs.voyager.navigator)
-            //implementation(libs.voyager.koin)
 
             implementation(libs.kermit)
 

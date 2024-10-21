@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.QuickSearchTag
 
-class ExploreViewModel(private val repository: IRecipesRepository) : ViewModel() {
+class ExploreViewModel(repository: IRecipesRepository) : ViewModel() {
 
     private val mutableState = MutableStateFlow(repository.getQuickSearchTags())
     val state: StateFlow<List<QuickSearchTag>> = mutableState.asStateFlow()

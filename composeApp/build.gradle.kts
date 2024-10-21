@@ -18,7 +18,7 @@ kotlin {
 
     listOf(
         iosX64(),
-        iosArm64(),
+        //iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
@@ -28,7 +28,6 @@ kotlin {
     }
 
     sourceSets {
-
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)

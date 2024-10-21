@@ -12,9 +12,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun SearchBarPreview() {
     SearchBarComposable(
-        onSearchClicked = {},
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp), isActive = false, onQueryChange = {}, onSearch = {}, content = {}
-    )
+            .height(50.dp)){}
 }

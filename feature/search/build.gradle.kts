@@ -18,7 +18,7 @@ kotlin {
 
     listOf(
         iosX64(),
-        iosArm64(),
+        //iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
@@ -77,6 +77,8 @@ kotlin {
             implementation(libs.voyager.screenModel)
 
             implementation(libs.paging)
+
+            implementation(libs.kermit)
 
 
         }

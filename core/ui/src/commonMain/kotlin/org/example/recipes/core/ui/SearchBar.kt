@@ -1,6 +1,6 @@
 package org.example.recipes.core.ui
 
-import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.clickable
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -22,18 +22,13 @@ import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 @Composable
 fun SearchBarComposable(
     modifier: Modifier = Modifier,
-    isActive: Boolean = false,
-    query: String = "",
-    onSearchClicked: () -> Unit,
-    onQueryChange: (String) -> Unit,
-    onSearch: (String) -> Unit,
-    content: @Composable ColumnScope.() -> Unit = {}
+    onClick: () -> Unit,
 ) {
     AdaptiveWidget(
         material = {
             SearchBar(
                 modifier = modifier,
-                query = query,
+                query = "",
                 placeholder = { Text("Search") },
                 leadingIcon = {
                     Icon(
@@ -41,18 +36,19 @@ fun SearchBarComposable(
                         contentDescription = "Search"
                     )
                 },
-                active = isActive,
-                onQueryChange = onQueryChange,
-                onSearch = onSearch,
-                onActiveChange = { onSearchClicked() },
-                content = content
+                active = false,
+                onQueryChange = {},
+                onSearch = {},
+                onActiveChange = { onClick() },
+                content = {}
             )
         },
         cupertino = {
             CupertinoSearchTextField(
-                onValueChange = {
-
-                }, value = ""
+                modifier = Modifier.clickable { onClick() },
+                enabled = false,
+                onValueChange = {}, 
+                value = ""
             )
         }
     )

@@ -155,7 +155,7 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
             cupertino = {
                 CupertinoSearchTextField(
                     onValueChange = viewModel::searchRecipes,
-                    value = suggestionQuery
+                    value = searchQuery
                 )
             }
         )

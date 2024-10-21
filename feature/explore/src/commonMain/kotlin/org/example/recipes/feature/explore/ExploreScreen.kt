@@ -95,8 +95,9 @@ fun ExploreScreen(
 
         SearchBarComposable(modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-            onSearchClicked = onSearchBarClick, onSearch = {}, onQueryChange = {})
+            .padding(16.dp)){
+            onSearchBarClick()
+        }
         Spacer(modifier = Modifier.size(16.dp))
         Text(
             text = "Quick search",
