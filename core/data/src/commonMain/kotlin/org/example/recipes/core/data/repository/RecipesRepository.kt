@@ -19,7 +19,7 @@ class RecipesRepository(
     //private val pagingSource: RecipesPagingSource
 ) : IRecipesRepository {
     override suspend fun getHomeRecipes(): List<Recipe> {
-        return apiService.getRecipesPage().results.map { it.toDomain() }
+        return apiService.getRecipesPage().results?.map { it.toDomain() } ?: emptyList()
     }
 
     override fun getRecipesPage(query: String): Flow<PagingData<Recipe>> {
@@ -87,5 +87,9 @@ class RecipesRepository(
         return apiService.getSuggestions(query).autoCompleteList?.map {
             it?.display!!
         } ?: emptyList()
+    }
+
+    override suspend fun getSimilarRecipes(recipeId: String): List<Recipe> {
+        return apiService.getSimilarRecipes(recipeId).results?.map { it.toDomain() } ?: emptyList()
     }
 }

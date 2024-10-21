@@ -14,5 +14,6 @@ interface IApiService {
 
     suspend fun getTags(): TagsResponseDto
     suspend fun getSuggestions(prefix: String): AutoCompleteResponseDto
+    suspend fun getSimilarRecipes(recipeId: String): RecipesResponseDto
 }
 

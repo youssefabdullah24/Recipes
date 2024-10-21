@@ -11,4 +11,5 @@ interface IRecipesRepository {
     fun getRecipesPage(query: String = ""): Flow<PagingData<Recipe>>
     fun getQuickSearchTags(): List<QuickSearchTag>
     suspend fun getSuggestions(it: String): List<String>
+    suspend fun getSimilarRecipes(recipeId: String) : List<Recipe>
 }

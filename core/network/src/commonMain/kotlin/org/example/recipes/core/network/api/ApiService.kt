@@ -40,4 +40,12 @@ class ApiService(
         return response
     }
 
+    override suspend fun getSimilarRecipes(recipeId: String): RecipesResponseDto {
+        val response = client.get {
+            url(BuildKonfig.baseUrl + "/recipes/list-similarities")
+            parameter("recipe_id", recipeId)
+        }.body<RecipesResponseDto>()
+        return response
+    }
+
 }

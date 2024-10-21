@@ -8,7 +8,7 @@ import io.github.alexzhirkevich.cupertino.adaptive.Theme
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun AppTheme(
+internal fun AppTheme(
     theme: Theme = determineTheme(),
     content: @Composable () -> Unit
 ) {
