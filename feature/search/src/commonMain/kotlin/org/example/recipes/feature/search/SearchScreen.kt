@@ -61,7 +61,7 @@ class SearchRoute : Screen {
 fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
     val viewModel: SearchViewModel = koinViewModel()
     val suggestionQuery by viewModel.suggestionsQueryFlow.collectAsState()
-    val searchQuery by viewModel.searchQueryFlow.collectAsState()
+    //val searchQuery by viewModel.searchQueryFlow.collectAsState()
     val suggestions by viewModel.suggestions.collectAsState(SuggestionsState.Loading)
     val isActive by viewModel.isActive.collectAsState()
     val recipes = viewModel.recipes.collectAsLazyPagingItems()

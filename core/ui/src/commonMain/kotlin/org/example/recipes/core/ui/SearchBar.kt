@@ -1,6 +1,5 @@
 package org.example.recipes.core.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
