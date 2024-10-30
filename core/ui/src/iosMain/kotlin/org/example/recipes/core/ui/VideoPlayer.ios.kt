@@ -5,7 +5,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
-import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.AVFoundation.AVPlayer
@@ -19,7 +18,7 @@ import platform.QuartzCore.CATransaction
 import platform.QuartzCore.kCATransactionDisableActions
 import platform.UIKit.UIView
 
-@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
+@OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun VideoPlayer(url: String, modifier: Modifier) {
     val player = remember { AVPlayer(uRL = NSURL.URLWithString(url)!!) }
@@ -31,9 +30,9 @@ actual fun VideoPlayer(url: String, modifier: Modifier) {
 
     UIKitView(
         factory = {
-            UIView().apply {
-                addSubview(avPlayerViewController.view)
-            }
+            val playerContainer = UIView()
+            playerContainer.addSubview(avPlayerViewController.view)
+            playerContainer
         },
         onResize = { view: UIView, rect: CValue<CGRect> ->
             CATransaction.begin()

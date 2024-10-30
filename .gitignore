@@ -16,3 +16,13 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+/core/data/.gitignore
+/core/model/.gitignore
+/core/network/.gitignore
+/core/ui/.gitignore
+/navigation/.gitignore
+/feature/explore/.gitignore
+/feature/filter/.gitignore
+/feature/recipes/.gitignore
+/feature/recipe_details/.gitignore
+

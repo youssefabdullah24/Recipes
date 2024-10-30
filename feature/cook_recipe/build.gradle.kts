@@ -22,34 +22,21 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "recipes"
+            baseName = "cook_recipe"
             isStatic = true
         }
     }
 
     sourceSets {
-
         androidMain.dependencies {
             implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.coil.client.okhttp)
-            //implementation(libs.ktor.client.okhttp)
-
-
         }
 
-        iosMain.dependencies {
-            //implementation(libs.ktor.client.darwin)
-
-        }
 
         commonMain.dependencies {
             implementation(project(":navigation"))
-
             implementation(project(":core:data"))
-
             implementation(project(":core:model"))
-
             implementation(project(":core:ui"))
 
             implementation(compose.runtime)
@@ -71,21 +58,20 @@ kotlin {
 
             implementation(libs.viewmodel)
 
-           // implementation(libs.cupertino)
+            // implementation(libs.cupertino)
 
             implementation(libs.voyager.screenModel)
             implementation(libs.voyager.navigator)
-            implementation(libs.voyager.tabNavigator)
-         //   implementation(libs.voyager.koin)
 
             implementation(libs.kermit)
+
 
         }
     }
 }
 
 android {
-    namespace = "org.example.recipes.feature.recipes"
+    namespace = "org.example.recipes.feature.cook_recipe"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -109,13 +95,4 @@ android {
     buildFeatures {
         compose = true
     }
-    dependencies {
-        debugImplementation(compose.uiTooling)
-
-    }
 }
-dependencies {
-    implementation(libs.androidx.foundation.android)
-    implementation(libs.kotlin.coroutines)
-}
-

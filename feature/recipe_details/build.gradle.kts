@@ -38,7 +38,7 @@ kotlin {
         }
 
         iosMain.dependencies {
-            //implementation(libs.ktor.client.darwin)
+            implementation(libs.ktor.client.darwin)
 
         }
 
@@ -51,6 +51,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -66,13 +67,14 @@ kotlin {
 
             implementation(libs.viewmodel)
 
-            implementation(libs.cupertino)
+           // implementation(libs.cupertino)
 
             implementation(libs.voyager.screenModel)
             implementation(libs.voyager.navigator)
 
             implementation(libs.kermit)
 
+            implementation(libs.alert.kmp)
 
         }
     }

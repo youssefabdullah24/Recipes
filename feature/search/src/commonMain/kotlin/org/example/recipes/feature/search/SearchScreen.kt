@@ -35,10 +35,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.recipes.navigation.Routes
-import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveWidget
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.koin.compose.viewmodel.koinViewModel
@@ -58,9 +55,7 @@ class SearchRoute : Screen {
 
 
 @OptIn(
-    ExperimentalAdaptiveApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalCupertinoApi::class
 )
 @Composable
 fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
@@ -72,8 +67,8 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
     val recipes = viewModel.recipes.collectAsLazyPagingItems()
     val padding by animateDpAsState(if (isActive) 0.dp else 16.dp)
     Box(modifier = Modifier.fillMaxSize()) {
-        AdaptiveWidget(
-            material = {
+       /* AdaptiveWidget(
+            material = {*/
                 SearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -151,14 +146,14 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
 
                     }
                 }
-            },
-            cupertino = {
+          //  },
+         /*   cupertino = {
                 CupertinoSearchTextField(
                     onValueChange = viewModel::searchRecipes,
                     value = searchQuery
                 )
             }
-        )
+        )*/
 
         Spacer(modifier = Modifier.height(24.dp))
         when (recipes.loadState.refresh) {

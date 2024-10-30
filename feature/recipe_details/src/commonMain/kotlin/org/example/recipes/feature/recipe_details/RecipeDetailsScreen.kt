@@ -24,15 +24,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -74,7 +71,6 @@ import org.example.recipes.core.ui.InstructionItem
 import org.example.recipes.core.ui.RecipeItem
 import org.koin.compose.viewmodel.koinViewModel
 
-
 data class RecipeDetailsRoute(private val recipe: Recipe?) : Screen {
     @Composable
     override fun Content() {
@@ -104,9 +100,16 @@ fun RecipeDetailsScreen(
         uiState,
         onRecipeClick = {
             navigator.push(ScreenRegistry.get(Routes.RecipeDetailsScreenRoute(it)))
+        },
+        onSaveRecipeClick = {
+
+        },
+        onCookRecipeClick = {
+            navigator.push(ScreenRegistry.get(Routes.CookRecipeScreenRoute(it)))
         }
     )
 }
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -114,7 +117,9 @@ fun RecipeDetailsScreen(
     recipe: Recipe,
     modifier: Modifier = Modifier,
     uiState: RecipeDetailsUiState,
-    onRecipeClick: (Recipe) -> Unit
+    onRecipeClick: (Recipe) -> Unit,
+    onSaveRecipeClick: (Recipe) -> Unit,
+    onCookRecipeClick: (Recipe) -> Unit
 ) {
     val imageHeight = 360.dp
     val cardMinHeight = 60.dp
@@ -308,14 +313,18 @@ fun RecipeDetailsScreen(
             }
         }
 
-
         AnimatedVisibility(
             visible = shouldShowScrollUpButton,
             modifier = Modifier.align(Alignment.BottomEnd),
         ) {
             BottomTab(modifier = Modifier.fillMaxWidth()
                 .wrapContentHeight()
-                .padding(16.dp), {}, {})
+                .padding(16.dp),
+                onSaveRecipeClick = {
+                    onSaveRecipeClick(recipe)
+                }, onCookRecipeClick = {
+                    onCookRecipeClick(recipe)
+                })
         }
     }
 }
@@ -354,6 +363,5 @@ fun BoxScope.BottomTab(
             )
         }
     }
-
 
 }

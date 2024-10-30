@@ -43,8 +43,9 @@ kotlin {
             implementation(project(":navigation"))
             implementation(project(":feature:explore"))
             implementation(project(":feature:search"))
-            implementation(project(":feature:recipe_details"))
             implementation(project(":feature:recipes"))
+            implementation(project(":feature:recipe_details"))
+            implementation(project(":feature:cook_recipe"))
 
             implementation(project(":core:network"))
             implementation(project(":core:data"))
@@ -54,6 +55,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -61,7 +63,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
 
-            implementation(libs.cupertino)
+           // implementation(libs.cupertino)
 
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tabNavigator)

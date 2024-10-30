@@ -1,4 +1,4 @@
-
+import com.example.recipes.feature.cook_recipe.di.cookRecipeModule
 import org.example.racipes.feature.recipes.di.recipesModule
 import org.example.recipes.core.data.di.dataModule
 import org.example.recipes.core.network.di.networkModule
@@ -16,5 +16,6 @@ fun initKoin() = startKoin {
         exploreModule,
         searchModule,
         recipeDetailsModule,
+        cookRecipeModule,
     )
 }

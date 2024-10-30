@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
@@ -35,14 +36,11 @@ import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
 import compose.icons.fontawesomeicons.regular.Heart
 import compose.icons.fontawesomeicons.regular.User
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 
 
 @OptIn(ExperimentalMaterialApi::class,
     ExperimentalFoundationApi::class,
-    ExperimentalAdaptiveApi::class
 )
 @Composable
 fun RecipeItem(
@@ -117,7 +115,7 @@ fun RecipeItem(
                         label = "Type",
                         value = recipe.type
                     )
-                    AdaptiveIconButton(
+                    IconButton(
                         modifier = Modifier.size(32.dp),
                         onClick = { /* TODO: Handle click event */ }) {
                         Icon(

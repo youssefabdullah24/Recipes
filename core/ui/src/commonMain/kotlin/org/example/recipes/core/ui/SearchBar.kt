@@ -9,23 +9,18 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveWidget
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
-
 
 @OptIn(
-    ExperimentalCupertinoApi::class, ExperimentalMaterial3Api::class,
-    ExperimentalAdaptiveApi::class
+    ExperimentalMaterial3Api::class,
+
 )
 @Composable
 fun SearchBarComposable(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    AdaptiveWidget(
-        material = {
+   // AdaptiveWidget(
+      //  material = {
             SearchBar(
                 modifier = modifier,
                 query = "",
@@ -42,14 +37,14 @@ fun SearchBarComposable(
                 onActiveChange = { onClick() },
                 content = {}
             )
-        },
-        cupertino = {
+      //  },
+        /*cupertino = {
             CupertinoSearchTextField(
                 modifier = Modifier.clickable { onClick() },
                 enabled = false,
-                onValueChange = {}, 
+                onValueChange = {},
                 value = ""
             )
-        }
-    )
+        }*/
+   // )
 }

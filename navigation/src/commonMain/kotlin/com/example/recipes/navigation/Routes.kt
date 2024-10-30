@@ -8,4 +8,5 @@ sealed class Routes : ScreenProvider {
     data object ExploreScreenRoute : Routes()
     data object SearchScreenRoute : Routes()
     data class RecipeDetailsScreenRoute(val recipe: Recipe?) : Routes()
+    data class CookRecipeScreenRoute(val recipe: Recipe) : Routes()
 }

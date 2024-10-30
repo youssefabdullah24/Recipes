@@ -3,7 +3,7 @@ agp = "8.3.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.2"
+androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 androidx-core-ktx = "1.13.1"
@@ -14,11 +14,11 @@ junit = "4.13.2"
 coroutines = "1.9.0"
 coil-core = "3.0.0-alpha06"
 coil-wasm = "3.0.0-wasm2"
-foundationAndroid = "1.7.3"
+foundationAndroid = "1.7.4"
 composeIcons = "1.1.0"
 jetbrainsKotlinJvm = "1.9.0"
-uiToolingPreview = "1.7.3"
-ktor = "2.3.12"
+uiToolingPreview = "1.7.4"
+ktor = "3.0.1"
 koin = "4.0.0"
 buildKonfig = "0.15.1"
 viewModel = "2.8.0"
@@ -26,8 +26,9 @@ voyager = "1.1.0-beta02"
 kermit = "2.0.4"
 paging = "3.3.0-alpha02-0.5.1"
 exoplayer = "1.4.1"
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 kotlin-compose-plugin = "1.6.11" #upgrading to 1.7.0 causes undefined behaviour in IOS video player
+cupertino = "0.1.0-alpha04"
 
 [libraries]
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiToolingPreview" }
@@ -64,7 +65,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 
-cupertino = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha04" }
+#cupertino = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 
@@ -84,6 +85,7 @@ exoplayer-core = { group = "androidx.media3", name = "media3-exoplayer", version
 exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 
+alert-kmp = { module = "io.github.khubaibkhan4:mediaplayer-kmp", version = "2.0.0" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
