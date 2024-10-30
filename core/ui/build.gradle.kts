@@ -33,18 +33,12 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.coil.client.okhttp)
 
-
-        }
-
-        iosMain.dependencies {
 
         }
 
         commonMain.dependencies {
             implementation(project(":core:model"))
-
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -62,6 +56,7 @@ kotlin {
             implementation(libs.composeIcons.fontAwesome)
 
             // Coil
+            implementation(libs.ktor.client.core)
             implementation(libs.coil.core)
             implementation(libs.coil.compose)
             implementation(libs.coil.ktor)
