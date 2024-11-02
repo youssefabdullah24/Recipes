@@ -5,19 +5,19 @@ android-minSdk = "24"
 android-targetSdk = "34"
 androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
-androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.13.1"
+androidx-constraintlayout = "2.2.0"
+androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 junit = "4.13.2"
 coroutines = "1.9.0"
-coil-core = "3.0.0-alpha06"
+coil-core = "3.0.0-rc02"
 coil-wasm = "3.0.0-wasm2"
-foundationAndroid = "1.7.4"
+foundationAndroid = "1.7.5"
 composeIcons = "1.1.0"
 jetbrainsKotlinJvm = "1.9.0"
-uiToolingPreview = "1.7.4"
+uiToolingPreview = "1.7.5"
 ktor = "3.0.1"
 koin = "4.0.0"
 buildKonfig = "0.15.1"
@@ -48,7 +48,8 @@ viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-view
 
 coil-core = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil-core" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-core" }
-coil-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil-core" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil-core" }
+coil-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version = "3.0.0-rc02" }
 coil-client-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil-core" }
 
 

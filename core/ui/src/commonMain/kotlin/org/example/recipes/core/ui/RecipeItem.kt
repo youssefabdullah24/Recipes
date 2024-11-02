@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Regular
@@ -71,8 +72,7 @@ fun RecipeItem(
 
                     },
                     onError = {
-                        // TODO: Handle any errors that occur while loading the image
-
+                        Logger.w("Error loading image", it.result.throwable)
                     }
                 )
                 recipe.videoUrl?.let {

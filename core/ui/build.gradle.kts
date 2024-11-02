@@ -33,8 +33,12 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
 
+        }
 
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
 
         commonMain.dependencies {
@@ -48,6 +52,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.kotlin.coroutines)
 
             // Cupertino
            // implementation(libs.cupertino)
@@ -56,10 +61,12 @@ kotlin {
             implementation(libs.composeIcons.fontAwesome)
 
             // Coil
-            implementation(libs.ktor.client.core)
-            implementation(libs.coil.core)
+            implementation(libs.coil.compose.core)
             implementation(libs.coil.compose)
+            implementation(libs.coil.core)
             implementation(libs.coil.ktor)
+            implementation(libs.ktor.client.core)
+            implementation(libs.kermit)
         }
     }
 }
