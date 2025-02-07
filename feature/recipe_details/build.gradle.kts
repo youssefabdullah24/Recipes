@@ -43,7 +43,6 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(project(":navigation"))
             implementation(project(":core:data"))
             implementation(project(":core:model"))
             implementation(project(":core:ui"))
@@ -69,12 +68,11 @@ kotlin {
 
            // implementation(libs.cupertino)
 
-            implementation(libs.voyager.screenModel)
-            implementation(libs.voyager.navigator)
 
             implementation(libs.kermit)
 
-            implementation(libs.alert.kmp)
+            //implementation(libs.alert.kmp)
+            implementation(libs.composeIcons.fontAwesome)
 
         }
     }
@@ -86,7 +84,7 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["main"].resources.srcDirs("src/commonMain/composeResources")
 
     packaging {
         resources {

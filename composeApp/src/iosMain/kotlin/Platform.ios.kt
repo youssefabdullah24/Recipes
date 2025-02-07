@@ -1,4 +1,3 @@
-/*
-import io.github.alexzhirkevich.cupertino.adaptive.Theme
+import com.slapps.cupertino.adaptive.Theme
 
-actual fun determineTheme(): Theme = Theme.Cupertino*/
+actual fun determineTheme(): Theme = Theme.Cupertino

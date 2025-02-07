@@ -55,7 +55,7 @@ kotlin {
             implementation(libs.kotlin.coroutines)
 
             // Cupertino
-           // implementation(libs.cupertino)
+            implementation(libs.bundles.cupertino)
 
             // ComposeIcons
             implementation(libs.composeIcons.fontAwesome)

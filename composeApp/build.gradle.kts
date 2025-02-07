@@ -6,11 +6,11 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -40,7 +40,6 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(project(":navigation"))
             implementation(project(":feature:explore"))
             implementation(project(":feature:search"))
             implementation(project(":feature:recipes"))
@@ -60,13 +59,16 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.serialization.json)
+
+            implementation(libs.compose.navigation)
+
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
 
-           // implementation(libs.cupertino)
+            implementation(libs.bundles.cupertino)
 
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.tabNavigator)
+            implementation(libs.kermit)
 
 
         }

@@ -47,7 +47,6 @@ kotlin {
 
             implementation(project(":core:model"))
             
-            implementation(libs.voyager.navigator)
 
             implementation(libs.kermit)
 

@@ -22,6 +22,11 @@ class RecipesRepository(
         return apiService.getRecipesPage().results?.map { it.toDomain() } ?: emptyList()
     }
 
+
+    override suspend fun getRecipe(recipeId: String): Recipe {
+        return apiService.getRecipe(recipeId).toDomain()
+    }
+
     override fun getRecipesPage(query: String): Flow<PagingData<Recipe>> {
         return Pager(
             config = PagingConfig(pageSize = 5),

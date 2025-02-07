@@ -44,7 +44,6 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(project(":navigation"))
             implementation(project(":core:data"))
             implementation(project(":core:model"))
 
@@ -70,12 +69,9 @@ kotlin {
 
             implementation(libs.viewmodel)
 
-        //    implementation(libs.cupertino)
+            implementation(libs.bundles.cupertino)
 
             implementation(libs.kermit)
-
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.screenModel)
 
             implementation(libs.paging)
 

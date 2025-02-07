@@ -1,22 +1,18 @@
 package org.example.recipes.core.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.interop.UIKitView
-import kotlinx.cinterop.CValue
+import androidx.compose.ui.viewinterop.UIKitInteropProperties
+import androidx.compose.ui.viewinterop.UIKitView
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.AVFoundation.AVPlayer
 import platform.AVFoundation.AVPlayerLayer
-import platform.AVFoundation.pause
 import platform.AVFoundation.play
 import platform.AVKit.AVPlayerViewController
-import platform.CoreGraphics.CGRect
 import platform.Foundation.NSURL
-import platform.QuartzCore.CATransaction
-import platform.QuartzCore.kCATransactionDisableActions
 import platform.UIKit.UIView
+
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -31,26 +27,21 @@ actual fun VideoPlayer(url: String, modifier: Modifier) {
     UIKitView(
         factory = {
             val playerContainer = UIView()
+            avPlayerViewController.view.setFrame(playerContainer.bounds)
             playerContainer.addSubview(avPlayerViewController.view)
             playerContainer
         },
-        onResize = { view: UIView, rect: CValue<CGRect> ->
-            CATransaction.begin()
-            CATransaction.setValue(true, kCATransactionDisableActions)
-            view.layer.setFrame(rect)
-            playerLayer.setFrame(rect)
-            avPlayerViewController.view.layer.frame = rect
-            CATransaction.commit()
-        },
+        modifier = modifier,
         update = {
             player.play()
             avPlayerViewController.player?.play()
+            avPlayerViewController.view.setFrame(it.bounds)
+            playerLayer.setFrame(avPlayerViewController.view.bounds)
         },
-        modifier = modifier,
+        properties = UIKitInteropProperties(
+            isInteractive = true,
+            isNativeAccessibilityEnabled = true
+        )
     )
-    DisposableEffect(Unit) {
-        onDispose {
-            player.pause()
-        }
-    }
 }
+

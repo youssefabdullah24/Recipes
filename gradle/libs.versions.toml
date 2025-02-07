@@ -1,9 +1,9 @@
 [versions]
 agp = "8.3.2"
-android-compileSdk = "34"
+android-compileSdk = "35"
 android-minSdk = "24"
-android-targetSdk = "34"
-androidx-activityCompose = "1.9.3"
+android-targetSdk = "35"
+androidx-activityCompose = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
 androidx-core-ktx = "1.15.0"
@@ -12,23 +12,24 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 junit = "4.13.2"
 coroutines = "1.9.0"
+compose-navigation = "2.8.0-alpha10"
 coil-core = "3.0.0-rc02"
 coil-wasm = "3.0.0-wasm2"
-foundationAndroid = "1.7.5"
+foundationAndroid = "1.7.7"
 composeIcons = "1.1.0"
 jetbrainsKotlinJvm = "1.9.0"
-uiToolingPreview = "1.7.5"
+uiToolingPreview = "1.7.7"
 ktor = "3.0.1"
 koin = "4.0.0"
 buildKonfig = "0.15.1"
 viewModel = "2.8.0"
-voyager = "1.1.0-beta02"
 kermit = "2.0.4"
 paging = "3.3.0-alpha02-0.5.1"
-exoplayer = "1.4.1"
-kotlin = "2.0.21"
-kotlin-compose-plugin = "1.6.11" #upgrading to 1.7.0 causes undefined behaviour in IOS video player
-cupertino = "0.1.0-alpha04"
+exoplayer = "1.5.1"
+kotlin = "2.1.0"
+kotlin-serialization = "1.8.0"
+kotlin-compose-plugin = "1.7.3"
+cupertino = "2.0.8"
 
 [libraries]
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiToolingPreview" }
@@ -42,9 +43,15 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+
 kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewModel" }
+compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
+
+
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 
 coil-core = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil-core" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-core" }
@@ -66,16 +73,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 
-#cupertino = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
-androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
-
-voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
-voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
-voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
-voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
-voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 
@@ -86,13 +84,16 @@ exoplayer-core = { group = "androidx.media3", name = "media3-exoplayer", version
 exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 
-alert-kmp = { module = "io.github.khubaibkhan4:mediaplayer-kmp", version = "2.0.0" }
+cupertino-core = { group = "io.github.schott12521", name = "cupertino", version.ref = "cupertino" }
+cupertino-adaptive = { group = "io.github.schott12521", name = "cupertino-adaptive", version.ref = "cupertino" }
+cupertino-native = { group = "io.github.schott12521", name = "cupertino-native", version.ref = "cupertino" }
+cupertino-icons-extended = { group = "io.github.schott12521", name = "cupertino-icons-extended", version.ref = "cupertino" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
-kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "2.0.21" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "kotlin-compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
@@ -100,3 +101,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 
 [bundles]
 exoplayer = ["exoplayer-core", "exoplayer-dash", "exoplayer-ui"]
+cupertino = ["cupertino-core", "cupertino-adaptive", "cupertino-native", "cupertino-icons-extended"]

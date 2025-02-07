@@ -1,5 +1,8 @@
 package org.example.recipes.core.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Measurement(
     val name: String,
     val abbreviation: String,

@@ -38,7 +38,7 @@ kotlin {
         }
 
         commonMain.dependencies {
-            // implementation(project(":core:model"))
+            implementation(libs.serialization.json)
         }
     }
 }
