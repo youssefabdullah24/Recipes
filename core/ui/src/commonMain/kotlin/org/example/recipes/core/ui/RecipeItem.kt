@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
@@ -31,6 +30,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
+import com.slapps.cupertino.adaptive.AdaptiveIconButton
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.regular.Bookmark
@@ -41,7 +42,7 @@ import org.example.recipes.core.model.Recipe
 
 
 @OptIn(ExperimentalMaterialApi::class,
-    ExperimentalFoundationApi::class,
+    ExperimentalAdaptiveApi::class,
 )
 @Composable
 fun RecipeItem(
@@ -67,10 +68,6 @@ fun RecipeItem(
                     contentScale = ContentScale.Crop,
                     model = recipe.image,
                     contentDescription = recipe.title,
-                    onLoading = {
-                        // TODO: Show a loading indicator while the image is loading
-
-                    },
                     onError = {
                         Logger.w("Error loading image", it.result.throwable)
                     }
@@ -115,7 +112,7 @@ fun RecipeItem(
                         label = "Type",
                         value = recipe.type
                     )
-                    IconButton(
+                    AdaptiveIconButton(
                         modifier = Modifier.size(32.dp),
                         onClick = { /* TODO: Handle click event */ }) {
                         Icon(
@@ -132,7 +129,6 @@ fun RecipeItem(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RecipeDetailRow(
     modifier: Modifier = Modifier,

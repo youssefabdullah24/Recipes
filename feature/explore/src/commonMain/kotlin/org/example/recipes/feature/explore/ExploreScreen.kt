@@ -12,67 +12,34 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.registry.ScreenRegistry
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabOptions
-import com.example.recipes.navigation.Routes
 import org.example.recipes.core.model.QuickSearchTag
 import org.example.recipes.core.ui.QuickSearchComposable
 import org.example.recipes.core.ui.SearchBarComposable
 import org.koin.compose.viewmodel.koinViewModel
 
+@Composable
+fun ExploreRoute() {
 
-object ExploreTab : Tab {
+    val screenModel = koinViewModel<ExploreViewModel>()
+    val quickSearchTags by screenModel.state.collectAsState()
 
-    @Composable
-    override fun Content() {
-        Navigator(ExploreRoute())
-    }
-
-    override val options: TabOptions
-        @Composable
-        get() = TabOptions(
-            index = 1u,
-            title = "Explore",
-            icon = rememberVectorPainter(Icons.Default.Search)
-        )
-
+    ExploreScreen(
+        modifier = Modifier.fillMaxSize(),
+        quickSearchTags = quickSearchTags,
+        onSearchBarClick = {
+            // TODO:navigator.push(ScreenRegistry.get(Routes.SearchScreenRoute))
+        },
+        onQuickSearchItemClick = {
+            // Handle quick search item click
+        }
+    )
 }
-
-class ExploreRoute : Screen {
-
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val screenModel = koinViewModel<ExploreViewModel>()
-        val quickSearchTags by screenModel.state.collectAsState()
-
-        ExploreScreen(
-            modifier = Modifier.fillMaxSize(),
-            quickSearchTags = quickSearchTags,
-            onSearchBarClick = {
-                navigator.push(ScreenRegistry.get(Routes.SearchScreenRoute))
-            },
-            onQuickSearchItemClick = {
-                // Handle quick search item click
-            }
-        )
-    }
-}
-
 
 @Composable
 fun ExploreScreen(

@@ -8,6 +8,7 @@ import io.ktor.client.request.url
 import org.example.recipes.core.network.BuildKonfig
 import org.example.recipes.core.network.IApiService
 import org.example.recipes.core.network.model.AutoCompleteResponseDto
+import org.example.recipes.core.network.model.RecipeDto
 import org.example.recipes.core.network.model.RecipesResponseDto
 import org.example.recipes.core.network.model.TagsResponseDto
 
@@ -22,6 +23,14 @@ class ApiService(
             parameter("q", query)
 
         }.body<RecipesResponseDto>()
+        return response
+    }
+
+    override suspend fun getRecipe(recipeId: String): RecipeDto {
+        val response = client.get {
+            url(BuildKonfig.baseUrl + "/recipes/get-more-info")
+            parameter("id", recipeId)
+        }.body<RecipeDto>()
         return response
     }
 

@@ -1,5 +1,4 @@
-/*
-import io.github.alexzhirkevich.cupertino.adaptive.Theme
+import com.slapps.cupertino.adaptive.Theme
 
 
-expect fun determineTheme() : Theme*/
+expect fun determineTheme() : Theme

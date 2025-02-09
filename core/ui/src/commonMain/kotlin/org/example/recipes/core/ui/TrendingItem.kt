@@ -2,7 +2,6 @@
 
 package org.example.recipes.core.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,8 +29,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import org.example.recipes.core.model.*
 
-@OptIn(ExperimentalFoundationApi::class,
-    ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrendingItem(
     recipe: Recipe,

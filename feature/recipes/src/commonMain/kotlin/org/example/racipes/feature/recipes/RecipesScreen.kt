@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,69 +14,37 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.registry.ScreenRegistry
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabOptions
-import com.example.recipes.navigation.Routes
-import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
-import org.example.recipes.core.ui.VideoPlayer
 import org.koin.compose.viewmodel.koinViewModel
 
 
-object RecipesTab : Tab {
+@Composable
+fun RecipesRoute(
+    onNavigate: (Int) -> Unit
+) {
+    val screenModel = koinViewModel<RecipesViewModel>()
+    val uiState by screenModel.state.collectAsState()
 
-    @Composable
-    override fun Content() {
-        Navigator(RecipesScreen())
-    }
-
-    override val options: TabOptions
-        @Composable
-        get() = TabOptions(
-            0u,
-            "Home",
-            rememberVectorPainter(Icons.Default.Home)
-        )
-
-}
-
-class RecipesScreen : Screen {
-    @Composable
-    override fun Content() {
-        val screenModel = koinViewModel<RecipesViewModel>()
-        val uiState by screenModel.state.collectAsState()
-        val navigator = LocalNavigator.currentOrThrow
-
-        RecipesScreen(
-            modifier = Modifier.fillMaxSize(),
-            uiState = uiState,
-            onRecipeClick = {
-                navigator.push(ScreenRegistry.get(Routes.RecipeDetailsScreenRoute(it)))
-            }
-        )
-    }
+    RecipesScreen(
+        modifier = Modifier.fillMaxSize()
+            .padding(bottom = 82.dp),
+        uiState = uiState,
+        onRecipeClick = onNavigate
+    )
 
 }
 
 @Composable
 fun RecipesScreen(
     uiState: RecipesUiState,
-    onRecipeClick: (Recipe) -> Unit,
+    onRecipeClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -85,8 +52,8 @@ fun RecipesScreen(
             Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier
-                        .align(Alignment.Center)
                         .size(64.dp)
+                        .align(Alignment.Center)
                 )
             }
 
@@ -128,7 +95,7 @@ fun RecipesScreen(
                                         240.dp
                                     ),
                                 recipe = it,
-                                onClick = onRecipeClick
+                                onClick = { onRecipeClick(it.id) }
                             )
                         }
                     }
@@ -158,7 +125,7 @@ fun RecipesScreen(
                                         280.dp
                                     ),
                                 recipe = it,
-                                onClick = onRecipeClick
+                                onClick = { onRecipeClick(it.id) }
                             )
                         }
                     }
@@ -185,7 +152,7 @@ fun RecipesScreen(
                             RecipeItem(
                                 modifier = Modifier.size(280.dp, 240.dp),
                                 recipe = it,
-                                onClick = onRecipeClick
+                                onClick = { onRecipeClick(it.id) }
                             )
                         }
                     }

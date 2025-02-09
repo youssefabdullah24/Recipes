@@ -1,6 +1,7 @@
 package org.example.recipes.core.network
 
 import org.example.recipes.core.network.model.AutoCompleteResponseDto
+import org.example.recipes.core.network.model.RecipeDto
 import org.example.recipes.core.network.model.RecipesResponseDto
 import org.example.recipes.core.network.model.TagsResponseDto
 
@@ -12,6 +13,7 @@ interface IApiService {
         size: Int = 20
     ): RecipesResponseDto
 
+    suspend fun getRecipe(recipeId: String): RecipeDto
     suspend fun getTags(): TagsResponseDto
     suspend fun getSuggestions(prefix: String): AutoCompleteResponseDto
     suspend fun getSimilarRecipes(recipeId: String): RecipesResponseDto

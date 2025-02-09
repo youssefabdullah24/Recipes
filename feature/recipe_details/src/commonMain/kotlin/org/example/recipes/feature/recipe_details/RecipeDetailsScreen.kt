@@ -2,7 +2,9 @@ package org.example.recipes.feature.recipe_details
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +30,12 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -56,83 +61,71 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.registry.ScreenRegistry
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
-import com.example.recipes.navigation.Routes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.IngredientItem
 import org.example.recipes.core.ui.InstructionItem
 import org.example.recipes.core.ui.RecipeItem
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import recipes.feature.recipe_details.generated.resources.Res
+import recipes.feature.recipe_details.generated.resources.baseline_more_vert_24
 
-data class RecipeDetailsRoute(private val recipe: Recipe?) : Screen {
-    @Composable
-    override fun Content() {
-        RecipeDetailsScreen(
-            recipe = recipe!!,
-            modifier = Modifier
-        )
-    }
-
-}
 
 @Composable
-fun RecipeDetailsScreen(
-    recipe: Recipe,
+fun RecipeDetailsRoute(
+    recipeId: String,
     modifier: Modifier = Modifier,
-    viewModel: RecipeDetailsViewModel = koinViewModel<RecipeDetailsViewModel>()
+    viewModel: RecipeDetailsViewModel = koinViewModel<RecipeDetailsViewModel>(),
+    onRecipeClick: (Recipe) -> Unit,
+    onCookRecipeClick: (Recipe) -> Unit,
+    onSaveRecipeClick: (Recipe) -> Unit
 ) {
-    val navigator = LocalNavigator.currentOrThrow
 
-    LaunchedEffect(recipe.id) {
-        viewModel.getSimilarRecipes(recipe.id.toString())
+    LaunchedEffect(recipeId) {
+        viewModel.getRecipeDetails(recipeId)
+        viewModel.getSimilarRecipes(recipeId)
     }
     val uiState by viewModel.uiState.collectAsState()
     RecipeDetailsScreen(
-        recipe,
         modifier,
         uiState,
-        onRecipeClick = {
-            navigator.push(ScreenRegistry.get(Routes.RecipeDetailsScreenRoute(it)))
-        },
-        onSaveRecipeClick = {
-
-        },
-        onCookRecipeClick = {
-            navigator.push(ScreenRegistry.get(Routes.CookRecipeScreenRoute(it)))
+        onRecipeClick = onRecipeClick,
+        onSaveRecipeClick = onSaveRecipeClick,
+        onCookRecipeClick = onCookRecipeClick,
+        onBackPressed = {
+            // TODO: navigator.pop()
         }
     )
 }
 
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RecipeDetailsScreen(
-    recipe: Recipe,
+internal fun RecipeDetailsScreen(
     modifier: Modifier = Modifier,
     uiState: RecipeDetailsUiState,
     onRecipeClick: (Recipe) -> Unit,
     onSaveRecipeClick: (Recipe) -> Unit,
-    onCookRecipeClick: (Recipe) -> Unit
+    onCookRecipeClick: (Recipe) -> Unit,
+    onBackPressed: () -> Unit
 ) {
+    val recipe = uiState.recipe
     val imageHeight = 360.dp
     val cardMinHeight = 60.dp
     var scrollOffset by remember { mutableStateOf(0f) }
     val density = LocalDensity.current
-    val totalSteps = recipe.directions.size
+    val totalSteps = recipe?.directions?.size
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     var hasScrolledUp by remember { mutableStateOf(false) }
-    val shouldShowScrollUpButton by remember {
-        derivedStateOf {
-            scrollOffset < 0f
-        }
+    var appBarVisibility by remember { mutableStateOf(false) }
+    val shouldShowScrollUpButton by remember { derivedStateOf { scrollOffset < 0f } }
+
+    LaunchedEffect(Unit) {
+        delay(250)
+        appBarVisibility = true
     }
     LaunchedEffect(listState.isScrollInProgress) {
         if (!listState.isScrollInProgress &&
@@ -148,186 +141,244 @@ fun RecipeDetailsScreen(
         }
     }
     Box(modifier = modifier) {
-        AsyncImage(
-            model = recipe.image,
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .fillMaxWidth()
-                .animateContentSize()
-                .height(imageHeight + with(density) { scrollOffset.toDp() })
-        )
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .fillMaxSize()
-                .nestedScroll(object : NestedScrollConnection {
-                    override fun onPreScroll(
-                        available: Offset,
-                        source: NestedScrollSource
-                    ): Offset {
-                        val delta = available.y
-                        val newOffset = (scrollOffset + delta).coerceIn(
-                            with(density) { -imageHeight.toPx() + cardMinHeight.toPx() },
-                            0f
-                        )
-                        scrollOffset = newOffset
-                        return Offset.Zero
-                    }
-                })
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(imageHeight))
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.White)
-                        .padding(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
-                        text = recipe.title,
-                        maxLines = 1,
-                        fontWeight = FontWeight.Bold,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    )
-                    Text(text = recipe.type + " / " + recipe.duration)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp
-                                )
-                            ) {
-                                append("Ingredients")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontSize = 14.sp
-                                )
-                            ) {
-                                append(" ${recipe.servings} Serves")
-                            }
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    recipe.ingredients.forEach {
-                        IngredientItem(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight(),
-                            ingredient = it
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp
-                                )
-                            ) {
-                                append("Directions")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontSize = 14.sp
-                                )
-                            ) {
-                                append(" $totalSteps steps")
-                            }
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    recipe.directions.forEach {
-                        InstructionItem(
-                            instruction = it,
-                            totalSteps
-                        )
-                    }
-                }
-                Box(
+        if (uiState.isRecipeLoading) {
+            CircularProgressIndicator(modifier = Modifier.size(48.dp).align(Alignment.Center))
+        } else if (uiState.error != null) {
+            Text(text = uiState.error, modifier = Modifier.align(Alignment.Center))
+        } else {
+            recipe?.let { recipe ->
+                AsyncImage(
+                    model = recipe.image,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp)
-                ) {
-                    if (uiState.isSimilarRecipesLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(48.dp)
-                                .align(Alignment.Center)
-                        )
-                    } else {
-                        if (uiState.error != null) {
-                            Logger.d(
-                                tag = "RecipeDetailsScreen",
-                                messageString = uiState.error
-                            )
-                        }
-                        if (uiState.similarRecipes.isNotEmpty()) {
-                            Column(modifier = Modifier.wrapContentSize()) {
-                                Text(
-                                    text = "Similar Recipes",
-                                    modifier = Modifier.padding(
-                                        start = 16.dp,
-                                        top = 8.dp
-                                    ),
-                                    style = MaterialTheme.typography.h6
+                        .animateContentSize()
+                        .height(imageHeight + with(density) { scrollOffset.toDp() })
+                )
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(object : NestedScrollConnection {
+                            override fun onPreScroll(
+                                available: Offset,
+                                source: NestedScrollSource
+                            ): Offset {
+                                val delta = available.y
+                                val newOffset = (scrollOffset + delta).coerceIn(
+                                    with(density) { -imageHeight.toPx() + cardMinHeight.toPx() },
+                                    0f
                                 )
-                                LazyRow(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentPadding = PaddingValues(8.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                                ) {
-                                    items(uiState.similarRecipes) {
-                                        RecipeItem(
-                                            recipe = it,
-                                            modifier = Modifier.size(
-                                                280.dp,
-                                                240.dp
-                                            ),
-                                            onClick = { recipe ->
-                                                onRecipeClick(recipe)
-                                                scope.launch {
-                                                    hasScrolledUp = true
-                                                    listState.animateScrollToItem(0)
-                                                }
-
-                                            }
+                                scrollOffset = newOffset
+                                return Offset.Zero
+                            }
+                        })
+                ) {
+                    item {
+                        Spacer(modifier = Modifier.height(imageHeight))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.White)
+                                .padding(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
+                                text = recipe.title,
+                                maxLines = 1,
+                                fontWeight = FontWeight.Bold,
+                                overflow = TextOverflow.Ellipsis,
+                                fontSize = 16.sp,
+                                color = Color.Black
+                            )
+                            Text(text = recipe.type + " / " + recipe.duration)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 18.sp
                                         )
+                                    ) {
+                                        append("Ingredients")
+                                    }
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontSize = 14.sp
+                                        )
+                                    ) {
+                                        append(" ${recipe.servings} Serves")
+                                    }
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            recipe.ingredients.forEach {
+                                IngredientItem(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentHeight(),
+                                    ingredient = it
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 18.sp
+                                        )
+                                    ) {
+                                        append("Directions")
+                                    }
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontSize = 14.sp
+                                        )
+                                    ) {
+                                        append(" $totalSteps steps")
+                                    }
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            recipe.directions.forEach {
+                                InstructionItem(
+                                    instruction = it,
+                                    totalSteps ?: 0
+                                )
+                            }
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp)
+                        ) {
+                            if (uiState.isSimilarRecipesLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .align(Alignment.Center)
+                                )
+                            } else {
+                                if (uiState.similarRecipes.isNotEmpty()) {
+                                    Column(modifier = Modifier.wrapContentSize()) {
+                                        Text(
+                                            text = "Similar Recipes",
+                                            modifier = Modifier.padding(
+                                                start = 16.dp,
+                                                top = 8.dp
+                                            ),
+                                            style = MaterialTheme.typography.h6
+                                        )
+                                        LazyRow(
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentPadding = PaddingValues(8.dp),
+                                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                                        ) {
+                                            items(uiState.similarRecipes) {
+                                                RecipeItem(
+                                                    recipe = it,
+                                                    modifier = Modifier.size(
+                                                        280.dp,
+                                                        240.dp
+                                                    ),
+                                                    onClick = { recipe ->
+                                                        onRecipeClick(recipe)
+                                                        scope.launch {
+                                                            hasScrolledUp = true
+                                                            listState.animateScrollToItem(0)
+                                                        }
+
+                                                    }
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    item {
+                        Spacer(modifier = Modifier.height(52.dp))
+                    }
                 }
-            }
-            item {
-                Spacer(modifier = Modifier.height(52.dp))
-            }
-        }
 
-        AnimatedVisibility(
-            visible = shouldShowScrollUpButton,
-            modifier = Modifier.align(Alignment.BottomEnd),
-        ) {
-            BottomTab(modifier = Modifier.fillMaxWidth()
-                .wrapContentHeight()
-                .padding(16.dp),
-                onSaveRecipeClick = {
-                    onSaveRecipeClick(recipe)
-                }, onCookRecipeClick = {
-                    onCookRecipeClick(recipe)
-                })
+                AnimatedVisibility(
+                    visible = shouldShowScrollUpButton,
+                    modifier = Modifier.align(Alignment.BottomEnd),
+                ) {
+                    BottomTab(modifier = Modifier.fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(16.dp),
+                        onSaveRecipeClick = {
+                            onSaveRecipeClick(recipe)
+                        }, onCookRecipeClick = {
+                            onCookRecipeClick(recipe)
+                        })
+                }
+
+                /*TopAppBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .align(Alignment.TopCenter),
+                    backgroundColor = Color(0x20000000),
+                    contentColor = Color.White,
+                    elevation = 0.dp
+                ) {
+                    AnimatedVisibility(
+                        visible = appBarVisibility,
+                        enter = slideInHorizontally(
+                            animationSpec = tween(
+                                durationMillis = 200,
+                                easing = LinearEasing
+                            )
+                        )
+                    ) {
+                        IconButton(
+                            modifier = Modifier.wrapContentSize(),
+                            onClick = onBackPressed
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(24.dp),
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back Button"
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    AnimatedVisibility(
+                        visible = appBarVisibility,
+                        enter = slideInHorizontally(
+                            initialOffsetX = { it },
+                            animationSpec = tween(
+                                durationMillis = 200,
+                                easing = LinearEasing
+                            )
+                        )
+                    ) {
+                        IconButton(
+                            modifier = Modifier.wrapContentSize(),
+                            onClick = {
+                                // TODO
+                            }
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(24.dp),
+                                painter = painterResource(resource = Res.drawable.baseline_more_vert_24),
+                                contentDescription = "Options"
+                            )
+                        }
+                    }
+                }*/
+            }
         }
     }
 }
+
 
 @Composable
 fun BoxScope.BottomTab(
