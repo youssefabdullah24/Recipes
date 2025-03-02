@@ -2,9 +2,6 @@ package org.example.recipes.feature.recipe_details
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
@@ -30,12 +27,9 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -61,7 +55,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -69,10 +62,7 @@ import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.IngredientItem
 import org.example.recipes.core.ui.InstructionItem
 import org.example.recipes.core.ui.RecipeItem
-import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
-import recipes.feature.recipe_details.generated.resources.Res
-import recipes.feature.recipe_details.generated.resources.baseline_more_vert_24
 
 
 @Composable
@@ -96,9 +86,6 @@ fun RecipeDetailsRoute(
         onRecipeClick = onRecipeClick,
         onSaveRecipeClick = onSaveRecipeClick,
         onCookRecipeClick = onCookRecipeClick,
-        onBackPressed = {
-            // TODO: navigator.pop()
-        }
     )
 }
 
@@ -109,7 +96,6 @@ internal fun RecipeDetailsScreen(
     onRecipeClick: (Recipe) -> Unit,
     onSaveRecipeClick: (Recipe) -> Unit,
     onCookRecipeClick: (Recipe) -> Unit,
-    onBackPressed: () -> Unit
 ) {
     val recipe = uiState.recipe
     val imageHeight = 360.dp
@@ -120,13 +106,8 @@ internal fun RecipeDetailsScreen(
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     var hasScrolledUp by remember { mutableStateOf(false) }
-    var appBarVisibility by remember { mutableStateOf(false) }
-    val shouldShowScrollUpButton by remember { derivedStateOf { scrollOffset < 0f } }
+    val shouldShowBottomTab by remember { derivedStateOf { scrollOffset < 0f } }
 
-    LaunchedEffect(Unit) {
-        delay(250)
-        appBarVisibility = true
-    }
     LaunchedEffect(listState.isScrollInProgress) {
         if (!listState.isScrollInProgress &&
             listState.firstVisibleItemIndex == 0 &&
@@ -155,6 +136,7 @@ internal fun RecipeDetailsScreen(
                         .fillMaxWidth()
                         .animateContentSize()
                         .height(imageHeight + with(density) { scrollOffset.toDp() })
+
                 )
                 LazyColumn(
                     state = listState,
@@ -307,7 +289,7 @@ internal fun RecipeDetailsScreen(
                 }
 
                 AnimatedVisibility(
-                    visible = shouldShowScrollUpButton,
+                    visible = shouldShowBottomTab,
                     modifier = Modifier.align(Alignment.BottomEnd),
                 ) {
                     BottomTab(modifier = Modifier.fillMaxWidth()
@@ -319,61 +301,6 @@ internal fun RecipeDetailsScreen(
                             onCookRecipeClick(recipe)
                         })
                 }
-
-                /*TopAppBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .align(Alignment.TopCenter),
-                    backgroundColor = Color(0x20000000),
-                    contentColor = Color.White,
-                    elevation = 0.dp
-                ) {
-                    AnimatedVisibility(
-                        visible = appBarVisibility,
-                        enter = slideInHorizontally(
-                            animationSpec = tween(
-                                durationMillis = 200,
-                                easing = LinearEasing
-                            )
-                        )
-                    ) {
-                        IconButton(
-                            modifier = Modifier.wrapContentSize(),
-                            onClick = onBackPressed
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back Button"
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                    AnimatedVisibility(
-                        visible = appBarVisibility,
-                        enter = slideInHorizontally(
-                            initialOffsetX = { it },
-                            animationSpec = tween(
-                                durationMillis = 200,
-                                easing = LinearEasing
-                            )
-                        )
-                    ) {
-                        IconButton(
-                            modifier = Modifier.wrapContentSize(),
-                            onClick = {
-                                // TODO
-                            }
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                painter = painterResource(resource = Res.drawable.baseline_more_vert_24),
-                                contentDescription = "Options"
-                            )
-                        }
-                    }
-                }*/
             }
         }
     }

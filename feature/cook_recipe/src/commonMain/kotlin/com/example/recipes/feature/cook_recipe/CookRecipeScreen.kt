@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,79 +30,87 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import org.example.recipes.core.model.Direction
-import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.Step
 import org.example.recipes.core.ui.VideoPlayer
 
 @Composable
-fun CookRecipeRoute(videoUrl: String?,
-                    directions: List<Direction>){
-    CookRecipeScreen(videoUrl,
-        directions)
+fun CookRecipeRoute(
+    videoUrl: String?,
+    directions: List<Direction>,
+    modifier: Modifier = Modifier
+) {
+    CookRecipeScreen(videoUrl, directions, modifier)
 }
 
 @Composable
-internal fun CookRecipeScreen(videoUrl: String?,
-                              directions: List<Direction>) {
+internal fun CookRecipeScreen(
+    videoUrl: String?,
+    directions: List<Direction>,
+    modifier: Modifier = Modifier
+) {
     var currentStep by rememberSaveable { mutableStateOf(1) }
     val lastStep by rememberSaveable { mutableStateOf(directions.size) }
-    val currentDirection by mutableStateOf(directions[currentStep - 1])
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Logger.d(tag="CookRecipeScreen", messageString = "CookRecipeScreen: $videoUrl")
-            videoUrl?.let {
-                VideoPlayer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.5f),
-                    url = it,
-                )
-            }
-            Card(
+    var currentDirection by remember { mutableStateOf(directions[currentStep - 1]) }
+    var seekTo by rememberSaveable { mutableStateOf(0.0) }
+    Box(modifier = modifier) {
+        videoUrl?.let {
+            VideoPlayer(
                 modifier = Modifier
+                    .align(Alignment.TopCenter)
                     .fillMaxWidth()
-                    .weight(1f),
-                shape = RoundedCornerShape(16.dp)
+                    .fillMaxHeight(0.5f),
+                seekTo = seekTo,
+                url = it,
             ) {
-                Text(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = "Step $currentStep"
-                )
-                LazyRow(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    items(directions) {
-                        Step(
-                            modifier = Modifier.size(32.dp),
-                            stepNumber = it.position,
-                            isSelected = it.position == currentStep
-                        ) { step ->
-                            currentStep = step
-                        }
+            }
+        }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f)
+                .align(Alignment.BottomCenter),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "Step $currentStep"
+            )
+            LazyRow(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(directions) {
+                    Step(
+                        modifier = Modifier.size(32.dp),
+                        stepNumber = it.position,
+                        isSelected = it.position == currentStep
+                    ) { step ->
+                        currentStep = step
+                        currentDirection = directions[step-1]
+                        seekTo = directions[step-1].startTime.toDouble()
                     }
                 }
-                AnimatedContent(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    targetState = currentDirection.text
-                ) {
-                    Text(
-                        modifier = Modifier.verticalScroll(state = rememberScrollState()),
-                        textAlign = TextAlign.Center,
-                        text = currentDirection.text
-                    )
-                }
+            }
+            AnimatedContent(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxSize()
+                    .padding(16.dp),
+                targetState = currentDirection.text
+            ) {
+                Text(
+                    modifier = Modifier.verticalScroll(state = rememberScrollState()),
+                    textAlign = TextAlign.Center,
+                    text = currentDirection.text
+                )
             }
         }
 

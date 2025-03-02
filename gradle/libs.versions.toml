@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.2"
+agp = "8.8.0"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
@@ -22,10 +22,10 @@ uiToolingPreview = "1.7.7"
 ktor = "3.0.1"
 koin = "4.0.0"
 buildKonfig = "0.15.1"
-viewModel = "2.8.0"
+viewModel = "2.8.2"
 kermit = "2.0.4"
 paging = "3.3.0-alpha02-0.5.1"
-exoplayer = "1.5.1"
+media3 = "1.5.1"
 kotlin = "2.1.0"
 kotlin-serialization = "1.8.0"
 kotlin-compose-plugin = "1.7.3"
@@ -80,9 +80,10 @@ kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 paging = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
 
 
-exoplayer-core = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "exoplayer" }
-exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
+media3-core = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
+media3-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "media3" }
+media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
+media3-common = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3" }
 
 cupertino-core = { group = "io.github.schott12521", name = "cupertino", version.ref = "cupertino" }
 cupertino-adaptive = { group = "io.github.schott12521", name = "cupertino-adaptive", version.ref = "cupertino" }
@@ -100,5 +101,5 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 [bundles]
-exoplayer = ["exoplayer-core", "exoplayer-dash", "exoplayer-ui"]
+media3 = ["media3-core", "media3-common", "media3-ui", "media3-dash"]
 cupertino = ["cupertino-core", "cupertino-adaptive", "cupertino-native", "cupertino-icons-extended"]

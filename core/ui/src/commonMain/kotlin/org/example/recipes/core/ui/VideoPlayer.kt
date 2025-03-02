@@ -6,5 +6,7 @@ import androidx.compose.ui.Modifier
 @Composable
 expect fun VideoPlayer(
     url: String,
+    seekTo: Double,
     modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit,
 )

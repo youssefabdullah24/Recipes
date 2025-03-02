@@ -78,13 +78,10 @@ fun App() {
                     val recipeId = backStackEntry.arguments?.getInt("recipeId")!!
                     RecipeDetailsRoute(modifier = Modifier.fillMaxSize(),
                         recipeId = recipeId.toString(),
-                        onRecipeClick = {
-                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it.id))
-                        }, onCookRecipeClick = {
-                            navController.navigate(Route.CookRecipeScreenRoute.createRoute(it))
-                        }, onSaveRecipeClick = {
-
-                        })
+                        onRecipeClick = { navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it.id)) },
+                        onCookRecipeClick = { navController.navigate(Route.CookRecipeScreenRoute.createRoute(it)) },
+                        onSaveRecipeClick = { }
+                    )
                 }
                 composable(
                     route = Route.CookRecipeScreenRoute.ROUTE,
@@ -101,6 +98,7 @@ fun App() {
                         backStackEntry.arguments?.getString("recipeDirections")!!
                     val directions = Json.decodeFromString<List<Direction>>(directionsJson)
                     CookRecipeRoute(
+                        modifier = Modifier.fillMaxSize(),
                         videoUrl = videoUrl,
                         directions = directions
                     )
@@ -117,9 +115,7 @@ fun App() {
                     onBackPressed = {
                         navController.navigateUp()
                     }, onOptionIconClicked = {
-                        if (it == 0) {
-                            //...
-                        }
+
                     })
             }
             BottomNavigationBar(
@@ -132,10 +128,7 @@ fun App() {
                 navController.navigate(route) {
                     launchSingleTop = true
                     restoreState = true
-
-                    popUpTo(navController.graph.startDestinationRoute!!) {
-                        saveState = true
-                    }
+                    popUpTo(navController.graph.startDestinationRoute!!) { saveState = true }
                 }
             }
         }
