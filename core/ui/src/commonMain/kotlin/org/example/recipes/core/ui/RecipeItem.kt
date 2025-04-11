@@ -1,6 +1,5 @@
 package org.example.recipes.core.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,11 +17,14 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
@@ -36,40 +38,48 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
-import compose.icons.fontawesomeicons.regular.Heart
 import compose.icons.fontawesomeicons.regular.User
 import org.example.recipes.core.model.Recipe
 
 
-@OptIn(ExperimentalMaterialApi::class,
+@OptIn(
+    ExperimentalMaterialApi::class,
     ExperimentalAdaptiveApi::class,
 )
 @Composable
 fun RecipeItem(
     recipe: Recipe,
     modifier: Modifier = Modifier,
-    onClick: (Recipe) -> Unit
+    onClick: (Recipe) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(8.dp),
-        onClick = { onClick(recipe) }
+        onClick = {
+            onClick(recipe)
+        }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.5f)
+            ) {
                 AsyncImage(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                     model = recipe.image,
                     contentDescription = recipe.title,
                     onError = {
-                        Logger.w("Error loading image", it.result.throwable)
+                        Logger.w(
+                            "Error loading image",
+                            it.result.throwable
+                        )
                     }
                 )
                 recipe.videoUrl?.let {
@@ -113,11 +123,16 @@ fun RecipeItem(
                         value = recipe.type
                     )
                     AdaptiveIconButton(
-                        modifier = Modifier.size(32.dp),
-                        onClick = { /* TODO: Handle click event */ }) {
+                        modifier = Modifier
+                            .size(48.dp),
+                        onClick = {
+                            onAddToFavoritesClicked(recipe.id.toString())
+                        }
+                    ) {
                         Icon(
-                            modifier = Modifier.fillMaxSize().padding(4.dp),
-                            imageVector = FontAwesomeIcons.Regular.Heart,
+                            modifier = Modifier.fillMaxSize(),
+                            imageVector = if (recipe.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            tint = Color.Red,
                             contentDescription = "Add to Favorites"
                         )
                     }

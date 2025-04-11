@@ -8,9 +8,10 @@ import org.example.recipes.core.model.Recipe
 
 interface IRecipesRepository {
     suspend fun getHomeRecipes(): List<Recipe>
-    suspend fun getRecipe(recipeId: String): Recipe
+    suspend fun getRecipe(recipeId: String): Result<Recipe>
     fun getRecipesPage(query: String = ""): Flow<PagingData<Recipe>>
     fun getQuickSearchTags(): List<QuickSearchTag>
-    suspend fun getSuggestions(it: String): List<String>
+    suspend fun getSuggestions(query: String): List<String>
     suspend fun getSimilarRecipes(recipeId: String) : List<Recipe>
+
 }

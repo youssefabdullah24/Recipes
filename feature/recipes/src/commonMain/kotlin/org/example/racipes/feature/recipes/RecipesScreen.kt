@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
 import org.koin.compose.viewmodel.koinViewModel
@@ -27,134 +28,145 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RecipesRoute(
-    onNavigate: (Int) -> Unit
+    recipesViewModel: RecipesViewModel = koinViewModel<RecipesViewModel>(),
+    favorites: List<Recipe>,
+    onRecipeClicked: (Int) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit
 ) {
-    val screenModel = koinViewModel<RecipesViewModel>()
-    val uiState by screenModel.state.collectAsState()
+    val uiState by recipesViewModel.recipesUiState.collectAsState()
+    recipesViewModel.submitFavoriteList(favorites)
 
     RecipesScreen(
         modifier = Modifier.fillMaxSize()
             .padding(bottom = 82.dp),
         uiState = uiState,
-        onRecipeClick = onNavigate
-    )
+        //favorites = favorites,
+        onRecipeClicked = onRecipeClicked,
+        onAddToFavoritesClicked ={
+            onAddToFavoritesClicked(it)
 
+        }
+    )
 }
 
 @Composable
 fun RecipesScreen(
     uiState: RecipesUiState,
-    onRecipeClick: (Int) -> Unit,
+    //favorites: List<String>,
+    onRecipeClicked: (Int) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState) {
-        is RecipesUiState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(64.dp)
-                        .align(Alignment.Center)
-                )
-            }
+    if (uiState.isLoading) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(64.dp)
+                    .align(Alignment.Center)
+            )
+        }
+    }
 
+
+    if (uiState.error != null) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = uiState.error
+            )
         }
 
-        is RecipesUiState.Error -> {
-            Box(modifier = Modifier.fillMaxSize()) {
+    }
+
+    if (uiState.recipes.isNotEmpty()) {
+        LazyColumn(modifier = modifier) {
+            item {
                 Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = uiState.message
+                    text = "Recipes",
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 32.dp
+                    ),
+                    style = MaterialTheme.typography.h4
                 )
             }
-
-        }
-
-        is RecipesUiState.Success -> {
-            LazyColumn(modifier = modifier) {
-                item {
-                    Text(
-                        text = "Recipes",
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            top = 32.dp
-                        ),
-                        style = MaterialTheme.typography.h4
-                    )
-                }
-                item { Spacer(modifier = Modifier.height(8.dp)) }
-                item {
-                    LazyRow(
-                        contentPadding = PaddingValues(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(uiState.recipes) {
-                            RecipeItem(
-                                modifier = Modifier
-                                    .size(
-                                        280.dp,
-                                        240.dp
-                                    ),
-                                recipe = it,
-                                onClick = { onRecipeClick(it.id) }
-                            )
-                        }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            item {
+                LazyRow(
+                    contentPadding = PaddingValues(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(uiState.recipes) { recipe ->
+                        RecipeItem(
+                            modifier = Modifier
+                                .size(
+                                    280.dp,
+                                    240.dp
+                                ),
+                            recipe = recipe,
+                            onClick = { onRecipeClicked(recipe.id) },
+                            onAddToFavoritesClicked = { onAddToFavoritesClicked(recipe.id.toString()) }
+                        )
                     }
                 }
-                item { Spacer(modifier = Modifier.height(8.dp)) }
+            }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
 
-                item {
-                    Text(
-                        text = "Trending now",
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            top = 8.dp
-                        ),
-                        style = MaterialTheme.typography.h6
-                    )
-                }
-                item {
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(16.dp)
-                    ) {
-                        items(uiState.recipes) {
-                            TrendingItem(
-                                modifier = Modifier
-                                    .size(
-                                        180.dp,
-                                        280.dp
-                                    ),
-                                recipe = it,
-                                onClick = { onRecipeClick(it.id) }
-                            )
-                        }
+            item {
+                Text(
+                    text = "Trending now",
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 8.dp
+                    ),
+                    style = MaterialTheme.typography.h6
+                )
+            }
+            item {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(16.dp)
+                ) {
+                    items(uiState.recipes) {
+                        TrendingItem(
+                            modifier = Modifier
+                                .size(
+                                    180.dp,
+                                    280.dp
+                                ),
+                            recipe = it,
+                            onClick = { onRecipeClicked(it.id) }
+                        )
                     }
                 }
-                item { Spacer(modifier = Modifier.height(8.dp)) }
+            }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
 
-                item {
-                    Text(
-                        text = "Top video recipes",
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            top = 8.dp
-                        ),
-                        style = MaterialTheme.typography.h6
-                    )
-                }
-                item { Spacer(modifier = Modifier.height(8.dp)) }
-                item {
-                    LazyRow(
-                        contentPadding = PaddingValues(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(uiState.recipes) {
-                            RecipeItem(
-                                modifier = Modifier.size(280.dp, 240.dp),
-                                recipe = it,
-                                onClick = { onRecipeClick(it.id) }
+            item {
+                Text(
+                    text = "Top video recipes",
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 8.dp
+                    ),
+                    style = MaterialTheme.typography.h6
+                )
+            }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            item {
+                LazyRow(
+                    contentPadding = PaddingValues(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(uiState.recipes) { recipe ->
+                        RecipeItem(
+                            modifier = Modifier.size(280.dp, 240.dp),
+                            recipe = recipe,
+                            onClick = { onRecipeClicked(it.id) },
+                            onAddToFavoritesClicked = {
+                                onAddToFavoritesClicked(recipe.id.toString())
+                                                      },
                             )
-                        }
                     }
                 }
             }

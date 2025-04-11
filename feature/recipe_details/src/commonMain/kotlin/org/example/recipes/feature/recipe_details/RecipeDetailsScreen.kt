@@ -64,7 +64,6 @@ import org.example.recipes.core.ui.InstructionItem
 import org.example.recipes.core.ui.RecipeItem
 import org.koin.compose.viewmodel.koinViewModel
 
-
 @Composable
 fun RecipeDetailsRoute(
     recipeId: String,
@@ -74,12 +73,13 @@ fun RecipeDetailsRoute(
     onCookRecipeClick: (Recipe) -> Unit,
     onSaveRecipeClick: (Recipe) -> Unit
 ) {
-
-    LaunchedEffect(recipeId) {
-        viewModel.getRecipeDetails(recipeId)
-        viewModel.getSimilarRecipes(recipeId)
-    }
     val uiState by viewModel.uiState.collectAsState()
+    if (uiState.recipe == null) {
+        LaunchedEffect(recipeId) {
+            viewModel.getRecipeDetails(recipeId)
+            //viewModel.getSimilarRecipes(recipeId)
+        }
+    }
     RecipeDetailsScreen(
         modifier,
         uiState,
@@ -275,7 +275,7 @@ internal fun RecipeDetailsScreen(
                                                         }
 
                                                     }
-                                                )
+                                                ){}
                                             }
                                         }
                                     }
@@ -292,9 +292,10 @@ internal fun RecipeDetailsScreen(
                     visible = shouldShowBottomTab,
                     modifier = Modifier.align(Alignment.BottomEnd),
                 ) {
-                    BottomTab(modifier = Modifier.fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(16.dp),
+                    BottomTab(
+                        modifier = Modifier.fillMaxWidth()
+                            .wrapContentHeight()
+                            .padding(16.dp),
                         onSaveRecipeClick = {
                             onSaveRecipeClick(recipe)
                         }, onCookRecipeClick = {

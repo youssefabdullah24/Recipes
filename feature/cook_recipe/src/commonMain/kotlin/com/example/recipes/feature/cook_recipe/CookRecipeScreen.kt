@@ -45,15 +45,22 @@ import org.example.recipes.core.ui.VideoPlayer
 fun CookRecipeRoute(
     videoUrl: String?,
     directions: List<Direction>,
+    onFinishCooking: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    CookRecipeScreen(videoUrl, directions, modifier)
+    CookRecipeScreen(
+        videoUrl,
+        directions,
+        onFinishCooking,
+        modifier,
+    )
 }
 
 @Composable
 internal fun CookRecipeScreen(
     videoUrl: String?,
     directions: List<Direction>,
+    onFinishCooking: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var currentStep by rememberSaveable { mutableStateOf(1) }
@@ -94,8 +101,8 @@ internal fun CookRecipeScreen(
                         isSelected = it.position == currentStep
                     ) { step ->
                         currentStep = step
-                        currentDirection = directions[step-1]
-                        seekTo = directions[step-1].startTime.toDouble()
+                        currentDirection = directions[step - 1]
+                        seekTo = directions[step - 1].startTime.toDouble()
                     }
                 }
             }
@@ -147,7 +154,7 @@ internal fun CookRecipeScreen(
                     .height(48.dp),
                 onClick = {
                     if (currentStep < lastStep) currentStep++ else {
-                        // TODO: Navigate somewhere?
+                        onFinishCooking()
                     }
                 }
             ) {

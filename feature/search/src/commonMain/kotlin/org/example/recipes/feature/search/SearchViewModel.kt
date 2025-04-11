@@ -26,6 +26,7 @@ sealed class SuggestionsState{
     data class Success(val suggestions: List<String>) : SuggestionsState()
     data class Error(val error: Throwable) : SuggestionsState()
 }
+
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() {
 
@@ -35,7 +36,7 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
     private val _searchQueryFlow = MutableStateFlow("")
     val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
 
-    private val _isActive = MutableStateFlow(false)
+    private val _isActive = MutableStateFlow(true)
     val isActive = _isActive.asStateFlow()
 
     fun suggestQueries(keyword: String) {

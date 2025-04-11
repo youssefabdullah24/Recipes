@@ -30,6 +30,7 @@ kotlin = "2.1.0"
 kotlin-serialization = "1.8.0"
 kotlin-compose-plugin = "1.7.3"
 cupertino = "2.0.8"
+firebase = "2.1.0"
 
 [libraries]
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiToolingPreview" }
@@ -90,6 +91,11 @@ cupertino-adaptive = { group = "io.github.schott12521", name = "cupertino-adapti
 cupertino-native = { group = "io.github.schott12521", name = "cupertino-native", version.ref = "cupertino" }
 cupertino-icons-extended = { group = "io.github.schott12521", name = "cupertino-icons-extended", version.ref = "cupertino" }
 
+firebase-auth = { group = "dev.gitlive", name = "firebase-auth", version.ref = "firebase" }
+firebase-firestore = { group = "dev.gitlive", name = "firebase-firestore", version.ref = "firebase" }
+firebase-storage = { group = "dev.gitlive", name = "firebase-storage", version.ref = "firebase" }
+
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -103,3 +109,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 [bundles]
 media3 = ["media3-core", "media3-common", "media3-ui", "media3-dash"]
 cupertino = ["cupertino-core", "cupertino-adaptive", "cupertino-native", "cupertino-icons-extended"]
+firebase = ["firebase-auth", "firebase-firestore", "firebase-storage"]

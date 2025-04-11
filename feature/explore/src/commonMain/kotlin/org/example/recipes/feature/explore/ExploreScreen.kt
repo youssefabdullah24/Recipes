@@ -24,7 +24,9 @@ import org.example.recipes.core.ui.SearchBarComposable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ExploreRoute() {
+fun ExploreRoute(
+    onNavigate: () -> Unit,
+) {
 
     val screenModel = koinViewModel<ExploreViewModel>()
     val quickSearchTags by screenModel.state.collectAsState()
@@ -32,9 +34,7 @@ fun ExploreRoute() {
     ExploreScreen(
         modifier = Modifier.fillMaxSize(),
         quickSearchTags = quickSearchTags,
-        onSearchBarClick = {
-            // TODO:navigator.push(ScreenRegistry.get(Routes.SearchScreenRoute))
-        },
+        onSearchBarClick = onNavigate,
         onQuickSearchItemClick = {
             // Handle quick search item click
         }
@@ -58,8 +58,6 @@ fun ExploreScreen(
             ),
             style = MaterialTheme.typography.h4
         )
-
-
         SearchBarComposable(
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,7 +73,6 @@ fun ExploreScreen(
             ),
             style = MaterialTheme.typography.h6
         )
-
 
         LazyVerticalGrid(
             modifier = Modifier

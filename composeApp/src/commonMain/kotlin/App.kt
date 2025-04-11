@@ -12,10 +12,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -38,11 +40,14 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.example.racipes.feature.recipes.RecipesRoute
+import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.model.Direction
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.feature.explore.ExploreRoute
+import org.example.recipes.feature.profile.ProfileRoute
 import org.example.recipes.feature.recipe_details.RecipeDetailsRoute
 import org.example.recipes.feature.search.SearchRoute
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
@@ -52,6 +57,10 @@ fun App() {
         val navStack by navController.currentBackStackEntryAsState()
         val currentRoute = navStack?.destination?.route
         var isVisible by rememberSaveable { mutableStateOf(false) }
+        val profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>()
+        val profileUiState by profileViewModel.profileUiState.collectAsState()
+        val favorites = profileUiState.favorites
+
         LaunchedEffect(currentRoute) {
             isVisible = !isTopLevelDestination(currentRoute)
         }
@@ -61,22 +70,46 @@ fun App() {
                 startDestination = BottomNavigationItem.Recipes.route
             ) {
                 composable(BottomNavigationItem.Recipes.route) {
-                    RecipesRoute {
-                        navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
-                    }
+                    RecipesRoute(
+                        favorites = favorites,
+                        onRecipeClicked = {
+                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
+                        }, onAddToFavoritesClicked = {
+                            profileViewModel.toggleFavoriteRecipe(it)
+                        }
+                    )
                 }
                 composable(BottomNavigationItem.Explore.route) {
-                    ExploreRoute()
+                    ExploreRoute {
+                        navController.navigate(Route.SearchScreenRoute.ROUTE)
+                    }
                 }
-                composable(Route.SearchScreenRoute.name) {
-                    SearchRoute()
+                composable(BottomNavigationItem.Profile.route) {
+                    ProfileRoute(
+                        viewModel = profileViewModel,
+                        onRecipeClicked = {
+                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
+                        }, onUpdateProfileClicked = {
+
+                        })
+                }
+                composable(Route.SearchScreenRoute.ROUTE) {
+                    SearchRoute(
+                        onRecipeClick = {
+                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
+                        },
+                        onAddToFavoritesClicked = {
+                            profileViewModel.toggleFavoriteRecipe(it)
+                        }
+                    )
                 }
                 composable(
                     route = Route.RecipeDetailsScreenRoute.ROUTE,
                     arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
                 ) { backStackEntry ->
                     val recipeId = backStackEntry.arguments?.getInt("recipeId")!!
-                    RecipeDetailsRoute(modifier = Modifier.fillMaxSize(),
+                    RecipeDetailsRoute(
+                        modifier = Modifier.fillMaxSize(),
                         recipeId = recipeId.toString(),
                         onRecipeClick = { navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it.id)) },
                         onCookRecipeClick = { navController.navigate(Route.CookRecipeScreenRoute.createRoute(it)) },
@@ -86,6 +119,7 @@ fun App() {
                 composable(
                     route = Route.CookRecipeScreenRoute.ROUTE,
                     arguments = listOf(
+                        navArgument("recipeId") { type = NavType.StringType },
                         navArgument("recipeVideoUrl") {
                             type = NavType.StringType
                             nullable = true
@@ -93,6 +127,7 @@ fun App() {
                         navArgument("recipeDirections") { type = NavType.StringType }
                     )
                 ) { backStackEntry ->
+                    val id = backStackEntry.arguments?.getString("recipeId")
                     val videoUrl = backStackEntry.arguments?.getString("recipeVideoUrl")
                     val directionsJson =
                         backStackEntry.arguments?.getString("recipeDirections")!!
@@ -100,7 +135,11 @@ fun App() {
                     CookRecipeRoute(
                         modifier = Modifier.fillMaxSize(),
                         videoUrl = videoUrl,
-                        directions = directions
+                        directions = directions,
+                        onFinishCooking = {
+                            navController.navigate(BottomNavigationItem.Recipes.route)
+                            profileViewModel.addToCookedRecipes(id!!)
+                        }
                     )
                 }
             }
@@ -110,19 +149,22 @@ fun App() {
                 enter = fadeIn() + slideInHorizontally(initialOffsetX = { -it }),
                 exit = fadeOut() + slideOutHorizontally(targetOffsetX = { -it })
             ) {
-                AppBar(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    onBackPressed = {
-                        navController.navigateUp()
-                    }, onOptionIconClicked = {
+                if (currentRoute != Route.SearchScreenRoute.name) {
+                    AppBar(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        onBackPressed = {
+                            navController.navigateUp()
+                        }, onOptionIconClicked = {
 
-                    })
+                        })
+                }
             }
             BottomNavigationBar(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 listOf(
                     BottomNavigationItem.Recipes,
-                    BottomNavigationItem.Explore
+                    BottomNavigationItem.Explore,
+                    BottomNavigationItem.Profile
                 ), currentRoute
             ) { route ->
                 navController.navigate(route) {
@@ -139,7 +181,9 @@ fun App() {
 internal fun isTopLevelDestination(route: String?): Boolean {
     return when (route) {
         BottomNavigationItem.Recipes.route,
-        BottomNavigationItem.Explore.route -> true
+        BottomNavigationItem.Explore.route,
+        BottomNavigationItem.Profile.route,
+            -> true
 
         else -> false
     }
@@ -183,8 +227,11 @@ internal fun BottomNavigationBar(
     currentRoute: String?,
     onNavigate: (String) -> Unit,
 ) {
-    if (isTopLevelDestination(currentRoute)) {
-        AdaptiveNavigationBar(modifier = modifier) {
+    AnimatedVisibility(
+        visible = isTopLevelDestination(currentRoute),
+        modifier = modifier
+    ) {
+        AdaptiveNavigationBar {
             topLevelDestinations.forEach { item ->
                 AdaptiveNavigationBarItem(
                     selected = currentRoute == item.route,
@@ -195,7 +242,9 @@ internal fun BottomNavigationBar(
                         )
                     },
                     label = { Text(text = item.title) },
-                    onClick = { onNavigate(item.route) }
+                    onClick = {
+                        onNavigate(item.route)
+                    }
                 )
             }
         }
@@ -209,12 +258,15 @@ internal sealed class BottomNavigationItem(
 ) {
     data object Recipes : BottomNavigationItem("recipes", "Recipes", Icons.Default.Home)
     data object Explore : BottomNavigationItem("explore", "Explore", Icons.Default.Search)
+    data object Profile : BottomNavigationItem("profile", "Profile", Icons.Default.Person)
 }
 
 @Serializable
 sealed class Route(val name: String) {
     @Serializable
-    data object SearchScreenRoute : Route("search")
+    data object SearchScreenRoute : Route("search") {
+        const val ROUTE = "search"
+    }
 
     @Serializable
     data object RecipeDetailsScreenRoute : Route("recipe_details") {
@@ -228,11 +280,11 @@ sealed class Route(val name: String) {
     @Serializable
     data object CookRecipeScreenRoute : Route("cook_recipe") {
         const val ROUTE =
-            "cook_recipe?recipeVideoUrl={recipeVideoUrl}&recipeDirections={recipeDirections}"
+            "cook_recipe?recipeId={recipeId}&recipeVideoUrl={recipeVideoUrl}&recipeDirections={recipeDirections}"
 
         fun createRoute(recipe: Recipe): String {
             val recipeDirectionsJson = Json.encodeToString(recipe.directions)
-            return "cook_recipe?recipeVideoUrl=${recipe.videoUrl}&recipeDirections=$recipeDirectionsJson"
+            return "cook_recipe?recipeId=${recipe.id}&recipeVideoUrl=${recipe.videoUrl}&recipeDirections=$recipeDirectionsJson"
         }
     }
 }

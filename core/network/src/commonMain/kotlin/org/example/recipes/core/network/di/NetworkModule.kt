@@ -11,7 +11,9 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.example.recipes.core.network.BuildKonfig
 import org.example.recipes.core.network.IApiService
+import org.example.recipes.core.network.IAuthService
 import org.example.recipes.core.network.api.ApiService
+import org.example.recipes.core.network.auth.AuthService
 import org.koin.dsl.module
 
 
@@ -32,7 +34,7 @@ val networkModule = module {
                     level = LogLevel.ALL
                     logger = object : Logger {
                         override fun log(message: String) {
-                            println("~~ ktor DEBUG ~~\n$message")
+                            /*println("~~ ktor DEBUG ~~\n$message")*/
                         }
 
                     }
@@ -47,4 +49,5 @@ val networkModule = module {
             }
         )
     }
+    single<IAuthService> { AuthService() }
 }

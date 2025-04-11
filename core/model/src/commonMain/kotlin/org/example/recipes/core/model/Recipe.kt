@@ -19,4 +19,6 @@ data class Recipe(
     val updatedAt: Int,
     val createdAt: Int,
     val ratings: Triple<Int, Int, Double>, // (positive, negative, score)
+    var isFavorite: Boolean = false,
+    var hasCooked: Boolean = false,
 )
