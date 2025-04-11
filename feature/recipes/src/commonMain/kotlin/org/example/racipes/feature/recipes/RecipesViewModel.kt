@@ -12,8 +12,7 @@ import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.Recipe
 
 // todo: add UseCase
-class RecipesViewModel(private val repository: IRecipesRepository) : ViewModel()
-/* StateScreenModel<RecipesUiState>(RecipesUiState.Loading)*/ {
+class RecipesViewModel(private val recipesRepo: IRecipesRepository) : ViewModel() {
     private var mutableState = MutableStateFlow<RecipesUiState>(RecipesUiState.Loading)
     val state = mutableState.asStateFlow()
     init {
@@ -23,7 +22,7 @@ class RecipesViewModel(private val repository: IRecipesRepository) : ViewModel()
     private fun getRecipes() {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                repository.getHomeRecipes()
+                recipesRepo.getHomeRecipes()
             }.onSuccess { recipes ->
                 mutableState.value = RecipesUiState.Success(recipes)
             }.onFailure { e ->

@@ -1,6 +1,4 @@
-
 import com.codingfeline.buildkonfig.compiler.FieldSpec
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
@@ -22,9 +20,8 @@ fun getLocalProperty(key: String): String {
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -51,17 +48,16 @@ kotlin {
         }
 
         commonMain.dependencies {
-            // Coroutines
             implementation(libs.kotlin.coroutines)
 
-            // Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.encoding)
 
-            // Koin
+            implementation(libs.bundles.firebase)
+
             implementation(libs.koin.core)
 
             implementation(libs.kermit)
@@ -91,7 +87,7 @@ android {
     namespace = "org.example.recipes.core.network"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }

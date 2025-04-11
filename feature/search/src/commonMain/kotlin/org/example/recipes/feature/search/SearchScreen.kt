@@ -19,9 +19,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,17 +36,20 @@ import com.slapps.cupertino.CupertinoSearchTextField
 import com.slapps.cupertino.ExperimentalCupertinoApi
 import com.slapps.cupertino.adaptive.AdaptiveWidget
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
-import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun SearchRoute() {
-
-
-    SearchScreen {
-        //TODO: navigator.push(ScreenRegistry.get(Routes.RecipeDetailsScreenRoute(it)))
-    }
+fun SearchRoute(
+    favorites: List<String>,
+    onRecipeClick: (Int) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit
+) {
+    SearchScreen(
+        favorites,
+        onRecipeClick,
+        onAddToFavoritesClicked
+    )
 }
 
 
@@ -55,22 +59,25 @@ fun SearchRoute() {
     ExperimentalCupertinoApi::class,
 )
 @Composable
-fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
+fun SearchScreen(
+    favorites: List<String>,
+    onRecipeClick: (Int) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit
+) {
     val viewModel: SearchViewModel = koinViewModel()
     val suggestionQuery by viewModel.suggestionsQueryFlow.collectAsState()
     val searchQuery by viewModel.searchQueryFlow.collectAsState()
     val suggestions by viewModel.suggestions.collectAsState(SuggestionsState.Loading)
     val isActive by viewModel.isActive.collectAsState()
     val recipes = viewModel.recipes.collectAsLazyPagingItems()
-    val padding by animateDpAsState(if (isActive) 0.dp else 16.dp)
+    val padding by animateDpAsState(if (isActive) 8.dp else 16.dp)
     Box(modifier = Modifier.fillMaxSize()) {
         AdaptiveWidget(
             material = {
-                val onActiveChange = { if (isActive) viewModel.setIsActive(true) }
-                val colors1 = SearchBarDefaults.colors()
-                SearchBar(
+                DockedSearchBar(
                     inputField = {
                         SearchBarDefaults.InputField(
+                            modifier = Modifier.fillMaxWidth(),
                             query = suggestionQuery,
                             onQueryChange = viewModel::suggestQueries,
                             onSearch = {
@@ -79,8 +86,17 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
                             },
                             expanded = isActive,
                             onExpandedChange = { viewModel.setIsActive(it) },
-                            enabled = true,
                             placeholder = { Text("Search") },
+                            trailingIcon = {
+                                AnimatedVisibility(visible = isActive) {
+                                    IconButton(onClick = { viewModel.suggestQueries("") }) {
+                                        Icon(
+                                            imageVector = Icons.Default.Clear,
+                                            contentDescription = "Clear"
+                                        )
+                                    }
+                                }
+                            },
                             leadingIcon = {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     AnimatedVisibility(visible = isActive) {
@@ -100,8 +116,6 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
                                     }
                                 }
                             },
-                            trailingIcon = null,
-                            colors = colors1.inputFieldColors,
                             interactionSource = null,
                         )
                     },
@@ -110,11 +124,6 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(padding),
-                    shape = SearchBarDefaults.inputFieldShape,
-                    colors = colors1,
-                    tonalElevation = SearchBarDefaults.TonalElevation,
-                    shadowElevation = SearchBarDefaults.ShadowElevation,
-                    windowInsets = SearchBarDefaults.windowInsets,
                 ) {
                     when (suggestions) {
                         is SuggestionsState.Loading -> {
@@ -130,7 +139,8 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
                         }
 
                         is SuggestionsState.Error -> {
-                            TextButton(modifier = Modifier,
+                            TextButton(
+                                modifier = Modifier,
                                 onClick = { recipes.retry() }) {
                                 Text(text = "Failed to load, tap to retry")
                             }
@@ -188,18 +198,24 @@ fun SearchScreen(onRecipeClick: (Recipe) -> Unit) {
             }
 
             is LoadState.Error -> {
-                TextButton(modifier = Modifier,
+                TextButton(
+                    modifier = Modifier,
                     onClick = { recipes.retry() }) {
                     Text(text = "Failed to load, tap to retry")
                 }
             }
 
             else -> {
+                // TODO: update when adding to favorites.
                 LazyColumn {
                     items(recipes.itemCount) {
                         RecipeItem(
                             recipe = recipes[it]!!,
-                            onClick = onRecipeClick
+                            onClick = { onRecipeClick(it.id) },
+                            isFavorite = favorites.contains(recipes[it]?.id?.toString()!!),
+                            onAddToFavoritesClicked = {
+                                onAddToFavoritesClicked(it)
+                            }
                         )
                     }
 

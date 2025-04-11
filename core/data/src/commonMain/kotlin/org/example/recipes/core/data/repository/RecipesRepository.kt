@@ -14,17 +14,18 @@ import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.network.IApiService
 
 // TODO: refactor and add UseCases
-class RecipesRepository(
-    private val apiService: IApiService,
-    //private val pagingSource: RecipesPagingSource
-) : IRecipesRepository {
+class RecipesRepository(private val apiService: IApiService) : IRecipesRepository {
+
     override suspend fun getHomeRecipes(): List<Recipe> {
         return apiService.getRecipesPage().results?.map { it.toDomain() } ?: emptyList()
     }
 
-
-    override suspend fun getRecipe(recipeId: String): Recipe {
-        return apiService.getRecipe(recipeId).toDomain()
+    override suspend fun getRecipe(recipeId: String): Result<Recipe> {
+        return try {
+            Result.success(apiService.getRecipe(recipeId).toDomain())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     override fun getRecipesPage(query: String): Flow<PagingData<Recipe>> {
@@ -35,7 +36,6 @@ class RecipesRepository(
     }
 
     override fun getQuickSearchTags(): List<QuickSearchTag> {
-        // return apiService.getTags().results.map { it.toDomain() }
         return listOf(
             QuickSearchTag(
                 "Breakfast",
@@ -89,12 +89,11 @@ class RecipesRepository(
     }
 
     override suspend fun getSuggestions(query: String): List<String> {
-        return apiService.getSuggestions(query).autoCompleteList?.map {
-            it?.display!!
-        } ?: emptyList()
+        return apiService.getSuggestions(query).autoCompleteList?.map { it?.display!! } ?: emptyList()
     }
 
     override suspend fun getSimilarRecipes(recipeId: String): List<Recipe> {
         return apiService.getSimilarRecipes(recipeId).results?.map { it.toDomain() } ?: emptyList()
     }
+
 }

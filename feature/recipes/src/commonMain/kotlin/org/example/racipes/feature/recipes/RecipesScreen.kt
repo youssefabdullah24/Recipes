@@ -27,24 +27,29 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RecipesRoute(
-    onNavigate: (Int) -> Unit
+    recipesViewModel: RecipesViewModel = koinViewModel<RecipesViewModel>(),
+    favorites: List<String>,
+    onRecipeClicked: (Int) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit
 ) {
-    val screenModel = koinViewModel<RecipesViewModel>()
-    val uiState by screenModel.state.collectAsState()
+    val uiState by recipesViewModel.state.collectAsState()
 
     RecipesScreen(
         modifier = Modifier.fillMaxSize()
             .padding(bottom = 82.dp),
         uiState = uiState,
-        onRecipeClick = onNavigate
+        favorites = favorites,
+        onRecipeClicked = onRecipeClicked,
+        onAddToFavoritesClicked = onAddToFavoritesClicked
     )
-
 }
 
 @Composable
 fun RecipesScreen(
     uiState: RecipesUiState,
-    onRecipeClick: (Int) -> Unit,
+    favorites: List<String>,
+    onRecipeClicked: (Int) -> Unit,
+    onAddToFavoritesClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -87,15 +92,17 @@ fun RecipesScreen(
                         contentPadding = PaddingValues(8.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        items(uiState.recipes) {
+                        items(uiState.recipes) { recipe ->
                             RecipeItem(
                                 modifier = Modifier
                                     .size(
                                         280.dp,
                                         240.dp
                                     ),
-                                recipe = it,
-                                onClick = { onRecipeClick(it.id) }
+                                recipe = recipe,
+                                isFavorite = favorites.contains(recipe.id.toString()),
+                                onClick = { onRecipeClicked(recipe.id) },
+                                onAddToFavoritesClicked = { onAddToFavoritesClicked(recipe.id.toString()) }
                             )
                         }
                     }
@@ -125,7 +132,7 @@ fun RecipesScreen(
                                         280.dp
                                     ),
                                 recipe = it,
-                                onClick = { onRecipeClick(it.id) }
+                                onClick = { onRecipeClicked(it.id) }
                             )
                         }
                     }
@@ -148,11 +155,14 @@ fun RecipesScreen(
                         contentPadding = PaddingValues(8.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        items(uiState.recipes) {
+                        items(uiState.recipes) { recipe ->
                             RecipeItem(
                                 modifier = Modifier.size(280.dp, 240.dp),
-                                recipe = it,
-                                onClick = { onRecipeClick(it.id) }
+                                recipe = recipe,
+                                onClick = { onRecipeClicked(it.id) },
+                                onAddToFavoritesClicked = { onAddToFavoritesClicked(recipe.id.toString()) },
+                                isFavorite = favorites.contains(recipe.id.toString())
+
                             )
                         }
                     }

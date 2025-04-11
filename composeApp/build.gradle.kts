@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -7,6 +6,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinSerialization)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -19,7 +19,7 @@ kotlin {
     listOf(
         iosX64(),
         //iosArm64(),
-        //iosSimulatorArm64()
+        iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
@@ -45,6 +45,7 @@ kotlin {
             implementation(project(":feature:recipes"))
             implementation(project(":feature:recipe_details"))
             implementation(project(":feature:cook_recipe"))
+            implementation(project(":feature:profile"))
 
             implementation(project(":core:network"))
             implementation(project(":core:data"))
@@ -65,10 +66,13 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.viewModel)
 
             implementation(libs.bundles.cupertino)
 
             implementation(libs.kermit)
+
+            implementation(libs.bundles.firebase)
 
 
         }

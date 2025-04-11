@@ -43,6 +43,6 @@ fun PreviewRecipeItem() {
                 updatedAt = 2981,
                 createdAt = 9103,
                 ratings = Triple(1, 2, 3.0)
-            ), onClick = {})
+            ), isFavorite = true, onClick = {}){}
     }
 }
