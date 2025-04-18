@@ -263,6 +263,7 @@ internal fun RecipeDetailsScreen(
                                             items(uiState.similarRecipes) {
                                                 RecipeItem(
                                                     recipe = it,
+                                                    isFavorite = false, //TODO
                                                     modifier = Modifier.size(
                                                         280.dp,
                                                         240.dp
