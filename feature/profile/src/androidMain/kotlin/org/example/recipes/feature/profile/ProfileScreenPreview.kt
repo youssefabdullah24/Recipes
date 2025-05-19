@@ -27,7 +27,9 @@ fun ProfileScreenPreview() {
                 ),
                 onUpdateProfileClicked = {},
                 onRecipeClicked = {},
-            ) { }
+                onLogOutClicked = {},
+                onAddToFavoritesClicked = {},
+            )
 
         }
     }

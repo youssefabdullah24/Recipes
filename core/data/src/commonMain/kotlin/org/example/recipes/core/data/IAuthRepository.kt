@@ -15,4 +15,6 @@ interface IAuthRepository {
         password: String,
         remember: Boolean
     ): Result<Unit>
+
+    suspend fun logout(): Result<Unit>
 }

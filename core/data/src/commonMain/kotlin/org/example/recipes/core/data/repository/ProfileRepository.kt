@@ -57,8 +57,8 @@ class ProfileRepository : IProfileRepository {
                 .firestore
                 .collection("Profiles")
                 .document(uid)
-            val favorites = doc.get().get<List<String>>("favorites")
-            if (favorites.contains(recipeId)) {
+            val favorites = doc.get().get<List<String>?>("favorites")
+            if (favorites != null && favorites.contains(recipeId)) {
                 doc.update(Pair("favorites", FieldValue.arrayRemove(recipeId)))
             } else {
                 doc.update(Pair("favorites", FieldValue.arrayUnion(recipeId)))

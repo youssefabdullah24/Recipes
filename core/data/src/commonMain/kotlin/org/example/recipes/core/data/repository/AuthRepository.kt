@@ -37,5 +37,13 @@ class AuthRepository(private val authService: IAuthService) : IAuthRepository {
         }
     }
 
+    override suspend fun logout(): Result<Unit> {
+        return try {
+            authService.logout()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
 }

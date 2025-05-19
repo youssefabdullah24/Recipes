@@ -1,6 +1,5 @@
 package org.example.recipes.core.network.auth
 
-import co.touchlab.kermit.Logger
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.flow.map
@@ -18,10 +17,11 @@ class AuthService : IAuthService {
     }
 
     override suspend fun signInUser(email: String, password: String) {
-        uid.collect {
-            Logger.d(tag="UID AUTH" , messageString = it.toString())
-        }
         Firebase.auth.signInWithEmailAndPassword(email, password)
+    }
+
+    override suspend fun logout() {
+        Firebase.auth.signOut()
     }
 
 

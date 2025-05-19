@@ -14,6 +14,8 @@ import org.example.recipes.core.model.Profile
 import org.example.recipes.core.model.Recipe
 
 data class ProfileUiState(
+    val isRegistrationLoading: Boolean = false,
+    val registrationError: String? = null,
     val isProfileLoading: Boolean = false,
     val profile: Profile? = null,
     val error: String? = null,
@@ -72,7 +74,7 @@ class ProfileViewModel(
                 }
             }.onFailure { throwable ->
                 Logger.e(
-                    tag = "CURRENT",
+                    tag = "getCurrentUser",
                     throwable = throwable,
                     messageString = throwable.message.toString()
                 )
@@ -119,7 +121,7 @@ class ProfileViewModel(
                 recipesRepository.getRecipe(it)
                     .onSuccess {
                         it.hasCooked = true
-                        if(profile.favorites.contains(it.id.toString())) it.isFavorite = true
+                        if (profile.favorites.contains(it.id.toString())) it.isFavorite = true
                         cookedList.add(it)
                     }.onFailure { throwable ->
                         _profileUiState.update {
@@ -160,22 +162,28 @@ class ProfileViewModel(
     }
 
     fun registerUser(profile: Profile, password: String) {
-        _profileUiState.update { it.copy(isProfileLoading = true) }
+        _profileUiState.update { it.copy(isRegistrationLoading = true) }
         viewModelScope.launch {
             val result = authRepository.registerUser(
                 email = profile.email, password = password
             )
             result.onSuccess {
-                uid.value?.let {
+                uid.value?.let { uid ->
                     val res = profileRepository.updateProfile(
-                        uid = it, profile = profile
+                        uid = uid, profile = profile
                     )
-                    res.onFailure { throwable ->
+                    res.onSuccess {
+                        getCurrentUser(uid)
+                        _profileUiState.update { it.copy(isRegistrationLoading = false) }
+                    }.onFailure { throwable ->
+                        Logger.e(messageString = throwable.message!!, throwable = throwable, tag = "registerUser")
                         _profileUiState.update {
                             it.copy(
-                                isProfileLoading = false, error = throwable.message
+                                isRegistrationLoading = false,
+                                registrationError = throwable.message
                             )
                         }
+
                     }
 
                 }
@@ -205,6 +213,18 @@ class ProfileViewModel(
                     )
                 }
             }
+
+        }
+    }
+
+    fun logOutUser() {
+        viewModelScope.launch {
+            authRepository.logout()
+                .onSuccess {
+
+                }.onFailure {
+
+                }
 
         }
     }

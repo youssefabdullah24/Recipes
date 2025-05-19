@@ -15,4 +15,6 @@ interface IAuthService {
         password: String,
     )
 
+    suspend fun logout()
+
 }

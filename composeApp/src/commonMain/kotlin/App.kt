@@ -27,12 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import co.touchlab.kermit.Logger
 import com.example.recipes.feature.cook_recipe.CookRecipeRoute
 import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
 import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
@@ -42,9 +44,11 @@ import kotlinx.serialization.json.Json
 import org.example.racipes.feature.recipes.RecipesRoute
 import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.model.Direction
+import org.example.recipes.core.model.Profile
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.feature.explore.ExploreRoute
 import org.example.recipes.feature.profile.ProfileRoute
+import org.example.recipes.feature.profile.RegisterScreen
 import org.example.recipes.feature.recipe_details.RecipeDetailsRoute
 import org.example.recipes.feature.search.SearchRoute
 import org.koin.compose.viewmodel.koinViewModel
@@ -91,7 +95,34 @@ fun App() {
                             navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
                         }, onUpdateProfileClicked = {
 
+                        }, onRegisterClicked = {
+                            navController.navigate(Route.RegisterScreenRoute.ROUTE)
                         })
+                }
+                composable(Route.RegisterScreenRoute.ROUTE) {
+                    RegisterScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        viewModel = profileViewModel,
+                        onRegisterClicked = { name, email, password ->
+                            profileViewModel.registerUser(
+                                Profile(name, email, null, emptyList(), emptyList()),
+                                password
+                            )
+                        }, onRegistered = {
+                            Logger.d(tag = "REGISTER", messageString = "onRegistered")
+                            navController.navigate(
+                                BottomNavigationItem.Profile.route,
+                                navOptions = NavOptions
+                                    .Builder()
+                                    .setPopUpTo(
+                                        route = BottomNavigationItem.Recipes.route,
+                                        inclusive = false,
+                                        saveState = false
+                                    )
+                                    .build()
+                            )
+                        }
+                    )
                 }
                 composable(Route.SearchScreenRoute.ROUTE) {
                     SearchRoute(
@@ -263,6 +294,16 @@ internal sealed class BottomNavigationItem(
 
 @Serializable
 sealed class Route(val name: String) {
+    @Serializable
+    data object LoginScreenRoute : Route("login") {
+        const val ROUTE = "login"
+    }
+
+    @Serializable
+    data object RegisterScreenRoute : Route("register") {
+        const val ROUTE = "register"
+    }
+
     @Serializable
     data object SearchScreenRoute : Route("search") {
         const val ROUTE = "search"
