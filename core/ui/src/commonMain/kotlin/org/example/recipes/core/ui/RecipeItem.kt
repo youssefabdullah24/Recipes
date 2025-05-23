@@ -32,20 +32,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
-import com.slapps.cupertino.adaptive.AdaptiveIconButton
-import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
 import compose.icons.fontawesomeicons.regular.User
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 
 
 @OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalAdaptiveApi::class,
-)
+    ExperimentalMaterialApi::class, ExperimentalAdaptiveApi::class,)
 @Composable
 fun RecipeItem(
     recipe: Recipe,

@@ -8,7 +8,6 @@ import org.example.recipes.feature.recipe_details.di.recipeDetailsModule
 import org.example.recipes.feature.search.di.searchModule
 import org.koin.core.context.startKoin
 
-// TODO: isolate injection in a dedicated module ex. "injector"
 fun initKoin() = startKoin {
     modules(
         networkModule,

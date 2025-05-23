@@ -66,7 +66,7 @@ kotlin {
 
             implementation(libs.viewmodel)
 
-           // implementation(libs.cupertino)
+            implementation(libs.cupertino.adaptive)
 
 
             implementation(libs.kermit)

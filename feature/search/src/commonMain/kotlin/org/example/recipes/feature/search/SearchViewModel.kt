@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
+import app.cash.paging.map
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -12,16 +13,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.update
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.Recipe
 
 
-sealed class SuggestionsState{
+sealed class SuggestionsState {
     data object Loading : SuggestionsState()
     data class Success(val suggestions: List<String>) : SuggestionsState()
     data class Error(val error: Throwable) : SuggestionsState()
@@ -29,6 +32,7 @@ sealed class SuggestionsState{
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() {
+    private val _favoriteIds = MutableStateFlow<Set<String>>(emptySet())
 
     private val _suggestionQueryFlow = MutableStateFlow("")
     val suggestionsQueryFlow: StateFlow<String> = _suggestionQueryFlow.asStateFlow()
@@ -38,6 +42,14 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
 
     private val _isActive = MutableStateFlow(true)
     val isActive = _isActive.asStateFlow()
+
+    fun setFavorites(favorites: List<String>) {
+        _favoriteIds.value = favorites.toSet()
+    }
+
+    fun toggleFavorite(id: String) {
+        _favoriteIds.update { if (it.contains(id)) it - id else it + id }
+    }
 
     fun suggestQueries(keyword: String) {
         _suggestionQueryFlow.value = keyword
@@ -53,11 +65,16 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
         .filter { it.isNotBlank() }
         .flatMapLatest {
             repository.getRecipesPage(it)
-        }.catch {
+        }.cachedIn(viewModelScope)
+        .combine(_favoriteIds) { pagingData, favorites ->
+            pagingData.map { item ->
+                item.copy(isFavorite = favorites.contains(item.id.toString()))
+            }
+        }
+        .catch {
             flowOf(PagingData.empty<Recipe>())
             Logger.e(it.stackTraceToString(), it)
         }
-        .cachedIn(viewModelScope)
 
     val suggestions: Flow<SuggestionsState> = suggestionsQueryFlow
         .debounce(2000L)
@@ -71,7 +88,6 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
                 SuggestionsState.Error(throwable)
             }
         }
-
 
 
     fun setIsActive(isActive: Boolean) {

@@ -23,7 +23,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -56,6 +55,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.example.recipes.core.model.Recipe
@@ -89,6 +90,7 @@ fun RecipeDetailsRoute(
     )
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 internal fun RecipeDetailsScreen(
     modifier: Modifier = Modifier,
@@ -123,9 +125,15 @@ internal fun RecipeDetailsScreen(
     }
     Box(modifier = modifier) {
         if (uiState.isRecipeLoading) {
-            CircularProgressIndicator(modifier = Modifier.size(48.dp).align(Alignment.Center))
+            AdaptiveCircularProgressIndicator(
+                modifier = Modifier.size(48.dp)
+                    .align(Alignment.Center)
+            )
         } else if (uiState.error != null) {
-            Text(text = uiState.error, modifier = Modifier.align(Alignment.Center))
+            Text(
+                text = uiState.error,
+                modifier = Modifier.align(Alignment.Center)
+            )
         } else {
             recipe?.let { recipe ->
                 AsyncImage(
@@ -239,7 +247,7 @@ internal fun RecipeDetailsScreen(
                                 .height(300.dp)
                         ) {
                             if (uiState.isSimilarRecipesLoading) {
-                                CircularProgressIndicator(
+                                AdaptiveCircularProgressIndicator(
                                     modifier = Modifier
                                         .size(48.dp)
                                         .align(Alignment.Center)
@@ -275,7 +283,7 @@ internal fun RecipeDetailsScreen(
                                                         }
 
                                                     }
-                                                ){}
+                                                ) {}
                                             }
                                         }
                                     }
@@ -305,6 +313,8 @@ internal fun RecipeDetailsScreen(
             }
         }
     }
+    // TODO: add reviews section from  "/tips/list" + paging
+
 }
 
 

@@ -93,31 +93,5 @@ fun ExploreScreen(
                 )
             }
         }
-
-        /*  item {
-              Text(
-                  text = "Popular Tags",
-                  modifier = Modifier.padding(16.dp),
-                  style = MaterialTheme.typography.h6
-              )
-          }
-          // TODO: display defined number of chips, adding to the end +Num
-          //  https://developer.android.com/develop/ui/compose/layouts/flow#lazy-flow
-          item {
-              FlowRow(
-                  modifier = Modifier
-                      .fillMaxWidth()
-                      .wrapContentHeight()
-                      .padding(horizontal = 16.dp),
-                  horizontalArrangement = Arrangement.spacedBy(8.dp),
-              ) {
-                  popularTags.forEach {
-                      ChipItem(
-                          modifier = Modifier.wrapContentSize(),
-                          title = it
-                      )
-                  }
-              }
-          }*/
     }
 }

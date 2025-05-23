@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
@@ -49,6 +50,7 @@ fun RecipesRoute(
     )
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun RecipesScreen(
     uiState: RecipesUiState,
@@ -59,7 +61,7 @@ fun RecipesScreen(
 ) {
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator(
+            AdaptiveCircularProgressIndicator(
                 modifier = Modifier
                     .size(64.dp)
                     .align(Alignment.Center)

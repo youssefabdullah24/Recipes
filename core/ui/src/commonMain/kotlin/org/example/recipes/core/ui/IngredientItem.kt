@@ -24,7 +24,6 @@ fun IngredientItem(
     ListItem(
         modifier = modifier,
         icon = {
-            // TODO
             AsyncImage(
                 modifier = Modifier
                     .size(32.dp)

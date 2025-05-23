@@ -9,10 +9,10 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.slapps.cupertino.CupertinoSearchTextField
-import com.slapps.cupertino.ExperimentalCupertinoApi
-import com.slapps.cupertino.adaptive.AdaptiveWidget
-import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
+import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveWidget
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 
 @OptIn(
     ExperimentalMaterial3Api::class,

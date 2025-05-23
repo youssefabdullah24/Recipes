@@ -13,7 +13,6 @@ import org.example.recipes.core.model.QuickSearchTag
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.network.IApiService
 
-// TODO: refactor and add UseCases
 class RecipesRepository(private val apiService: IApiService) : IRecipesRepository {
 
     override suspend fun getHomeRecipes(): List<Recipe> {

@@ -34,11 +34,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import co.touchlab.kermit.Logger
 import com.example.recipes.feature.cook_recipe.CookRecipeRoute
-import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
-import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
-import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.example.racipes.feature.recipes.RecipesRoute
@@ -63,6 +62,7 @@ fun App() {
         var isVisible by rememberSaveable { mutableStateOf(false) }
         val profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>()
         val profileUiState by profileViewModel.profileUiState.collectAsState()
+        val uid by profileViewModel.uid.collectAsState()
         val favorites = profileUiState.favorites
 
         LaunchedEffect(currentRoute) {
@@ -109,7 +109,6 @@ fun App() {
                                 password
                             )
                         }, onRegistered = {
-                            Logger.d(tag = "REGISTER", messageString = "onRegistered")
                             navController.navigate(
                                 BottomNavigationItem.Profile.route,
                                 navOptions = NavOptions
@@ -126,11 +125,19 @@ fun App() {
                 }
                 composable(Route.SearchScreenRoute.ROUTE) {
                     SearchRoute(
+                        favorites = favorites.map { it.id.toString() },
                         onRecipeClick = {
                             navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
                         },
                         onAddToFavoritesClicked = {
-                            profileViewModel.toggleFavoriteRecipe(it)
+                            if (uid == null) {
+
+                            } else {
+                                profileViewModel.toggleFavoriteRecipe(it)
+                            }
+                        },
+                        onBackPressed = {
+                            navController.navigateUp()
                         }
                     )
                 }
@@ -192,11 +199,12 @@ fun App() {
             }
             BottomNavigationBar(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                listOf(
+                topLevelDestinations = listOf(
                     BottomNavigationItem.Recipes,
                     BottomNavigationItem.Explore,
                     BottomNavigationItem.Profile
-                ), currentRoute
+                ),
+                currentRoute = currentRoute
             ) { route ->
                 navController.navigate(route) {
                     launchSingleTop = true
@@ -264,15 +272,23 @@ internal fun BottomNavigationBar(
     ) {
         AdaptiveNavigationBar {
             topLevelDestinations.forEach { item ->
+                // TODO: adaptive color
+                val selectedColor = if (currentRoute == item.route) accentColor() else Color.Unspecified
                 AdaptiveNavigationBarItem(
                     selected = currentRoute == item.route,
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.title
+                            contentDescription = item.title,
+                            tint = selectedColor
                         )
                     },
-                    label = { Text(text = item.title) },
+                    label = {
+                        Text(
+                            text = item.title,
+                            color = selectedColor
+                        )
+                    },
                     onClick = {
                         onNavigate(item.route)
                     }

@@ -50,9 +50,6 @@ kotlin {
 
             implementation(project(":core:ui"))
 
-            //     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
-            //  implementation("co.touchlab:stately-concurrent-collections:2.0.6")
-
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -73,7 +70,7 @@ kotlin {
 
             implementation(libs.viewmodel)
 
-            // implementation(libs.cupertino)
+            implementation(libs.cupertino.adaptive)
 
 
             implementation(libs.kermit)
