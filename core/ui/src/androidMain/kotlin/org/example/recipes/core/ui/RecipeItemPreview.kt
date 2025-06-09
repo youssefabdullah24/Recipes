@@ -3,7 +3,7 @@ package org.example.recipes.core.ui
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -42,7 +42,8 @@ fun PreviewRecipeItem() {
                 tags = listOf(),
                 updatedAt = 2981,
                 createdAt = 9103,
-                ratings = Triple(1, 2, 3.0)
+                ratings = Triple(1, 2, 3.0),
+                numServings = 0
             ), onClick = {}){}
     }
 }

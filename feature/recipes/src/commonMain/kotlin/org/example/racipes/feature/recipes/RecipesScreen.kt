@@ -26,10 +26,9 @@ import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
 import org.koin.compose.viewmodel.koinViewModel
 
-
 @Composable
 fun RecipesRoute(
-    recipesViewModel: RecipesViewModel = koinViewModel<RecipesViewModel>(),
+    recipesViewModel: RecipesViewModel = koinViewModel(),
     favorites: List<Recipe>,
     onRecipeClicked: (Int) -> Unit,
     onAddToFavoritesClicked: (String) -> Unit
@@ -38,15 +37,10 @@ fun RecipesRoute(
     recipesViewModel.submitFavoriteList(favorites)
 
     RecipesScreen(
-        modifier = Modifier.fillMaxSize()
-            .padding(bottom = 82.dp),
+        modifier = Modifier.fillMaxSize(),
         uiState = uiState,
-        //favorites = favorites,
         onRecipeClicked = onRecipeClicked,
-        onAddToFavoritesClicked ={
-            onAddToFavoritesClicked(it)
-
-        }
+        onAddToFavoritesClicked = onAddToFavoritesClicked
     )
 }
 
@@ -54,7 +48,6 @@ fun RecipesRoute(
 @Composable
 fun RecipesScreen(
     uiState: RecipesUiState,
-    //favorites: List<String>,
     onRecipeClicked: (Int) -> Unit,
     onAddToFavoritesClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -167,8 +160,8 @@ fun RecipesScreen(
                             onClick = { onRecipeClicked(it.id) },
                             onAddToFavoritesClicked = {
                                 onAddToFavoritesClicked(recipe.id.toString())
-                                                      },
-                            )
+                            },
+                        )
                     }
                 }
             }

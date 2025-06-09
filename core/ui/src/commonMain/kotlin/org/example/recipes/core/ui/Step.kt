@@ -25,9 +25,9 @@ fun Step(
         onClick = {
             onStepClick(stepNumber)
         },
-        modifier = modifier.alpha(if (isSelected) 1f else 0.5f),
+        modifier = modifier.alpha(if (isSelected) 1f else 0.2f),
         border = BorderStroke(
-            2.dp,
+            0.5.dp,
             Color.Black
         ),
         shape = RoundedCornerShape(percent = 100)

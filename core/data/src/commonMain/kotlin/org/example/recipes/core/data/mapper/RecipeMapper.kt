@@ -45,6 +45,7 @@ fun RecipeDto.toDomain(): Recipe {
         ingredients = component.map {
             Ingredient(
                 position = it.position ?: -1,
+                extraComment = it.extraComment ?: "",
                 measurement = Measurement(
                     name = if (it.measurements?.isNotEmpty() == true) it.measurements?.firstOrNull()?.measuringUnit?.name
                         ?: "" else "",
@@ -64,6 +65,7 @@ fun RecipeDto.toDomain(): Recipe {
             this.userRatings?.countPositive ?: -1,
             this.userRatings?.countNegative ?: -1,
             this.userRatings?.score ?: -1.0
-        )
+        ),
+        numServings = this.numServings ?: 0
     )
 }

@@ -18,7 +18,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.data.ProfileUiState
 import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.ui.ProfileHeader
@@ -191,6 +192,7 @@ fun RegisterScreen(
 }
 
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
@@ -201,11 +203,9 @@ fun ProfileScreen(
     onLogOutClicked:() -> Unit,
 
 ) {
-    Logger.d("ProfileScreen")
-    Logger.d("$profileUiState")
     if (profileUiState.isProfileLoading) {
         Box(modifier = modifier) {
-            CircularProgressIndicator(
+            AdaptiveCircularProgressIndicator(
                 modifier = Modifier
                     .size(48.dp)
                     .align(Alignment.Center)
@@ -215,8 +215,7 @@ fun ProfileScreen(
     if (profileUiState.error != null) {
         Box(modifier = modifier) {
             Text(
-                modifier = Modifier
-                    .align(Alignment.Center),
+                modifier = Modifier.align(Alignment.Center),
                 text = profileUiState.error.toString()
             )
         }

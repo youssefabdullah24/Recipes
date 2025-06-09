@@ -25,6 +25,7 @@ import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -42,6 +43,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SearchRoute(
+    quickSearchQuery: String?,
     favorites: List<String>,
     searchViewModel: SearchViewModel = koinViewModel(),
     onRecipeClick: (Int) -> Unit,
@@ -51,6 +53,7 @@ fun SearchRoute(
     searchViewModel.setFavorites(favorites)
     SearchScreen(
         searchViewModel,
+        quickSearchQuery,
         onRecipeClick,
         onBackPressed = onBackPressed,
     ) {
@@ -68,24 +71,32 @@ fun SearchRoute(
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
+    quickSearchQuery: String?,
     onRecipeClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
     onAddToFavoritesClicked: (String) -> Unit,
 ) {
+    LaunchedEffect(quickSearchQuery) {
+        if (quickSearchQuery != null) {
+            viewModel.setIsActive(false)
+            viewModel.searchRecipes(quickSearchQuery)
+        }
+    }
     val suggestionQuery by viewModel.suggestionsQueryFlow.collectAsState()
     val searchQuery by viewModel.searchQueryFlow.collectAsState()
     val suggestions by viewModel.suggestions.collectAsState(SuggestionsState.Loading)
     val isActive by viewModel.isActive.collectAsState()
     val recipes = viewModel.recipes.collectAsLazyPagingItems()
     val padding by animateDpAsState(if (isActive) 8.dp else 16.dp)
+
     Column(modifier = Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBackPressed) {
+            /*IconButton(onClick = onBackPressed) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back"
                 )
-            }
+            }*/
             AdaptiveWidget(
                 material = {
                     DockedSearchBar(
@@ -102,11 +113,11 @@ fun SearchScreen(
                                 onExpandedChange = { viewModel.setIsActive(it) },
                                 placeholder = { Text("Search") },
                                 trailingIcon = {
-                                    AnimatedVisibility(visible = isActive) {
+                                    AnimatedVisibility(visible = isActive && suggestionQuery.isNotBlank()) {
                                         IconButton(onClick = { viewModel.suggestQueries("") }) {
                                             Icon(
                                                 imageVector = Icons.Default.Clear,
-                                                contentDescription = "Clear"
+                                                contentDescription = "Clear search query"
                                             )
                                         }
                                     }
@@ -140,7 +151,7 @@ fun SearchScreen(
                             .padding(padding),
                     ) {
                         when (suggestions) {
-                            is SuggestionsState.Loading -> {
+                            SuggestionsState.Loading -> {
                                 if (suggestionQuery.isNotBlank()) {
                                     Box(modifier = Modifier.fillMaxSize()) {
                                         AdaptiveCircularProgressIndicator(
@@ -231,33 +242,32 @@ fun SearchScreen(
                         )
                     }
 
-                    recipes.apply {
-                        when (loadState.append) {
-                            is LoadState.Loading -> {
-                                item {
-                                    Box(modifier = Modifier.fillMaxWidth()) {
-                                        AdaptiveCircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                                    }
+                    when (recipes.loadState.append) {
+                        is LoadState.Loading -> {
+                            item {
+                                Box(modifier = Modifier.fillMaxWidth()) {
+                                    AdaptiveCircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                                 }
                             }
-
-                            is LoadState.Error -> {
-                                item {
-                                    Box(modifier = Modifier.fillMaxWidth().height(48.dp)
-                                    ) {
-                                        TextButton(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .align(Alignment.Center),
-                                            onClick = { recipes.retry() }) {
-                                            Text(text = "Failed to load, tap to retry")
-                                        }
-                                    }
-                                }
-                            }
-
-                            is LoadState.NotLoading -> {}
                         }
+
+                        is LoadState.Error -> {
+                            item {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().height(48.dp)
+                                ) {
+                                    TextButton(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .align(Alignment.Center),
+                                        onClick = { recipes.retry() }) {
+                                        Text(text = "Failed to load, tap to retry")
+                                    }
+                                }
+                            }
+                        }
+
+                        is LoadState.NotLoading -> {}
                     }
                 }
             }

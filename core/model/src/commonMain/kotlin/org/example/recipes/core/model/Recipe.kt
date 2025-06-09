@@ -21,4 +21,5 @@ data class Recipe(
     val ratings: Triple<Int, Int, Double>, // (positive, negative, score)
     var isFavorite: Boolean = false,
     var hasCooked: Boolean = false,
+    val numServings: Int
 )

@@ -60,6 +60,10 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
         _suggestionQueryFlow.value = newQuery
     }
 
+    fun setIsActive(isActive: Boolean) {
+        _isActive.value = isActive
+    }
+
     val recipes: Flow<PagingData<Recipe>> = searchQueryFlow
         .debounce(2000L)
         .filter { it.isNotBlank() }
@@ -80,19 +84,14 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
         .debounce(2000L)
         .filter { it.isNotBlank() }
         .mapLatest { query ->
-            try {
-                SuggestionsState.Loading
-                val suggestions = repository.getSuggestions(query)
-                SuggestionsState.Success(suggestions)
-            } catch (throwable: Throwable) {
-                SuggestionsState.Error(throwable)
+            SuggestionsState.Loading
+            repository.getSuggestions(query).onSuccess { suggestions ->
+                return@mapLatest SuggestionsState.Success(suggestions)
+            }.onFailure { throwable ->
+                return@mapLatest SuggestionsState.Error(throwable)
             }
+            return@mapLatest SuggestionsState.Error(Throwable())
         }
-
-
-    fun setIsActive(isActive: Boolean) {
-        _isActive.value = isActive
-    }
 
 }
 
