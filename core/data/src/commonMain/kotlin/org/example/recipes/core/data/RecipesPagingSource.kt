@@ -3,24 +3,23 @@ package org.example.recipes.core.data
 import androidx.paging.PagingState
 import app.cash.paging.PagingSource
 import app.cash.paging.PagingSourceLoadResultPage
-import org.example.recipes.core.network.IApiService
-import org.example.recipes.core.network.model.RecipeDto
+import org.example.recipes.core.network.model.PagingResponse
+import kotlin.reflect.KSuspendFunction3
 
-class RecipesPagingSource(
-    private val apiService: IApiService,
+class RecipesPagingSource<T : Any>(
+    private val func: KSuspendFunction3<String, Int, Int, PagingResponse<T>>,
     private val query: String
-) : PagingSource<Int, RecipeDto>() {
+) : PagingSource<Int, T>() {
 
-    override fun getRefreshKey(state: PagingState<Int, RecipeDto>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, T>): Int? {
         return state.anchorPosition
     }
 
-    // from: 0, 0+size .... until count
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RecipeDto> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         val from = params.key ?: 0
         val limit = params.loadSize
         return try {
-            val response = apiService.getRecipesPage(query, from, limit)
+            val response = func(query, from, limit)
             PagingSourceLoadResultPage(
                 data = response.results ?: emptyList(),
                 prevKey = if (from == 0) null else from - limit,

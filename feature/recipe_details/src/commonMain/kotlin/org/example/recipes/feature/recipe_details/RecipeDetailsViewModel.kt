@@ -9,13 +9,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.Recipe
+import org.example.recipes.core.model.Tip
 
 
 data class RecipeDetailsUiState(
     val isSimilarRecipesLoading: Boolean = true,
     val isRecipeLoading: Boolean = true,
+    val areTipsLoading: Boolean = true,
     val recipe: Recipe? = null,
     val similarRecipes: List<Recipe> = emptyList(),
+    val recipeTips: List<Tip> = emptyList(),
     val error: String? = null,
 )
 
@@ -24,6 +27,12 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
     val uiState = _uiState.asStateFlow()
 
     fun getRecipeDetails(recipeId: String) {
+        fetchRecipeDetails(recipeId)
+        fetchSimilarRecipes(recipeId)
+        fetchRecipeTips(recipeId)
+    }
+
+    private fun fetchRecipeDetails(recipeId: String) {
         _uiState.update { it.copy(isRecipeLoading = true) }
         viewModelScope.launch {
             val result = repo.getRecipe(recipeId)
@@ -48,26 +57,58 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                 }
             }
         }
+    }
+
+    private fun fetchSimilarRecipes(recipeId: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isSimilarRecipesLoading = true) }
-            try {
-                val recipes = repo.getSimilarRecipes(recipeId)
+            repo.getSimilarRecipes(recipeId).onSuccess { recipes ->
                 _uiState.update {
                     it.copy(
                         isSimilarRecipesLoading = false,
                         similarRecipes = recipes,
                     )
                 }
-            } catch (e: Exception) {
-                e.message?.let { message ->
-                    _uiState.update {
-                        it.copy(
-                            isSimilarRecipesLoading = false,
-                            error = message
-                        )
-                    }
+            }.onFailure { throwable ->
+                Logger.e(
+                    tag = "RecipeDetailsViewModel@fetchSimilarRecipes",
+                    throwable = throwable,
+                    messageString = throwable.message.toString()
+                )
+                _uiState.update {
+                    it.copy(
+                        isSimilarRecipesLoading = false,
+                        error = throwable.message
+                    )
                 }
             }
+        }
+    }
+
+    private fun fetchRecipeTips(recipeId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(areTipsLoading = true) }
+            repo.getRecipeTips(recipeId).onSuccess { tips ->
+                _uiState.update {
+                    it.copy(
+                        areTipsLoading = false,
+                        recipeTips = tips,
+                    )
+                }
+            }.onFailure { throwable ->
+                Logger.e(
+                    tag = "RecipeDetailsViewModel@fetchRecipeTips",
+                    throwable = throwable,
+                    messageString = throwable.message.toString()
+                )
+                _uiState.update {
+                    it.copy(
+                        isSimilarRecipesLoading = false,
+                        error = throwable.message
+                    )
+                }
+            }
+
         }
     }
 }

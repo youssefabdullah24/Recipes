@@ -1,10 +1,9 @@
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -14,18 +13,24 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavOptions
 import androidx.navigation.NavType
@@ -34,10 +39,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.recipes.feature.cook_recipe.CookRecipeRoute
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.example.racipes.feature.recipes.RecipesRoute
@@ -45,17 +52,22 @@ import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.model.Direction
 import org.example.recipes.core.model.Profile
 import org.example.recipes.core.model.Recipe
+import org.example.recipes.feature.cook_recipe.CookRecipeRoute
 import org.example.recipes.feature.explore.ExploreRoute
 import org.example.recipes.feature.profile.ProfileRoute
 import org.example.recipes.feature.profile.RegisterScreen
 import org.example.recipes.feature.recipe_details.RecipeDetailsRoute
+import org.example.recipes.feature.recipe_reviews.RecipeReviewsRoute
 import org.example.recipes.feature.search.SearchRoute
 import org.koin.compose.viewmodel.koinViewModel
 
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun App() {
     AppTheme {
+        var appBarTitle by rememberSaveable { mutableStateOf<String?>(null) }
+        var appBarShowBackground by rememberSaveable { mutableStateOf(false) }
         val navController = rememberNavController()
         val navStack by navController.currentBackStackEntryAsState()
         val currentRoute = navStack?.destination?.route
@@ -64,154 +76,230 @@ fun App() {
         val profileUiState by profileViewModel.profileUiState.collectAsState()
         val uid by profileViewModel.uid.collectAsState()
         val favorites = profileUiState.favorites
+        val snackbarHostState = remember { SnackbarHostState() }
+        val scope = rememberCoroutineScope()
 
         LaunchedEffect(currentRoute) {
             isVisible = !isTopLevelDestination(currentRoute)
         }
-        Box(modifier = Modifier.fillMaxSize()) {
-            NavHost(
-                navController = navController,
-                startDestination = BottomNavigationItem.Recipes.route
-            ) {
-                composable(BottomNavigationItem.Recipes.route) {
-                    RecipesRoute(
-                        favorites = favorites,
-                        onRecipeClicked = {
-                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
-                        }, onAddToFavoritesClicked = {
-                            profileViewModel.toggleFavoriteRecipe(it)
-                        }
-                    )
-                }
-                composable(BottomNavigationItem.Explore.route) {
-                    ExploreRoute {
-                        navController.navigate(Route.SearchScreenRoute.ROUTE)
+        AdaptiveScaffold(
+            containerColor = Color.Transparent,
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
+            bottomBar = {
+                BottomNavigationBar(
+                    topLevelDestinations = listOf(
+                        BottomNavigationItem.Recipes,
+                        BottomNavigationItem.Explore,
+                        BottomNavigationItem.Profile
+                    ),
+                    currentRoute = currentRoute
+                ) { route ->
+                    navController.navigate(route) {
+                        launchSingleTop = true
+                        restoreState = true
+                        popUpTo(navController.graph.startDestinationRoute!!) { saveState = true }
                     }
                 }
-                composable(BottomNavigationItem.Profile.route) {
-                    ProfileRoute(
-                        viewModel = profileViewModel,
-                        onRecipeClicked = {
-                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
-                        }, onUpdateProfileClicked = {
-
-                        }, onRegisterClicked = {
-                            navController.navigate(Route.RegisterScreenRoute.ROUTE)
-                        })
-                }
-                composable(Route.RegisterScreenRoute.ROUTE) {
-                    RegisterScreen(
-                        modifier = Modifier.fillMaxSize(),
-                        viewModel = profileViewModel,
-                        onRegisterClicked = { name, email, password ->
-                            profileViewModel.registerUser(
-                                Profile(name, email, null, emptyList(), emptyList()),
-                                password
-                            )
-                        }, onRegistered = {
-                            navController.navigate(
-                                BottomNavigationItem.Profile.route,
-                                navOptions = NavOptions
-                                    .Builder()
-                                    .setPopUpTo(
-                                        route = BottomNavigationItem.Recipes.route,
-                                        inclusive = false,
-                                        saveState = false
-                                    )
-                                    .build()
-                            )
-                        }
-                    )
-                }
-                composable(Route.SearchScreenRoute.ROUTE) {
-                    SearchRoute(
-                        favorites = favorites.map { it.id.toString() },
-                        onRecipeClick = {
-                            navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
-                        },
-                        onAddToFavoritesClicked = {
-                            if (uid == null) {
-
-                            } else {
-                                profileViewModel.toggleFavoriteRecipe(it)
+            }
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = it.calculateBottomPadding())
+            ) {
+                NavHost(
+                    navController = navController,
+                    startDestination = BottomNavigationItem.Recipes.route
+                ) {
+                    composable(BottomNavigationItem.Recipes.route) {
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        RecipesRoute(
+                            favorites = favorites,
+                            onRecipeClicked = {
+                                navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
+                            }, onAddToFavoritesClicked = { recipeId ->
+                                if (uid == null) {
+                                    showSnackBar(snackbarHostState, scope, "Please login first.")
+                                } else {
+                                    profileViewModel.toggleFavoriteRecipe(recipeId)
+                                }
                             }
-                        },
-                        onBackPressed = {
-                            navController.navigateUp()
-                        }
-                    )
-                }
-                composable(
-                    route = Route.RecipeDetailsScreenRoute.ROUTE,
-                    arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
-                ) { backStackEntry ->
-                    val recipeId = backStackEntry.arguments?.getInt("recipeId")!!
-                    RecipeDetailsRoute(
-                        modifier = Modifier.fillMaxSize(),
-                        recipeId = recipeId.toString(),
-                        onRecipeClick = { navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it.id)) },
-                        onCookRecipeClick = { navController.navigate(Route.CookRecipeScreenRoute.createRoute(it)) },
-                        onSaveRecipeClick = { }
-                    )
-                }
-                composable(
-                    route = Route.CookRecipeScreenRoute.ROUTE,
-                    arguments = listOf(
-                        navArgument("recipeId") { type = NavType.StringType },
-                        navArgument("recipeVideoUrl") {
+                        )
+                    }
+                    composable(BottomNavigationItem.Explore.route) {
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        ExploreRoute(
+                            onNavigate = {
+                                navController.navigate(Route.SearchScreenRoute.ROUTE)
+                            },
+                            onQuickSearchItemClick = {
+                                navController.navigate(Route.SearchScreenRoute.createRoute(it))
+                            })
+                    }
+                    composable(BottomNavigationItem.Profile.route) {
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        ProfileRoute(
+                            viewModel = profileViewModel,
+                            onRecipeClicked = {
+                                navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
+                            }, onUpdateProfileClicked = {
+
+                            }, onRegisterClicked = {
+                                navController.navigate(Route.RegisterScreenRoute.ROUTE)
+                            })
+                    }
+                    composable(Route.RegisterScreenRoute.ROUTE) {
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        RegisterScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            viewModel = profileViewModel,
+                            onRegisterClicked = { name, email, password ->
+                                profileViewModel.registerUser(
+                                    Profile(name, email, null, emptyList(), emptyList()),
+                                    password
+                                )
+                            }, onRegistered = {
+                                navController.navigate(
+                                    BottomNavigationItem.Profile.route,
+                                    navOptions = NavOptions
+                                        .Builder()
+                                        .setPopUpTo(
+                                            route = BottomNavigationItem.Recipes.route,
+                                            inclusive = false,
+                                            saveState = false
+                                        )
+                                        .build()
+                                )
+                            }
+                        )
+                    }
+                    composable(
+                        Route.SearchScreenRoute.ROUTE,
+                        arguments = listOf(navArgument("query") {
                             type = NavType.StringType
                             nullable = true
-                        },
-                        navArgument("recipeDirections") { type = NavType.StringType }
-                    )
-                ) { backStackEntry ->
-                    val id = backStackEntry.arguments?.getString("recipeId")
-                    val videoUrl = backStackEntry.arguments?.getString("recipeVideoUrl")
-                    val directionsJson =
-                        backStackEntry.arguments?.getString("recipeDirections")!!
-                    val directions = Json.decodeFromString<List<Direction>>(directionsJson)
-                    CookRecipeRoute(
-                        modifier = Modifier.fillMaxSize(),
-                        videoUrl = videoUrl,
-                        directions = directions,
-                        onFinishCooking = {
-                            navController.navigate(BottomNavigationItem.Recipes.route)
-                            profileViewModel.addToCookedRecipes(id!!)
-                        }
-                    )
+                            defaultValue = null
+                        })
+                    ) {
+                        //TODO: fix
+                        val query = if (it.arguments?.getString("query") == "{query}")
+                            null
+                        else
+                            it.arguments?.getString("query")
+
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        SearchRoute(
+                            quickSearchQuery = query,
+                            favorites = favorites.map { it.id.toString() },
+                            onRecipeClick = {
+                                navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it))
+                            },
+                            onAddToFavoritesClicked = {
+                                if (uid == null) {
+                                    showSnackBar(snackbarHostState, scope, "Please login first.")
+                                } else {
+                                    profileViewModel.toggleFavoriteRecipe(it)
+                                }
+                            },
+                            onBackPressed = {
+                                navController.navigateUp()
+                            }
+                        )
+                    }
+                    composable(
+                        route = Route.RecipeDetailsScreenRoute.ROUTE,
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val recipeId = backStackEntry.arguments?.getInt("recipeId")?.toString()!!
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        RecipeDetailsRoute(
+                            modifier = Modifier.fillMaxSize(),
+                            recipeId = recipeId,
+                            favorites = favorites.map { it.id.toString() },
+                            onRecipeClick = { navController.navigate(Route.RecipeDetailsScreenRoute.createRoute(it.id)) },
+                            onCookRecipeClick = { navController.navigate(Route.CookRecipeScreenRoute.createRoute(it)) },
+                            onViewAllReviewsClicked = { id, name ->
+                                navController.navigate(Route.RecipeReviewsScreenRoute.createRoute(id, name))
+                            }, onSaveRecipeClick = { recipe ->
+                                if (uid == null) {
+                                    showSnackBar(snackbarHostState, scope, "Please login first.")
+                                } else {
+                                    profileViewModel.toggleFavoriteRecipe(recipe)
+                                }
+                            }
+                        )
+                    }
+                    composable(
+                        route = Route.RecipeReviewsScreenRoute.ROUTE,
+                        arguments = listOf(
+                            navArgument("recipeId") { type = NavType.StringType },
+                            navArgument("recipeName") { type = NavType.StringType }
+                        )
+                    ) {
+                        val recipeName = it.arguments?.getString("recipeName")!!
+                        val recipeId = it.arguments?.getString("recipeId")!!
+                        appBarTitle = "$recipeName Reviews"
+                        appBarShowBackground = true
+
+                        RecipeReviewsRoute(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 56.dp),
+                            recipeName = recipeName,
+                            recipeId = recipeId
+                        )
+                    }
+                    composable(
+                        route = Route.CookRecipeScreenRoute.ROUTE,
+                        arguments = listOf(
+                            navArgument("recipeId") { type = NavType.StringType },
+                            navArgument("recipeVideoUrl") {
+                                type = NavType.StringType
+                                nullable = true
+                            },
+                            navArgument("recipeDirections") { type = NavType.StringType }
+                        )
+                    ) { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString("recipeId")
+                        val videoUrl = backStackEntry.arguments?.getString("recipeVideoUrl")
+                        val directionsJson = backStackEntry.arguments?.getString("recipeDirections")!!
+                        val directions = Json.decodeFromString<List<Direction>>(directionsJson)
+                        appBarTitle = ""
+                        appBarShowBackground = false
+                        CookRecipeRoute(
+                            modifier = Modifier.fillMaxSize(),
+                            videoUrl = videoUrl,
+                            directions = directions,
+                            onFinishCooking = {
+                                navController.navigate(BottomNavigationItem.Recipes.route)
+                                profileViewModel.addToCookedRecipes(id!!)
+                            }
+                        )
+                    }
                 }
-            }
-            //TODO: improve
-            AnimatedVisibility(
-                visible = isVisible,
-                enter = fadeIn() + slideInHorizontally(initialOffsetX = { -it }),
-                exit = fadeOut() + slideOutHorizontally(targetOffsetX = { -it })
-            ) {
-                if (currentRoute != Route.SearchScreenRoute.name) {
+                //TODO: improve
+                AnimatedVisibility(
+                    visible = isVisible && currentRoute != Route.SearchScreenRoute.ROUTE,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
                     AppBar(
-                        modifier = Modifier.align(Alignment.TopCenter),
+                        title = appBarTitle,
+                        showBackground = appBarShowBackground,
                         onBackPressed = {
                             navController.navigateUp()
-                        }, onOptionIconClicked = {
+                        }, onOptionIconClicked = {})
+                }
+            }
 
-                        })
-                }
-            }
-            BottomNavigationBar(
-                modifier = Modifier.align(Alignment.BottomCenter),
-                topLevelDestinations = listOf(
-                    BottomNavigationItem.Recipes,
-                    BottomNavigationItem.Explore,
-                    BottomNavigationItem.Profile
-                ),
-                currentRoute = currentRoute
-            ) { route ->
-                navController.navigate(route) {
-                    launchSingleTop = true
-                    restoreState = true
-                    popUpTo(navController.graph.startDestinationRoute!!) { saveState = true }
-                }
-            }
         }
     }
 }
@@ -232,23 +320,39 @@ internal fun isTopLevelDestination(route: String?): Boolean {
 @Composable
 internal fun AppBar(
     modifier: Modifier = Modifier,
+    title: String?,
+    showBackground: Boolean,
     onBackPressed: () -> Unit,
     onOptionIconClicked: (Int) -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
         elevation = 0.dp,
-        backgroundColor = Color.Transparent,
-        title = {},
+        backgroundColor = if (showBackground) Color.White else Color.Transparent,
+        title = {
+            title?.let {
+                Text(
+                    text = it,
+                    textAlign = TextAlign.Center
+                )
+            }
+        },
         navigationIcon = {
-            IconButton(onClick = onBackPressed) {
+            FilledIconButton(
+                onClick = onBackPressed,
+                colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.White)
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = "Navigate Back"
                 )
             }
         }, actions = {
-            IconButton(onClick = { onOptionIconClicked(0) }) {
+            FilledIconButton(
+                onClick = { onOptionIconClicked(0) },
+                colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.White)
+
+            ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "REPLACE"
@@ -272,7 +376,6 @@ internal fun BottomNavigationBar(
     ) {
         AdaptiveNavigationBar {
             topLevelDestinations.forEach { item ->
-                // TODO: adaptive color
                 val selectedColor = if (currentRoute == item.route) accentColor() else Color.Unspecified
                 AdaptiveNavigationBarItem(
                     selected = currentRoute == item.route,
@@ -322,7 +425,10 @@ sealed class Route(val name: String) {
 
     @Serializable
     data object SearchScreenRoute : Route("search") {
-        const val ROUTE = "search"
+        const val ROUTE = "search?q={query}"
+        fun createRoute(query: String): String {
+            return "search?q=${query}"
+        }
     }
 
     @Serializable
@@ -333,6 +439,13 @@ sealed class Route(val name: String) {
         }
     }
 
+    @Serializable
+    data object RecipeReviewsScreenRoute : Route("recipe_reviews") {
+        const val ROUTE = "recipe_reviews?recipeId={recipeId}&recipeName={recipeName}"
+        fun createRoute(recipeId: String, recipeName: String): String {
+            return "recipe_reviews?recipeId=${recipeId}&recipeName=${recipeName}"
+        }
+    }
 
     @Serializable
     data object CookRecipeScreenRoute : Route("cook_recipe") {
@@ -346,3 +459,16 @@ sealed class Route(val name: String) {
     }
 }
 
+// TODO: handle actions
+fun showSnackBar(
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope,
+    message: String
+) {
+    scope.launch {
+        snackbarHostState.showSnackbar(
+            message = message,
+            duration = SnackbarDuration.Short
+        )
+    }
+}

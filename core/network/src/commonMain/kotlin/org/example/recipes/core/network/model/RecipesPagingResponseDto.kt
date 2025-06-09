@@ -5,9 +5,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RecipesResponseDto(
+data class RecipesPagingResponseDto(
     @SerialName("count")
-    val count: Int? = 0,
+    override val count: Int,
     @SerialName("results")
-    val results: List<RecipeDto>? = listOf()
-)
+    override val results: List<RecipeDto>
+) : PagingResponse<RecipeDto>

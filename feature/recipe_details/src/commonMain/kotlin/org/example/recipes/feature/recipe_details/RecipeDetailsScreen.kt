@@ -29,6 +29,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -63,28 +64,33 @@ import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.IngredientItem
 import org.example.recipes.core.ui.InstructionItem
 import org.example.recipes.core.ui.RecipeItem
+import org.example.recipes.core.ui.ReviewCard
 import org.koin.compose.viewmodel.koinViewModel
 
+//TODO: just pass the recipe to save api requests & loading time
 @Composable
 fun RecipeDetailsRoute(
     recipeId: String,
     modifier: Modifier = Modifier,
+    favorites: List<String>,
     viewModel: RecipeDetailsViewModel = koinViewModel<RecipeDetailsViewModel>(),
     onRecipeClick: (Recipe) -> Unit,
+    onViewAllReviewsClicked: (recipeId: String, recipeName: String) -> Unit,
     onCookRecipeClick: (Recipe) -> Unit,
-    onSaveRecipeClick: (Recipe) -> Unit
+    onSaveRecipeClick: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     if (uiState.recipe == null) {
         LaunchedEffect(recipeId) {
             viewModel.getRecipeDetails(recipeId)
-            //viewModel.getSimilarRecipes(recipeId)
         }
     }
     RecipeDetailsScreen(
-        modifier,
-        uiState,
+        modifier = modifier,
+        uiState = uiState,
+        favorites = favorites,
         onRecipeClick = onRecipeClick,
+        onViewAllReviewsClicked = onViewAllReviewsClicked,
         onSaveRecipeClick = onSaveRecipeClick,
         onCookRecipeClick = onCookRecipeClick,
     )
@@ -95,8 +101,10 @@ fun RecipeDetailsRoute(
 internal fun RecipeDetailsScreen(
     modifier: Modifier = Modifier,
     uiState: RecipeDetailsUiState,
+    favorites: List<String>,
     onRecipeClick: (Recipe) -> Unit,
-    onSaveRecipeClick: (Recipe) -> Unit,
+    onViewAllReviewsClicked: (recipeId: String, recipeName: String) -> Unit,
+    onSaveRecipeClick: (String) -> Unit,
     onCookRecipeClick: (Recipe) -> Unit,
 ) {
     val recipe = uiState.recipe
@@ -180,12 +188,17 @@ internal fun RecipeDetailsScreen(
                                 maxLines = 1,
                                 fontWeight = FontWeight.Bold,
                                 overflow = TextOverflow.Ellipsis,
-                                fontSize = 16.sp,
+                                fontSize = 18.sp,
                                 color = Color.Black
                             )
-                            Text(text = recipe.type + " / " + recipe.duration)
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
+                                fontSize = 14.sp,
+                                text = recipe.type + " / " + recipe.duration
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                modifier = Modifier.align(Alignment.Start),
                                 text = buildAnnotatedString {
                                     withStyle(
                                         style = SpanStyle(
@@ -193,18 +206,14 @@ internal fun RecipeDetailsScreen(
                                             fontSize = 18.sp
                                         )
                                     ) {
-                                        append("Ingredients")
+                                        append("Ingredients   ")
                                     }
-                                    withStyle(
-                                        style = SpanStyle(
-                                            fontSize = 14.sp
-                                        )
-                                    ) {
-                                        append(" ${recipe.servings} Serves")
+                                    withStyle(style = SpanStyle(fontSize = 14.sp)) {
+                                        append("${recipe.numServings} Serves")
                                     }
                                 }
                             )
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(modifier = Modifier.height(8.dp))
                             recipe.ingredients.forEach {
                                 IngredientItem(
                                     modifier = Modifier
@@ -215,6 +224,7 @@ internal fun RecipeDetailsScreen(
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
+                                modifier = Modifier.align(Alignment.Start),
                                 text = buildAnnotatedString {
                                     withStyle(
                                         style = SpanStyle(
@@ -222,14 +232,10 @@ internal fun RecipeDetailsScreen(
                                             fontSize = 18.sp
                                         )
                                     ) {
-                                        append("Directions")
+                                        append("Directions   ")
                                     }
-                                    withStyle(
-                                        style = SpanStyle(
-                                            fontSize = 14.sp
-                                        )
-                                    ) {
-                                        append(" $totalSteps steps")
+                                    withStyle(style = SpanStyle(fontSize = 14.sp)) {
+                                        append("$totalSteps steps")
                                     }
                                 }
                             )
@@ -270,7 +276,7 @@ internal fun RecipeDetailsScreen(
                                         ) {
                                             items(uiState.similarRecipes) {
                                                 RecipeItem(
-                                                    recipe = it,
+                                                    recipe = it.copy(isFavorite = favorites.contains(it.id.toString())),
                                                     modifier = Modifier.size(
                                                         280.dp,
                                                         240.dp
@@ -282,8 +288,9 @@ internal fun RecipeDetailsScreen(
                                                             listState.animateScrollToItem(0)
                                                         }
 
-                                                    }
-                                                ) {}
+                                                    },
+                                                    onAddToFavoritesClicked = onSaveRecipeClick
+                                                )
                                             }
                                         }
                                     }
@@ -292,10 +299,47 @@ internal fun RecipeDetailsScreen(
                         }
                     }
                     item {
-                        Spacer(modifier = Modifier.height(52.dp))
-                    }
-                }
+                        if (uiState.recipeTips.isNotEmpty()) {
+                            Column(modifier = Modifier.wrapContentSize()) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "Reviews",
+                                        modifier = Modifier.padding(
+                                            start = 16.dp,
+                                        ),
+                                        style = MaterialTheme.typography.h6
+                                    )
+                                    TextButton(onClick = { onViewAllReviewsClicked(recipe.id.toString(), recipe.title) }) {
+                                        Text(text = "View all")
+                                    }
 
+                                }
+
+                                LazyRow(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentPadding = PaddingValues(horizontal = 8.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                                ) {
+                                    items(uiState.recipeTips) {
+                                        ReviewCard(
+                                            modifier = Modifier.height(160.dp).width(240.dp),
+                                            tip = it
+                                        ) {
+
+                                        }
+                                    }
+                                }
+                                Spacer(modifier = Modifier.padding(vertical = 48.dp))
+                            }
+
+                        }
+                    }
+
+                }
                 AnimatedVisibility(
                     visible = shouldShowBottomTab,
                     modifier = Modifier.align(Alignment.BottomEnd),
@@ -304,23 +348,20 @@ internal fun RecipeDetailsScreen(
                         modifier = Modifier.fillMaxWidth()
                             .wrapContentHeight()
                             .padding(16.dp),
-                        onSaveRecipeClick = {
-                            onSaveRecipeClick(recipe)
-                        }, onCookRecipeClick = {
-                            onCookRecipeClick(recipe)
-                        })
+                        isFavorite = favorites.contains(recipe.id.toString()),
+                        onSaveRecipeClick = { onSaveRecipeClick(recipe.id.toString()) },
+                        onCookRecipeClick = { onCookRecipeClick(recipe) })
                 }
             }
         }
     }
-    // TODO: add reviews section from  "/tips/list" + paging
-
 }
 
 
 @Composable
 fun BoxScope.BottomTab(
     modifier: Modifier,
+    isFavorite: Boolean,
     onSaveRecipeClick: () -> Unit,
     onCookRecipeClick: () -> Unit
 ) {
@@ -334,7 +375,7 @@ fun BoxScope.BottomTab(
                 .height(48.dp),
             onClick = onSaveRecipeClick
         ) {
-            Text(text = "Save")
+            Text(text = if (isFavorite) "Unfavorite" else "Favorite")
         }
         Spacer(modifier = Modifier.width(16.dp))
         ElevatedButton(
