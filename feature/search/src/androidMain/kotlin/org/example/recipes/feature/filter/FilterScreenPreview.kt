@@ -1,4 +1,4 @@
-package com.example.recipes.feature.filter
+package org.example.recipes.feature.filter
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface

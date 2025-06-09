@@ -1,4 +1,4 @@
-package com.example.recipes.feature.cook_recipe
+package org.example.recipes.feature.cook_recipe
 
 import androidx.lifecycle.ViewModel
 

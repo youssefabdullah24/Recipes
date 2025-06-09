@@ -1,5 +1,3 @@
-package com.example.recipes.feaure.explore
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

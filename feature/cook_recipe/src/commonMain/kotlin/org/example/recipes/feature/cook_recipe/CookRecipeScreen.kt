@@ -1,9 +1,10 @@
-package com.example.recipes.feature.cook_recipe
+package org.example.recipes.feature.cook_recipe
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,16 +18,16 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Card
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.example.recipes.core.model.Direction
@@ -75,20 +77,28 @@ internal fun CookRecipeScreen(
                     .fillMaxWidth()
                     .fillMaxHeight(0.5f),
                 seekTo = seekTo,
-                url = it,
-            ) {
+                url = it
+            ) { progress ->
+                directions.forEach {
+                    if (progress >= it.startTime && progress < it.endTime) {
+                        currentDirection = it
+                    }
+                }
+                currentStep = currentDirection.position
             }
         }
-        Card(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.5f)
                 .align(Alignment.BottomCenter),
-            shape = RoundedCornerShape(16.dp)
         ) {
             Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "Step $currentStep"
+                text = "Step $currentStep",
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(16.dp),
+                style = MaterialTheme.typography.headlineMedium
             )
             LazyRow(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -127,43 +137,57 @@ internal fun CookRecipeScreen(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            AnimatedVisibility(currentStep > 1) {
-                Row(modifier = Modifier.weight(0.25f)) {
-                    ElevatedButton(
-                        onClick = { currentStep-- },
-                        modifier = Modifier
-                            .height(48.dp)
-                    ) {
-                        Icon(
-                            modifier = Modifier.height(24.dp),
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Previous Step"
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Previous")
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
+            AnimatedVisibility(
+                modifier = Modifier.weight(0.5f),
+                visible = currentStep > 1
+            ) {
+                ElevatedButton(
+                    onClick = {
+                        currentStep--
+                        currentDirection = directions[currentStep - 1]
+                        seekTo = directions[currentStep - 1].startTime.toDouble()
+                    },
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                    modifier = Modifier.height(48.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier.height(24.dp),
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Previous Step"
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "Previous")
                 }
             }
 
             ElevatedButton(
                 modifier = Modifier
-                    .weight(0.75f)
+                    .weight(0.5f)
                     .height(48.dp),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                 onClick = {
-                    if (currentStep < lastStep) currentStep++ else {
+                    if (currentStep < lastStep) {
+                        currentStep++
+                        currentDirection = directions[currentStep - 1]
+                        seekTo = directions[currentStep - 1].startTime.toDouble()
+
+                    } else {
                         onFinishCooking()
                     }
                 }
             ) {
-                Text(text = if (currentStep == lastStep) "Finish Cook" else "Next Step")
+                Text(
+                    color = Color.White,
+                    text = if (currentStep == lastStep) "Finish Cooking" else "Next Step"
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
                     modifier = Modifier.height(24.dp),
+                    tint = Color.White,
                     imageVector = if (currentStep == lastStep) Icons.Default.Check else Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Next Step"
+                    contentDescription = if (currentStep == lastStep) "Finish Cooking" else "Next Step"
                 )
             }
         }
