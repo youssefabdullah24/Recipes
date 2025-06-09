@@ -9,6 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -28,24 +32,36 @@ fun IngredientItem(
                 modifier = Modifier
                     .size(32.dp)
                     .clip(CircleShape),
-                model = ingredient.name,
+                model = ingredient.name, //TODO
                 contentDescription = ingredient.name,
                 contentScale = ContentScale.FillBounds
             )
         },
         text = {
             Text(
-                text = ingredient.name,
-                style = MaterialTheme.typography.h6,
-                fontSize = 18.sp
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )){
+                        append(ingredient.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() })
+                    }
+                    withStyle(style = SpanStyle(
+                        fontSize = 14.sp,
+                    )){
+                        append("   ${ingredient.extraComment}")
+                    }
+                },
             )
         },
         trailing = {
-            Text(
-                text = ingredient.measurement.quantity,
-                style = MaterialTheme.typography.body2,
-                fontSize = 14.sp
-            )
+            if(ingredient.measurement.quantity != "0") {
+                Text(
+                    text = "${ingredient.measurement.quantity} ${ingredient.measurement.abbreviation}",
+                    style = MaterialTheme.typography.body2,
+                    fontSize = 14.sp
+                )
+            }
         }
     )
 }

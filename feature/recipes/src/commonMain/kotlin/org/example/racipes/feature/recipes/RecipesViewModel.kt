@@ -30,9 +30,7 @@ class RecipesViewModel(private val recipesRepo: IRecipesRepository) : ViewModel(
     private fun getRecipes() {
         viewModelScope.launch(Dispatchers.IO) {
             _recipesUiState.update { it.copy(isLoading = true) }
-            runCatching {
-                recipesRepo.getHomeRecipes()
-            }.onSuccess { recipes ->
+            recipesRepo.getHomeRecipes().onSuccess { recipes ->
                 _recipesUiState.update {
                     it.copy(
                         isLoading = false,
@@ -40,12 +38,16 @@ class RecipesViewModel(private val recipesRepo: IRecipesRepository) : ViewModel(
                         error = null
                     )
                 }
-            }.onFailure { e ->
-                Logger.d(e.stackTraceToString())
+            }.onFailure { throwable ->
+                Logger.e(
+                    tag = "RecipesViewModel@getRecipes",
+                    throwable = throwable,
+                    messageString = throwable.message.toString()
+                )
                 _recipesUiState.update {
                     it.copy(
                         isLoading = false,
-                        error = e.message
+                        error = throwable.message
                     )
                 }
             }

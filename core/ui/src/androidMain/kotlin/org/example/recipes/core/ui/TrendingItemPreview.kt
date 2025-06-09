@@ -51,14 +51,16 @@ fun TrendingItemPreview() {
                             name = "Reed Chapman",
                             abbreviation = "fringilla",
                             quantity = "ad"
-                        ), name = "Catherine Wilkins"
+                        ), name = "Catherine Wilkins",
+                        extraComment = ""
                     )
                 ),
                 videoUrl = null,
                 tags = listOf(),
                 updatedAt = 6534,
                 createdAt = 1387,
-                ratings = Triple(1, 2, 3.0)
+                ratings = Triple(1, 2, 3.0),
+                numServings = 0
             ), onClick = {}, modifier = Modifier.size(150.dp)
 
         )

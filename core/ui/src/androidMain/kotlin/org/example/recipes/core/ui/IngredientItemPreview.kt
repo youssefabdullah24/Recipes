@@ -26,8 +26,8 @@ fun IngredientItemPreview() {
                     name = "Sharron McKee",
                     abbreviation = "proin",
                     quantity = "nostrum"
-                ), name = "Crystal Dominguez"
-
+                ), name = "Crystal Dominguez",
+                extraComment = "0"
             )
         )
     }

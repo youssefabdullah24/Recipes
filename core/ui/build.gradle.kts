@@ -53,6 +53,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             implementation(libs.kotlin.coroutines)
+            implementation(libs.kotlin.datetime)
 
             // Cupertino
             implementation(libs.bundles.cupertino)

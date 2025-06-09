@@ -88,6 +88,7 @@ class ProfileViewModel(
         }
     }
 
+    // TODO: There are better ways to handle this
     private suspend fun getFavoritesList(favorites: List<String>): List<Recipe> {
         _profileUiState.update { it.copy(isFavoriteListLoading = true) }
         val favoritesList = arrayListOf<Recipe>()
@@ -221,7 +222,7 @@ class ProfileViewModel(
         viewModelScope.launch {
             authRepository.logout()
                 .onSuccess {
-
+                    _profileUiState.update { it.copy(favorites = emptyList()) }
                 }.onFailure {
 
                 }

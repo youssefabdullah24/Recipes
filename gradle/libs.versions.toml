@@ -1,12 +1,12 @@
 [versions]
-agp = "8.8.0"
+agp = "8.8.2"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
-androidx-activityCompose = "1.10.0"
+androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.0"
-androidx-constraintlayout = "2.2.0"
-androidx-core-ktx = "1.15.0"
+androidx-constraintlayout = "2.2.1"
+androidx-core-ktx = "1.16.0"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
@@ -15,21 +15,22 @@ coroutines = "1.9.0"
 compose-navigation = "2.8.0-alpha10"
 coil-core = "3.0.0-rc02"
 coil-wasm = "3.0.0-wasm2"
-foundationAndroid = "1.7.7"
+foundationAndroid = "1.8.2"
 composeIcons = "1.1.0"
 jetbrainsKotlinJvm = "1.9.0"
-uiToolingPreview = "1.7.7"
+uiToolingPreview = "1.8.2"
 ktor = "3.0.1"
 koin = "4.0.0"
 buildKonfig = "0.15.1"
 viewModel = "2.8.2"
 kermit = "2.0.4"
 paging = "3.3.0-alpha02-0.5.1"
-media3 = "1.5.1"
+media3 = "1.7.1"
 kotlin = "2.1.0"
 kotlin-serialization = "1.8.0"
+kotlin-datetime = "0.6.2"
 kotlin-compose-plugin = "1.7.3"
-cupertino = "2.0.8"
+cupertino = "0.1.0-alpha04"
 firebase = "2.1.0"
 
 [libraries]
@@ -47,6 +48,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlin-datetime" }
 kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewModel" }
 compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
@@ -86,10 +88,10 @@ media3-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", versi
 media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
 media3-common = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3" }
 
-cupertino-core = { group = "io.github.schott12521", name = "cupertino", version.ref = "cupertino" }
-cupertino-adaptive = { group = "io.github.schott12521", name = "cupertino-adaptive", version.ref = "cupertino" }
-cupertino-native = { group = "io.github.schott12521", name = "cupertino-native", version.ref = "cupertino" }
-cupertino-icons-extended = { group = "io.github.schott12521", name = "cupertino-icons-extended", version.ref = "cupertino" }
+cupertino-core = { group = "io.github.alexzhirkevich", name = "cupertino", version.ref = "cupertino" }
+cupertino-adaptive = { group = "io.github.alexzhirkevich", name = "cupertino-adaptive", version.ref = "cupertino" }
+cupertino-native = { group = "io.github.alexzhirkevich", name = "cupertino-native", version.ref = "cupertino" }
+cupertino-icons-extended = { group = "io.github.alexzhirkevich", name = "cupertino-icons-extended", version.ref = "cupertino" }
 
 firebase-auth = { group = "dev.gitlive", name = "firebase-auth", version.ref = "firebase" }
 firebase-firestore = { group = "dev.gitlive", name = "firebase-firestore", version.ref = "firebase" }

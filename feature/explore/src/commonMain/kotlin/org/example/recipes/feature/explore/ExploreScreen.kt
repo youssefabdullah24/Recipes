@@ -25,18 +25,18 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ExploreRoute(
+    viewModel: ExploreViewModel = koinViewModel(),
     onNavigate: () -> Unit,
+    onQuickSearchItemClick: (String) -> Unit
 ) {
-
-    val screenModel = koinViewModel<ExploreViewModel>()
-    val quickSearchTags by screenModel.state.collectAsState()
+    val quickSearchTags by viewModel.state.collectAsState()
 
     ExploreScreen(
         modifier = Modifier.fillMaxSize(),
         quickSearchTags = quickSearchTags,
         onSearchBarClick = onNavigate,
         onQuickSearchItemClick = {
-            // Handle quick search item click
+            onQuickSearchItemClick(it.title)
         }
     )
 }

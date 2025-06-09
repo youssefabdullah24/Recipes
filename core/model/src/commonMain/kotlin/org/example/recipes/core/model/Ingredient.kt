@@ -7,4 +7,5 @@ data class Ingredient(
     val position: Int,
     val measurement: Measurement,
     val name: String,
+    val extraComment: String,
 )

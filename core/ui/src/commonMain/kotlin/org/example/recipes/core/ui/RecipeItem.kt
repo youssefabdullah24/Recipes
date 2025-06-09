@@ -42,8 +42,7 @@ import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 
 
-@OptIn(
-    ExperimentalMaterialApi::class, ExperimentalAdaptiveApi::class,)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalAdaptiveApi::class,)
 @Composable
 fun RecipeItem(
     recipe: Recipe,
