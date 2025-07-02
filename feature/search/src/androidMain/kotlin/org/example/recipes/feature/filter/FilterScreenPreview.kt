@@ -1,7 +1,7 @@
 package org.example.recipes.feature.filter
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,7 +17,7 @@ fun FilterScreenPreview() {
                 org.example.recipes.feature.search.FilterSection(
                     "Cuisine",
                     listOf(
-                        "ItalianPAPII",
+                        "Italian",
                         "Mexican",
                         "Italian",
                         "Mexican",

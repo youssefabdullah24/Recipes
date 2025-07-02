@@ -18,8 +18,8 @@ import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import co.touchlab.kermit.Logger
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import com.slapps.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Tip
 import org.example.recipes.core.ui.ReviewCard
 import org.koin.compose.viewmodel.koinViewModel

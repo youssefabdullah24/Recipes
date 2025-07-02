@@ -12,14 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,17 +31,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
+import com.slapps.cupertino.adaptive.AdaptiveIconButton
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.regular.Bookmark
 import compose.icons.fontawesomeicons.regular.Clock
 import compose.icons.fontawesomeicons.regular.User
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalAdaptiveApi::class,)
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun RecipeItem(
     recipe: Recipe,
@@ -58,9 +57,7 @@ fun RecipeItem(
         }
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+            modifier = modifier
         ) {
             Box(
                 modifier = Modifier
@@ -68,7 +65,9 @@ fun RecipeItem(
                     .fillMaxHeight(0.5f)
             ) {
                 AsyncImage(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(140.dp),
                     contentScale = ContentScale.Crop,
                     model = recipe.image,
                     contentDescription = recipe.title,
@@ -83,6 +82,7 @@ fun RecipeItem(
                     Icon(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
+                            .size(24.dp)
                             .padding(8.dp),
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = "Play Video"
@@ -94,7 +94,7 @@ fun RecipeItem(
                 Text(
                     modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                     text = recipe.title,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
@@ -121,7 +121,8 @@ fun RecipeItem(
                     )
                     AdaptiveIconButton(
                         modifier = Modifier
-                            .size(48.dp),
+                            .padding(8.dp)
+                            .size(24.dp),
                         onClick = {
                             onAddToFavoritesClicked(recipe.id.toString())
                         }
@@ -153,7 +154,7 @@ fun RecipeDetailRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            tint = MaterialTheme.colors.primary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(16.dp),
             imageVector = icon,
             contentDescription = label

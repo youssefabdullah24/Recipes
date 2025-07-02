@@ -5,13 +5,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,7 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.recipes.core.model.QuickSearchTag
-import org.example.recipes.core.ui.QuickSearchComposable
+import org.example.recipes.core.ui.QuickSearchCard
 import org.example.recipes.core.ui.SearchBarComposable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -48,20 +50,21 @@ fun ExploreScreen(
     onSearchBarClick: () -> Unit,
     onQuickSearchItemClick: (QuickSearchTag) -> Unit
 ) {
+    val scrollState = rememberScrollState()
     // TODO: add cuisine row
-    Column(modifier = modifier) {
+    Column(modifier = modifier.verticalScroll(scrollState)) {
         Text(
             text = "Explore",
             modifier = Modifier.padding(
                 start = 16.dp,
                 top = 32.dp
             ),
-            style = MaterialTheme.typography.h4
+            style = MaterialTheme.typography.headlineMedium
         )
         SearchBarComposable(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             onClick = onSearchBarClick
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -71,18 +74,18 @@ fun ExploreScreen(
                 start = 16.dp,
                 top = 8.dp
             ),
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.headlineMedium
         )
 
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .heightIn(max = 800.dp),
             columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(8.dp)
         ) {
             items(quickSearchTags.size) {
-                QuickSearchComposable(
+                QuickSearchCard(
                     modifier = Modifier.wrapContentSize()
                         .padding(
                             8.dp,

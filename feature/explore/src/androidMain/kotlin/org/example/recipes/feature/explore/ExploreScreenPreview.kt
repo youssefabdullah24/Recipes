@@ -1,23 +1,32 @@
+package org.example.recipes.feature.explore
+
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import org.example.recipes.core.model.QuickSearchTag
-import org.example.recipes.feature.explore.ExploreScreen
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
 
 @Composable
-@Preview
+@Preview(showSystemUi = true,
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun ExploreScreenPreview() {
-    ExploreScreen(
-        quickSearchTags = listOf(
-            QuickSearchTag("Test", "Test"),
-            QuickSearchTag("Test", "Test"),
-            QuickSearchTag("Test", "Test"),
-            QuickSearchTag("Test", "Test"),
-            QuickSearchTag("Test", "Test"),
-            QuickSearchTag("Test", "Test")
-        ), modifier = Modifier.fillMaxSize(), onSearchBarClick = {}, onQuickSearchItemClick = {})
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        Surface {
+            ExploreScreen(
+                quickSearchTags = listOf(
+                    QuickSearchTag("Test", "Test"),
+                    QuickSearchTag("Test", "Test"),
+                    QuickSearchTag("Test", "Test"),
+                    QuickSearchTag("Test", "Test"),
+                    QuickSearchTag("Test", "Test"),
+                    QuickSearchTag("Test", "Test")
+                ), modifier = Modifier.fillMaxSize(), onSearchBarClick = {}, onQuickSearchItemClick = {})
+        }
+    }
 }
-
 

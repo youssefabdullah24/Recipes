@@ -99,6 +99,7 @@ class ProfileViewModel(
                         it.isFavorite = true
                         favoritesList.add(it)
                     }.onFailure { throwable ->
+                        Logger.e(messageString = throwable.message!!, throwable = throwable, tag = "getFavoritesList")
                         _profileUiState.update {
                             it.copy(
                                 isFavoriteListLoading = false,
@@ -125,6 +126,8 @@ class ProfileViewModel(
                         if (profile.favorites.contains(it.id.toString())) it.isFavorite = true
                         cookedList.add(it)
                     }.onFailure { throwable ->
+                        Logger.e(messageString = throwable.message!!, throwable = throwable, tag = "getCookedRecipesList")
+
                         _profileUiState.update {
                             it.copy(
                                 isCookedRecipesListLoading = false,

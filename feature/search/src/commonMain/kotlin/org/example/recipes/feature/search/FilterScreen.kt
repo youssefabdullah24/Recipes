@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -48,7 +48,7 @@ fun FilterSection(
     ) {
         Text(
             text = filterSection.title,
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.titleMedium
         )
         // TODO: display defined number of chips, adding to the end +Num
         //  https://developer.android.com/develop/ui/compose/layouts/flow#lazy-flow
