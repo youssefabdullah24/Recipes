@@ -49,7 +49,6 @@ kotlin {
 
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
@@ -74,6 +73,9 @@ kotlin {
             implementation(libs.paging)
 
             implementation(libs.kermit)
+
+            implementation(compose.materialIconsExtended)
+            implementation(libs.compose.resources)
 
 
         }

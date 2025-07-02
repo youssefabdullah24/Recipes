@@ -23,12 +23,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,7 +42,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -56,8 +55,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import com.slapps.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.example.recipes.core.model.Recipe
@@ -67,7 +66,6 @@ import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.ReviewCard
 import org.koin.compose.viewmodel.koinViewModel
 
-//TODO: just pass the recipe to save api requests & loading time
 @Composable
 fun RecipeDetailsRoute(
     recipeId: String,
@@ -178,7 +176,7 @@ internal fun RecipeDetailsScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(Color.White)
+                                .background(MaterialTheme.colorScheme.background)
                                 .padding(8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -189,7 +187,7 @@ internal fun RecipeDetailsScreen(
                                 fontWeight = FontWeight.Bold,
                                 overflow = TextOverflow.Ellipsis,
                                 fontSize = 18.sp,
-                                color = Color.Black
+                                //color = Color.Black
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
@@ -267,7 +265,7 @@ internal fun RecipeDetailsScreen(
                                                 start = 16.dp,
                                                 top = 8.dp
                                             ),
-                                            style = MaterialTheme.typography.h6
+                                            style = MaterialTheme.typography.headlineMedium
                                         )
                                         LazyRow(
                                             modifier = Modifier.fillMaxSize(),
@@ -311,7 +309,7 @@ internal fun RecipeDetailsScreen(
                                         modifier = Modifier.padding(
                                             start = 16.dp,
                                         ),
-                                        style = MaterialTheme.typography.h6
+                                        style = MaterialTheme.typography.headlineMedium
                                     )
                                     TextButton(onClick = { onViewAllReviewsClicked(recipe.id.toString(), recipe.title) }) {
                                         Text(text = "View all")

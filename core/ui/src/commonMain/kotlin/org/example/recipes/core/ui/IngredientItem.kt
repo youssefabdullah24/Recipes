@@ -1,9 +1,8 @@
 package org.example.recipes.core.ui
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +18,6 @@ import coil3.compose.AsyncImage
 import org.example.recipes.core.model.Ingredient
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun IngredientItem(
     modifier: Modifier,
@@ -27,7 +25,7 @@ fun IngredientItem(
 ) {
     ListItem(
         modifier = modifier,
-        icon = {
+        leadingContent = {
             AsyncImage(
                 modifier = Modifier
                     .size(32.dp)
@@ -37,7 +35,7 @@ fun IngredientItem(
                 contentScale = ContentScale.FillBounds
             )
         },
-        text = {
+        headlineContent = {
             Text(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(
@@ -53,12 +51,11 @@ fun IngredientItem(
                     }
                 },
             )
-        },
-        trailing = {
+        }, trailingContent = {
             if(ingredient.measurement.quantity != "0") {
                 Text(
                     text = "${ingredient.measurement.quantity} ${ingredient.measurement.abbreviation}",
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp
                 )
             }

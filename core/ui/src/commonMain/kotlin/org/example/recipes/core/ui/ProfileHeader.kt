@@ -1,7 +1,6 @@
 package org.example.recipes.core.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,16 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,12 +38,13 @@ fun ProfileHeader(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .clip(CircleShape)
-                .border(
-                    width = 2.dp,
-                    color = Color.Black,
-                    shape = CircleShape
-                )
                 .size(140.dp)
+                /*.border(
+                    width = 2.dp,
+                    //color = Color.Black,
+                    shape = CircleShape
+                )*/
+
         )
         Spacer(modifier = Modifier.width(24.dp))
         Box(Modifier.fillMaxHeight().padding(top = 16.dp)) {

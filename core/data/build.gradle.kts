@@ -1,8 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrainsCompose)
+
+
 }
 
 
@@ -41,6 +46,9 @@ kotlin {
             implementation(libs.bundles.firebase)
             implementation(libs.kermit)
             implementation(libs.viewmodel)
+            implementation(libs.serialization.json)
+            implementation(libs.compose.resources)
+            implementation(compose.components.resources)
 
         }
     }
@@ -54,4 +62,5 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    sourceSets["main"].resources.srcDirs("src/commonMain/composeResources")
 }

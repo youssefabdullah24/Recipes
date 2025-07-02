@@ -37,7 +37,7 @@ data class RecipeDto(
     @SerialName("facebook_posts")
     val facebookPosts: List<String>? = listOf(),
     @SerialName("id")
-    val id: Int? = 0,
+    val id: Int,
     @SerialName("inspired_by_url")
     val inspiredByUrl: String? = "",
     @SerialName("instructions")

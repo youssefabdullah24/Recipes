@@ -11,13 +11,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,8 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import com.slapps.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+
 import org.example.recipes.core.data.ProfileUiState
 import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.ui.ProfileHeader
@@ -232,7 +235,7 @@ fun ProfileScreen(
                         end = 16.dp
                     ).weight(1f),
                     text = "Profile",
-                    style = MaterialTheme.typography.h4
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 TextButton(onClick = onLogOutClicked){
                     Text(text = "Logout")
@@ -247,11 +250,11 @@ fun ProfileScreen(
                 profile = profileUiState.profile!!,
                 onUpdateProfileClicked = onUpdateProfileClicked
             )
-            if (profileUiState.profile?.favorites?.isNotEmpty()!!) {
+            if (profileUiState.favorites.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Favorites",
-                    style = MaterialTheme.typography.h6
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyRow(
@@ -263,10 +266,8 @@ fun ProfileScreen(
                         key = { it.id }
                     ) {
                         RecipeItem(
-                            modifier = Modifier.size(
-                                280.dp,
-                                240.dp
-                            ),
+                            modifier = Modifier.width(280.dp)
+                                .height(280.dp),
                             recipe = it,
                             onClick = { onRecipeClicked(it.id) },
                             onAddToFavoritesClicked = onAddToFavoritesClicked
@@ -275,11 +276,11 @@ fun ProfileScreen(
                     }
                 }
             }
-            if (profileUiState.profile?.cooked?.isNotEmpty()!!) {
+            if (profileUiState.cookedRecipes.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Cooked Recipes",
-                    style = MaterialTheme.typography.h6
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyRow(

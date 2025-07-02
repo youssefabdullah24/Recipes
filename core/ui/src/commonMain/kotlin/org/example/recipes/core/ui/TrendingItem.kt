@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
 package org.example.recipes.core.ui
 
 import androidx.compose.foundation.basicMarquee
@@ -13,9 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,9 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import org.example.recipes.core.model.*
+import org.example.recipes.core.model.Recipe
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrendingItem(
     recipe: Recipe,
@@ -44,17 +40,18 @@ fun TrendingItem(
                 .align(Alignment.Center)
                 .padding(top = 80.dp), // Add padding to leave space for the image overlap
             shape = RoundedCornerShape(16.dp),
-            elevation = 4.dp
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(top = 42.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 42.dp)
             ) {
                 Spacer(modifier = Modifier.height(42.dp)) // Space to match the image overlap
                 Text(
                     text = recipe.title,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     modifier = Modifier.basicMarquee(Int.MAX_VALUE)

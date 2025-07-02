@@ -2,42 +2,52 @@ package org.example.recipes.feature.search
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.collectAsLazyPagingItems
-import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveWidget
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import com.slapps.cupertino.CupertinoSearchTextField
+import com.slapps.cupertino.ExperimentalCupertinoApi
+import com.slapps.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import com.slapps.cupertino.adaptive.AdaptiveWidget
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import kotlinx.coroutines.launch
 import org.example.recipes.core.ui.RecipeItem
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -55,7 +65,7 @@ fun SearchRoute(
         searchViewModel,
         quickSearchQuery,
         onRecipeClick,
-        onBackPressed = onBackPressed,
+        onBackPressed,
     ) {
         searchViewModel.toggleFavorite(it)
         onAddToFavoritesClicked(it)
@@ -82,6 +92,9 @@ fun SearchScreen(
             viewModel.searchRecipes(quickSearchQuery)
         }
     }
+    val scope = rememberCoroutineScope()
+    val modalSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var showFilterModal by rememberSaveable { mutableStateOf(false) }
     val suggestionQuery by viewModel.suggestionsQueryFlow.collectAsState()
     val searchQuery by viewModel.searchQueryFlow.collectAsState()
     val suggestions by viewModel.suggestions.collectAsState(SuggestionsState.Loading)
@@ -90,13 +103,10 @@ fun SearchScreen(
     val padding by animateDpAsState(if (isActive) 8.dp else 16.dp)
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            /*IconButton(onClick = onBackPressed) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }*/
+        Row(
+            modifier = Modifier.padding(top = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             AdaptiveWidget(
                 material = {
                     DockedSearchBar(
@@ -124,41 +134,41 @@ fun SearchScreen(
                                 },
                                 leadingIcon = {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
-                                        AnimatedVisibility(visible = isActive) {
-                                            IconButton(onClick = { viewModel.setIsActive(false) }) {
-                                                Icon(
-                                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                    contentDescription = "Cancel"
-                                                )
+                                        IconButton(onClick = {
+                                            if (isActive) {
+                                                viewModel.setIsActive(false)
+                                            } else {
+                                                onBackPressed()
                                             }
+                                        }) {
+                                            Icon(
+                                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                                contentDescription = "Cancel"
+                                            )
                                         }
-                                        Icon(
-                                            imageVector = Icons.Default.Search,
-                                            contentDescription = "Search"
-                                        )
-                                        AnimatedVisibility(visible = isActive) {
-                                            Spacer(Modifier.width(8.dp))
-                                        }
+                                          Icon(
+                                              imageVector = Icons.Default.Search,
+                                              contentDescription = "Search"
+                                          )
+                                        //TODO: ??
+                                        /*    AnimatedVisibility(visible = isActive) {
+                                                Spacer(Modifier.width(8.dp))
+                                            }*/
                                     }
                                 },
-                                interactionSource = null,
                             )
                         },
                         expanded = isActive,
                         onExpandedChange = { viewModel.setIsActive(true) },
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .weight(1f)
                             .padding(padding),
                     ) {
                         when (suggestions) {
                             SuggestionsState.Loading -> {
                                 if (suggestionQuery.isNotBlank()) {
                                     Box(modifier = Modifier.fillMaxSize()) {
-                                        AdaptiveCircularProgressIndicator(
-                                            modifier = Modifier.align(
-                                                Alignment.Center
-                                            )
-                                        )
+                                        AdaptiveCircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                                     }
                                 }
                             }
@@ -207,12 +217,47 @@ fun SearchScreen(
                 cupertino = {
                     CupertinoSearchTextField(
                         onValueChange = viewModel::searchRecipes,
-                        value = searchQuery
+                        value = searchQuery,
+                        leadingIcon = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(onClick = {
+
+                                    onBackPressed()
+                                    /*if (isActive) {
+                                        viewModel.setIsActive(false)
+                                    } else {
+                                        onBackPressed()
+                                    }*/
+                                }) {
+                                     Icon(
+                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                         contentDescription = "Cancel"
+                                     )
+                                }
+                            }
+                        }
                     )
                 }
             )
+            AnimatedVisibility(
+                modifier = Modifier.padding(end = 8.dp),
+                visible = searchQuery.isNotBlank()
+                        && !isActive
+                        && recipes.itemCount > 0
+            ) {
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(onClick = {
+                    showFilterModal = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Filter"
+                    )
+                    Text(text = "Filter")
+                }
+            }
+
         }
-        Spacer(modifier = Modifier.height(16.dp))
         when (recipes.loadState.refresh) {
             is LoadState.Loading -> {
                 if (suggestionQuery.isNotBlank()) {
@@ -231,7 +276,10 @@ fun SearchScreen(
             }
 
             else -> {
-                LazyColumn {
+                LazyColumn(
+                    contentPadding = PaddingValues(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
                     items(recipes.itemCount) {
                         RecipeItem(
                             recipe = recipes[it]!!,
@@ -270,6 +318,34 @@ fun SearchScreen(
                         is LoadState.NotLoading -> {}
                     }
                 }
+            }
+        }
+    }
+
+    if (showFilterModal) {
+        ModalBottomSheet(
+            sheetState = modalSheetState,
+            onDismissRequest = {
+                scope.launch {
+                    modalSheetState.hide()
+                }.invokeOnCompletion {
+                    if (!modalSheetState.isVisible)
+                        showFilterModal = false
+                }
+            }
+        ) {
+            Button(
+                modifier = Modifier.align(Alignment.End),
+                onClick = {
+                    scope.launch {
+                        modalSheetState.hide()
+                    }.invokeOnCompletion {
+                        if (!modalSheetState.isVisible) {
+                            showFilterModal = false
+                        }
+                    }
+                }) {
+                Text(text = "Filter")
             }
         }
     }
