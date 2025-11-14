@@ -82,8 +82,8 @@ fun RecipeItem(
                     Icon(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
-                            .size(24.dp)
-                            .padding(8.dp),
+                            .padding(8.dp)
+                            .size(24.dp),
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = "Play Video"
                     )

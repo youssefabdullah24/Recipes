@@ -83,7 +83,6 @@ kotlin {
 
             implementation(libs.bundles.firebase)
 
-
         }
     }
 }

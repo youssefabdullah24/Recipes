@@ -2,9 +2,12 @@ package org.example.recipes.feature.search
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,15 +17,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Filter
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.InputChip
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBarDefaults
@@ -41,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slapps.cupertino.CupertinoSearchTextField
 import com.slapps.cupertino.ExperimentalCupertinoApi
@@ -48,7 +56,10 @@ import com.slapps.cupertino.adaptive.AdaptiveCircularProgressIndicator
 import com.slapps.cupertino.adaptive.AdaptiveWidget
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.coroutines.launch
+import org.example.recipes.core.model.Recipe
+import org.example.recipes.core.model.Tag
 import org.example.recipes.core.ui.RecipeItem
+import org.example.recipes.core.ui.TagsList
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -61,17 +72,55 @@ fun SearchRoute(
     onBackPressed: () -> Unit
 ) {
     searchViewModel.setFavorites(favorites)
-    SearchScreen(
-        searchViewModel,
-        quickSearchQuery,
-        onRecipeClick,
-        onBackPressed,
-    ) {
-        searchViewModel.toggleFavorite(it)
-        onAddToFavoritesClicked(it)
-    }
-}
 
+    val suggestionQuery by searchViewModel.suggestionsQueryFlow.collectAsState()
+    val searchQuery by searchViewModel.searchQueryFlow.collectAsState()
+    val suggestions by searchViewModel.suggestions.collectAsState(SuggestionsState.Loading)
+    val isActive by searchViewModel.isActive.collectAsState()
+    val recipes = searchViewModel.recipes.collectAsLazyPagingItems()
+    val tags by searchViewModel.tagsState.collectAsState()
+
+
+    LaunchedEffect(quickSearchQuery) {
+        if (!quickSearchQuery.isNullOrBlank()) {
+            searchViewModel.setIsActive(false)
+            searchViewModel.searchRecipes(quickSearchQuery)
+        }
+    }
+
+    SearchScreen(
+        quickSearchQuery = quickSearchQuery,
+        onRecipeClick = onRecipeClick,
+        onBackPressed = {
+            if (isActive) {
+                searchViewModel.setIsActive(false)
+            } else {
+                onBackPressed()
+            }
+        },
+        onAddToFavoritesClicked = { recipeString ->
+            searchViewModel.toggleFavorite(recipeString)
+            onAddToFavoritesClicked(recipeString)
+        },
+        onSuggestionQueryChange = { query ->
+            searchViewModel.suggestQueries(query)
+        },
+
+        onSearch = { query -> searchViewModel.searchRecipes(query) },
+        onActiveChange = { active -> searchViewModel.setIsActive(active) },
+        onClearSuggestionQuery = { searchViewModel.suggestQueries("") },
+        suggestionQuery = suggestionQuery,
+        searchQuery = searchQuery,
+        suggestions = suggestions,
+        isActive = isActive,
+        recipes = recipes,
+        tagsState = tags,
+        onRetryLoadSuggestions = {},
+        onRetryLoadRecipes = { recipes.retry() },
+        onFilterClicked = { searchViewModel.filterRecipes() },
+        onRemoveTagClicked = { searchViewModel.removeFilter(it) }
+    )
+}
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -80,31 +129,38 @@ fun SearchRoute(
 )
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel,
     quickSearchQuery: String?,
     onRecipeClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
     onAddToFavoritesClicked: (String) -> Unit,
+    onSuggestionQueryChange: (String) -> Unit,
+    onSearch: (String) -> Unit,
+    onActiveChange: (Boolean) -> Unit,
+    onClearSuggestionQuery: () -> Unit,
+    suggestionQuery: String,
+    searchQuery: Pair<String, List<Tag>>,
+    suggestions: SuggestionsState,
+    isActive: Boolean,
+    recipes: LazyPagingItems<Recipe>,
+    tagsState: TagsState,
+    onRetryLoadSuggestions: () -> Unit,
+    onRetryLoadRecipes: () -> Unit,
+    onFilterClicked: () -> Unit,
+    onRemoveTagClicked: (Tag) -> Unit
 ) {
     LaunchedEffect(quickSearchQuery) {
         if (quickSearchQuery != null) {
-            viewModel.setIsActive(false)
-            viewModel.searchRecipes(quickSearchQuery)
+            onActiveChange(false)
+            onSearch(quickSearchQuery)
         }
     }
     val scope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showFilterModal by rememberSaveable { mutableStateOf(false) }
-    val suggestionQuery by viewModel.suggestionsQueryFlow.collectAsState()
-    val searchQuery by viewModel.searchQueryFlow.collectAsState()
-    val suggestions by viewModel.suggestions.collectAsState(SuggestionsState.Loading)
-    val isActive by viewModel.isActive.collectAsState()
-    val recipes = viewModel.recipes.collectAsLazyPagingItems()
     val padding by animateDpAsState(if (isActive) 8.dp else 16.dp)
-
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
-            modifier = Modifier.padding(top = 32.dp),
+            modifier = Modifier.padding(top = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AdaptiveWidget(
@@ -114,17 +170,17 @@ fun SearchScreen(
                             SearchBarDefaults.InputField(
                                 modifier = Modifier.fillMaxWidth(),
                                 query = suggestionQuery,
-                                onQueryChange = viewModel::suggestQueries,
+                                onQueryChange = onSuggestionQueryChange,
                                 onSearch = {
-                                    viewModel.setIsActive(false)
-                                    viewModel.searchRecipes(it)
+                                    onActiveChange(false)
+                                    onSearch(it)
                                 },
                                 expanded = isActive,
-                                onExpandedChange = { viewModel.setIsActive(it) },
+                                onExpandedChange = { onActiveChange(it) },
                                 placeholder = { Text("Search") },
                                 trailingIcon = {
                                     AnimatedVisibility(visible = isActive && suggestionQuery.isNotBlank()) {
-                                        IconButton(onClick = { viewModel.suggestQueries("") }) {
+                                        IconButton(onClick = onClearSuggestionQuery) {
                                             Icon(
                                                 imageVector = Icons.Default.Clear,
                                                 contentDescription = "Clear search query"
@@ -134,32 +190,22 @@ fun SearchScreen(
                                 },
                                 leadingIcon = {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
-                                        IconButton(onClick = {
-                                            if (isActive) {
-                                                viewModel.setIsActive(false)
-                                            } else {
-                                                onBackPressed()
-                                            }
-                                        }) {
+                                        IconButton(onClick = onBackPressed) {
                                             Icon(
                                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                                 contentDescription = "Cancel"
                                             )
                                         }
-                                          Icon(
-                                              imageVector = Icons.Default.Search,
-                                              contentDescription = "Search"
-                                          )
-                                        //TODO: ??
-                                        /*    AnimatedVisibility(visible = isActive) {
-                                                Spacer(Modifier.width(8.dp))
-                                            }*/
+                                        Icon(
+                                            imageVector = Icons.Default.Search,
+                                            contentDescription = "Search"
+                                        )
                                     }
                                 },
                             )
                         },
                         expanded = isActive,
-                        onExpandedChange = { viewModel.setIsActive(true) },
+                        onExpandedChange = { onActiveChange(true) },
                         modifier = Modifier
                             .weight(1f)
                             .padding(padding),
@@ -176,14 +222,14 @@ fun SearchScreen(
                             is SuggestionsState.Error -> {
                                 TextButton(
                                     modifier = Modifier,
-                                    onClick = { recipes.retry() }) {
+                                    onClick = onRetryLoadSuggestions
+                                ) {
                                     Text(text = "Failed to load, tap to retry")
                                 }
                             }
 
                             is SuggestionsState.Success -> {
-                                val suggestionsData =
-                                    (suggestions as SuggestionsState.Success).suggestions
+                                val suggestionsData = suggestions.suggestions
                                 if (suggestionsData.isEmpty()) {
                                     Text(text = "No suggestions found")
                                 } else {
@@ -198,8 +244,8 @@ fun SearchScreen(
                                                     .fillMaxWidth()
                                                     .height(48.dp),
                                                 onClick = {
-                                                    viewModel.setIsActive(false)
-                                                    viewModel.searchRecipes(it)
+                                                    onActiveChange(false)
+                                                    onSearch(it)
 
                                                 }
                                             ) {
@@ -216,47 +262,57 @@ fun SearchScreen(
                 },
                 cupertino = {
                     CupertinoSearchTextField(
-                        onValueChange = viewModel::searchRecipes,
-                        value = searchQuery,
+                        modifier = Modifier.padding(top = 8.dp),
+                        onValueChange = onSearch,
+                        value = searchQuery.first,
                         leadingIcon = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 IconButton(onClick = {
-
                                     onBackPressed()
-                                    /*if (isActive) {
-                                        viewModel.setIsActive(false)
-                                    } else {
-                                        onBackPressed()
-                                    }*/
                                 }) {
-                                     Icon(
-                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                         contentDescription = "Cancel"
-                                     )
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = "Cancel"
+                                    )
                                 }
+                            }
+                        }, trailingIcon = {
+                            IconButton(onClick = {
+                                showFilterModal = true
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.FilterList,
+                                    contentDescription = "Filter"
+                                )
                             }
                         }
                     )
                 }
             )
-            AnimatedVisibility(
-                modifier = Modifier.padding(end = 8.dp),
-                visible = searchQuery.isNotBlank()
-                        && !isActive
-                        && recipes.itemCount > 0
+
+
+        }
+
+        AnimatedVisibility(searchQuery.second.isNotEmpty()) {
+            FlowRow(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedButton(onClick = {
-                    showFilterModal = true
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Filter"
+                searchQuery.second.forEach {
+                    InputChip(
+                        onClick = { onRemoveTagClicked(it) },
+                        selected = true,
+                        trailingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Clear,
+                                contentDescription = "Remove filter"
+                            )
+                        },
+                        label = { Text(text = it.displayName) }
                     )
-                    Text(text = "Filter")
                 }
             }
-
         }
         when (recipes.loadState.refresh) {
             is LoadState.Loading -> {
@@ -270,22 +326,23 @@ fun SearchScreen(
             is LoadState.Error -> {
                 TextButton(
                     modifier = Modifier,
-                    onClick = { recipes.retry() }) {
+                    onClick = onRetryLoadRecipes
+                ) {
                     Text(text = "Failed to load, tap to retry")
                 }
             }
 
             else -> {
                 LazyColumn(
-                    contentPadding = PaddingValues(8.dp),
+                    contentPadding = PaddingValues(horizontal =8.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(recipes.itemCount) {
                         RecipeItem(
                             recipe = recipes[it]!!,
-                            onClick = { onRecipeClick(it.id) },
-                            onAddToFavoritesClicked = {
-                                onAddToFavoritesClicked(it)
+                            onClick = { recipe -> onRecipeClick(recipe.id) },
+                            onAddToFavoritesClicked = { recipeId ->
+                                onAddToFavoritesClicked(recipeId)
                             }
                         )
                     }
@@ -308,7 +365,8 @@ fun SearchScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .align(Alignment.Center),
-                                        onClick = { recipes.retry() }) {
+                                        onClick = onRetryLoadRecipes
+                                    ) {
                                         Text(text = "Failed to load, tap to retry")
                                     }
                                 }
@@ -324,13 +382,13 @@ fun SearchScreen(
 
     if (showFilterModal) {
         ModalBottomSheet(
+            modifier = Modifier.scrollable(rememberScrollState(), Orientation.Vertical),
             sheetState = modalSheetState,
             onDismissRequest = {
                 scope.launch {
                     modalSheetState.hide()
                 }.invokeOnCompletion {
-                    if (!modalSheetState.isVisible)
-                        showFilterModal = false
+                    if (!modalSheetState.isVisible) showFilterModal = false
                 }
             }
         ) {
@@ -340,13 +398,19 @@ fun SearchScreen(
                     scope.launch {
                         modalSheetState.hide()
                     }.invokeOnCompletion {
-                        if (!modalSheetState.isVisible) {
-                            showFilterModal = false
-                        }
+                        if (!modalSheetState.isVisible) showFilterModal = false
+                        onFilterClicked()
                     }
+
                 }) {
                 Text(text = "Filter")
             }
+            LazyColumn {
+                items(tagsState.tags.toList()) {
+                    TagsList(sectionTitle = it.first, tags = it.second)
+                }
+            }
         }
+
     }
 }

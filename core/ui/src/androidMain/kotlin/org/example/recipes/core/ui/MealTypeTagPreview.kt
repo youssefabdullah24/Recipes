@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import org.example.recipes.core.model.Tag
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
@@ -12,7 +13,7 @@ fun MealTypeTagPreview() {
     Surface {
         ChipItem(
             modifier = Modifier.wrapContentSize(),
-            title = "text"
+            tag = Tag("display name", "name", "rootTagName",false)
         )
     }
 }

@@ -10,6 +10,7 @@ import org.example.recipes.core.network.model.TagsResponseDto
 interface IApiService {
     suspend fun getRecipesPage(
         query: String = "",
+        tags: String = "",
         from: Int = 0,
         size: Int = 20
     ): RecipesPagingResponseDto
@@ -22,6 +23,7 @@ interface IApiService {
 
     suspend fun getRecipeTipsPage(
         recipeId: String,
+        tags: String = "",
         from: Int = 0,
         size: Int = 20
     ): RecipeTipsPagingResponseDto

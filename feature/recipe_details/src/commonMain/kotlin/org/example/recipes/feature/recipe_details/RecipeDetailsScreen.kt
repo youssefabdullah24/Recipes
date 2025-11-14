@@ -245,10 +245,12 @@ internal fun RecipeDetailsScreen(
                                 )
                             }
                         }
+                    }
+                    item{
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(300.dp)
+                               // .height(500.dp)
                         ) {
                             if (uiState.isSimilarRecipesLoading) {
                                 AdaptiveCircularProgressIndicator(
@@ -258,7 +260,7 @@ internal fun RecipeDetailsScreen(
                                 )
                             } else {
                                 if (uiState.similarRecipes.isNotEmpty()) {
-                                    Column(modifier = Modifier.wrapContentSize()) {
+                                    Column {
                                         Text(
                                             text = "Similar Recipes",
                                             modifier = Modifier.padding(
@@ -268,29 +270,25 @@ internal fun RecipeDetailsScreen(
                                             style = MaterialTheme.typography.headlineMedium
                                         )
                                         LazyRow(
-                                            modifier = Modifier.fillMaxSize(),
                                             contentPadding = PaddingValues(8.dp),
                                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                                         ) {
-                                            items(uiState.similarRecipes) {
+                                            items(uiState.similarRecipes) { recipe ->
                                                 RecipeItem(
-                                                    recipe = it.copy(isFavorite = favorites.contains(it.id.toString())),
-                                                    modifier = Modifier.size(
-                                                        280.dp,
-                                                        240.dp
-                                                    ),
-                                                    onClick = { recipe ->
+                                                    modifier = Modifier.size(300.dp),
+                                                    recipe = recipe,
+                                                    onClick = {
                                                         onRecipeClick(recipe)
                                                         scope.launch {
                                                             hasScrolledUp = true
                                                             listState.animateScrollToItem(0)
                                                         }
-
                                                     },
                                                     onAddToFavoritesClicked = onSaveRecipeClick
                                                 )
                                             }
                                         }
+
                                     }
                                 }
                             }

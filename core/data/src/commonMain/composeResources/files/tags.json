@@ -1,0 +1,4442 @@
+[
+    {
+      "id" : 64453,
+      "display_name" : "Italian",
+      "root_tag_type" : "cuisine",
+      "name" : "italian",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 64460,
+      "display_name" : "Thai",
+      "root_tag_type" : "cuisine",
+      "name" : "thai",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 64469,
+      "display_name" : "Vegetarian",
+      "root_tag_type" : "dietary",
+      "name" : "vegetarian",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 64472,
+      "display_name" : "Under 30 Minutes",
+      "root_tag_type" : "difficulty",
+      "name" : "under_30_minutes",
+      "parent_tag_name" : "difficulty",
+      "type" : "difficulty"
+    },
+    {
+      "id" : 64480,
+      "display_name" : "Valentine's Day",
+      "root_tag_type" : "seasonal",
+      "name" : "valentines_day",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 64483,
+      "display_name" : "Breakfast",
+      "root_tag_type" : "meal",
+      "name" : "breakfast",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64486,
+      "display_name" : "Dinner",
+      "root_tag_type" : "meal",
+      "name" : "dinner",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64488,
+      "display_name" : "Kid-Friendly",
+      "root_tag_type" : "cooking_style",
+      "name" : "kid_friendly",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 64502,
+      "display_name" : "Happy Hour",
+      "root_tag_type" : "occasion",
+      "name" : "happy_hour",
+      "parent_tag_name" : null,
+      "type" : "occasion"
+    },
+    {
+      "id" : 64503,
+      "display_name" : "Party",
+      "root_tag_type" : "seasonal",
+      "name" : "party",
+      "parent_tag_name" : "occasion",
+      "type" : "occasion"
+    },
+    {
+      "id" : 64506,
+      "display_name" : "Tasty Cookbook",
+      "root_tag_type" : "business_tags",
+      "name" : "tasty_cookbook",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 65838,
+      "display_name" : "Blender",
+      "root_tag_type" : "appliance",
+      "name" : "blender",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65844,
+      "display_name" : "Hand Mixer",
+      "root_tag_type" : "appliance",
+      "name" : "hand_mixer",
+      "parent_tag_name" : null,
+      "type" : "appliance"
+    },
+    {
+      "id" : 65845,
+      "display_name" : "Microwave",
+      "root_tag_type" : "appliance",
+      "name" : "microwave",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65848,
+      "display_name" : "Stove Top",
+      "root_tag_type" : "appliance",
+      "name" : "stove_top",
+      "parent_tag_name" : null,
+      "type" : "appliance"
+    },
+    {
+      "id" : 65850,
+      "display_name" : "Indulgent Sweets",
+      "root_tag_type" : "occasion",
+      "name" : "indulgent_sweets",
+      "parent_tag_name" : null,
+      "type" : "occasion"
+    },
+    {
+      "id" : 65851,
+      "display_name" : "Big Batch",
+      "root_tag_type" : "cooking_style",
+      "name" : "big_batch",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 65859,
+      "display_name" : "Pan Fry",
+      "root_tag_type" : "cooking_style",
+      "name" : "pan_fry",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 1247767,
+      "display_name" : "Bread Pan",
+      "root_tag_type" : "equipment",
+      "name" : "bread_pan",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247770,
+      "display_name" : "Colander",
+      "root_tag_type" : "equipment",
+      "name" : "colander",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247772,
+      "display_name" : "Ice Cream Scoop",
+      "root_tag_type" : "equipment",
+      "name" : "ice_cream_scoop",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247774,
+      "display_name" : "Lollipop Sticks",
+      "root_tag_type" : "equipment",
+      "name" : "lollipop_sticks",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247779,
+      "display_name" : "Paper Plates",
+      "root_tag_type" : "equipment",
+      "name" : "paper_plates",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247781,
+      "display_name" : "Peeler",
+      "root_tag_type" : "equipment",
+      "name" : "peeler",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247785,
+      "display_name" : "Pyrex",
+      "root_tag_type" : "equipment",
+      "name" : "pyrex",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247786,
+      "display_name" : "Sauce Pan",
+      "root_tag_type" : "equipment",
+      "name" : "sauce_pan",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247793,
+      "display_name" : "Whisk",
+      "root_tag_type" : "equipment",
+      "name" : "whisk",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247794,
+      "display_name" : "Wooden Spoon",
+      "root_tag_type" : "equipment",
+      "name" : "wooden_spoon",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247795,
+      "display_name" : "Zipper Freezer Bags",
+      "root_tag_type" : "equipment",
+      "name" : "zipper_freezer_bags",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280502,
+      "display_name" : "Cooling Rack",
+      "root_tag_type" : "equipment",
+      "name" : "cooling_rack",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 3527978,
+      "display_name" : "Holiday Cookie: How To",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_cookie_howto",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 3801552,
+      "display_name" : "Pescatarian",
+      "root_tag_type" : "dietary",
+      "name" : "pescatarian",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 3801554,
+      "display_name" : "Caribbean",
+      "root_tag_type" : "cuisine",
+      "name" : "caribbean",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 3802076,
+      "display_name" : "Black History Month",
+      "root_tag_type" : "holiday",
+      "name" : "black_history_month",
+      "parent_tag_name" : null,
+      "type" : "holiday"
+    },
+    {
+      "id" : 3802077,
+      "display_name" : "Asian Pacific American Heritage Month",
+      "root_tag_type" : "holiday",
+      "name" : "asian_pacific_american_heritage_month",
+      "parent_tag_name" : null,
+      "type" : "holiday"
+    },
+    {
+      "id" : 6361699,
+      "display_name" : "Almond Joy",
+      "root_tag_type" : "feature_page",
+      "name" : "almond_joy",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6361775,
+      "display_name" : "Lil Brut",
+      "root_tag_type" : "business_tags",
+      "name" : "lil_brut",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6433722,
+      "display_name" : "Tasty Holiday: Snacks",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_holiday_snacks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543464,
+      "display_name" : "NYNM Protein",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_protein",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543466,
+      "display_name" : "NYNM Meal Prep",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_meal_prep",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6683351,
+      "display_name" : "MC Breakfast Savory",
+      "root_tag_type" : "feature_page",
+      "name" : "mc_breakfast_savory",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6742797,
+      "display_name" : "Passover",
+      "root_tag_type" : "seasonal",
+      "name" : "passover",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 6931167,
+      "display_name" : "Air Fryer",
+      "root_tag_type" : "appliance",
+      "name" : "air_fryer",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 6953008,
+      "display_name" : "Filipino",
+      "root_tag_type" : "cuisine",
+      "name" : "filipino",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 6953039,
+      "display_name" : "Taiwanese",
+      "root_tag_type" : "cuisine",
+      "name" : "taiwanese",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 6953040,
+      "display_name" : "Swedish",
+      "root_tag_type" : "cuisine",
+      "name" : "swedish",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 6953043,
+      "display_name" : "Lebanese",
+      "root_tag_type" : "cuisine",
+      "name" : "lebanese",
+      "parent_tag_name" : "middle_eastern",
+      "type" : "middle_eastern"
+    },
+    {
+      "id" : 6986106,
+      "display_name" : "McCormick UGC One Pot Slow",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_ugc_one_pot_slow",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041337,
+      "display_name" : "Fourth Eat",
+      "root_tag_type" : "feature_page",
+      "name" : "fourth_eat",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7436545,
+      "display_name" : "Uber Game Day Dips",
+      "root_tag_type" : "feature_page",
+      "name" : "uber_game_day_dips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7560081,
+      "display_name" : "Live Jasmine and Tucker",
+      "root_tag_type" : "feature_page",
+      "name" : "live_jasmine_and_tucker",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7608068,
+      "display_name" : "Shoppable Recipes Holiday Appetizers",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_holiday_appetizers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7723151,
+      "display_name" : "Franks Handheld Bites",
+      "root_tag_type" : "feature_page",
+      "name" : "franks_handheld_bites",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7783332,
+      "display_name" : "Butterfinger Runner Up Cookies",
+      "root_tag_type" : "feature_page",
+      "name" : "butterfinger_runner_up_cookies",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7987315,
+      "display_name" : "Charcuterie Tips",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_tips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8030032,
+      "display_name" : "Charcuterie Breakfast",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_breakfast",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8091916,
+      "display_name" : "Low-Calorie",
+      "root_tag_type" : "healthy",
+      "name" : "low_calorie",
+      "parent_tag_name" : "healthy",
+      "type" : "healthy"
+    },
+    {
+      "id" : 8091920,
+      "display_name" : "High-Fiber",
+      "root_tag_type" : "healthy",
+      "name" : "high_fiber",
+      "parent_tag_name" : "healthy",
+      "type" : "healthy"
+    },
+    {
+      "id" : 8322950,
+      "display_name" : "Red",
+      "root_tag_type" : "feature_page",
+      "name" : "red",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8600869,
+      "display_name" : "Dole Crowd Pleasers",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_crowd_pleasers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8683061,
+      "display_name" : "McCormick Holiday Drinks",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_holiday_drinks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8860914,
+      "display_name" : "Kings Hawaiian Delectable Dips",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_delectable_dips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875017,
+      "display_name" : "South Africa African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "south_africa_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8907402,
+      "display_name" : "Incredible Egg Lunches",
+      "root_tag_type" : "feature_page",
+      "name" : "incredible_egg_lunches",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9104328,
+      "display_name" : "Country Crock Apps",
+      "root_tag_type" : "feature_page",
+      "name" : "country_crock_apps",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9295873,
+      "display_name" : "Asian",
+      "root_tag_type" : "cuisine",
+      "name" : "asian",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 9295874,
+      "display_name" : "European",
+      "root_tag_type" : "cuisine",
+      "name" : "european",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 9299130,
+      "display_name" : "Holidays",
+      "root_tag_type" : "seasonal",
+      "name" : "holidays",
+      "parent_tag_name" : "seasonal",
+      "type" : "seasonal"
+    },
+    {
+      "id" : 9299134,
+      "display_name" : "Occasion",
+      "root_tag_type" : "seasonal",
+      "name" : "occasion",
+      "parent_tag_name" : "seasonal",
+      "type" : "seasonal"
+    },
+    {
+      "id" : 9299354,
+      "display_name" : "Southern",
+      "root_tag_type" : "cuisine",
+      "name" : "southern",
+      "parent_tag_name" : "north_american",
+      "type" : "north_american"
+    },
+    {
+      "id" : 9299362,
+      "display_name" : "Bread",
+      "root_tag_type" : "appliance",
+      "name" : "bread",
+      "parent_tag_name" : "baking",
+      "type" : "baking"
+    },
+    {
+      "id" : 9299364,
+      "display_name" : "Sweet Breakfasts",
+      "root_tag_type" : "meal",
+      "name" : "sweet_breakfasts",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 9299366,
+      "display_name" : "Egg Breakfasts",
+      "root_tag_type" : "meal",
+      "name" : "egg_breakfasts",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 9299497,
+      "display_name" : "Coleslaws",
+      "root_tag_type" : "meal",
+      "name" : "coleslaws",
+      "parent_tag_name" : "salads",
+      "type" : "salads"
+    },
+    {
+      "id" : 9299515,
+      "display_name" : "Beef",
+      "root_tag_type" : "meal",
+      "name" : "beef",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299527,
+      "display_name" : "Stews",
+      "root_tag_type" : "meal",
+      "name" : "stews",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299528,
+      "display_name" : "Stir Fry",
+      "root_tag_type" : "meal",
+      "name" : "stir_fry",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299622,
+      "display_name" : "Lasagna",
+      "root_tag_type" : "meal",
+      "name" : "lasagna",
+      "parent_tag_name" : "pasta",
+      "type" : "pasta"
+    },
+    {
+      "id" : 9299623,
+      "display_name" : "Macaroni & Cheese",
+      "root_tag_type" : "meal",
+      "name" : "macaroni_cheese",
+      "parent_tag_name" : "pasta",
+      "type" : "pasta"
+    },
+    {
+      "id" : 9299649,
+      "display_name" : "Fish",
+      "root_tag_type" : "meal",
+      "name" : "fish",
+      "parent_tag_name" : "seafood",
+      "type" : "seafood"
+    },
+    {
+      "id" : 9299680,
+      "display_name" : "Pie and Cobblers",
+      "root_tag_type" : "meal",
+      "name" : "pie_and_cobblers",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299684,
+      "display_name" : "Puddings",
+      "root_tag_type" : "meal",
+      "name" : "puddings",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299793,
+      "display_name" : "Gin",
+      "root_tag_type" : "meal",
+      "name" : "gin",
+      "parent_tag_name" : "cocktails",
+      "type" : "cocktails"
+    },
+    {
+      "id" : 10032069,
+      "display_name" : "Kings Hawaiian Pizza",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_pizza",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10080871,
+      "display_name" : "cozy_fall_fare",
+      "root_tag_type" : "business_tags",
+      "name" : "cozy_fall_fare",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10219605,
+      "display_name" : "Shoppable Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10274841,
+      "display_name" : "zelle_pandan",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_pandan",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10274842,
+      "display_name" : "zelle_scallion_pork",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_scallion_pork",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10296625,
+      "display_name" : "Holiday Drinks",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_drinks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10315444,
+      "display_name" : "Decadent Dinners",
+      "root_tag_type" : "feature_page",
+      "name" : "decadent_dinners",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10623610,
+      "display_name" : "Seafood",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "seafood",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10742775,
+      "display_name" : "Kosher",
+      "root_tag_type" : "dietary",
+      "name" : "kosher",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 11024933,
+      "display_name" : "KH Sweets",
+      "root_tag_type" : "feature_page",
+      "name" : "kh_sweets",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11173650,
+      "display_name" : "Cap One Sips",
+      "root_tag_type" : "feature_page",
+      "name" : "cap_one_sips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11176535,
+      "display_name" : "National Sandwich Day",
+      "root_tag_type" : "meal",
+      "name" : "national_sandwich_day",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 11230772,
+      "display_name" : "Brittany",
+      "root_tag_type" : "feature_page",
+      "name" : "brittany",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11230775,
+      "display_name" : "Ivanna",
+      "root_tag_type" : "feature_page",
+      "name" : "ivanna",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11230776,
+      "display_name" : "Katie",
+      "root_tag_type" : "feature_page",
+      "name" : "katie",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 64451,
+      "display_name" : "Mediterranean",
+      "root_tag_type" : "cuisine",
+      "name" : "mediterranean",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 64454,
+      "display_name" : "Japanese",
+      "root_tag_type" : "cuisine",
+      "name" : "japanese",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 64455,
+      "display_name" : "Korean",
+      "root_tag_type" : "cuisine",
+      "name" : "korean",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 64463,
+      "display_name" : "Dairy-Free",
+      "root_tag_type" : "dietary",
+      "name" : "dairy_free",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 64481,
+      "display_name" : "Appetizers",
+      "root_tag_type" : "meal",
+      "name" : "appetizers",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64484,
+      "display_name" : "Brunch",
+      "root_tag_type" : "meal",
+      "name" : "brunch",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64485,
+      "display_name" : "Desserts",
+      "root_tag_type" : "meal",
+      "name" : "desserts",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64487,
+      "display_name" : "Drinks",
+      "root_tag_type" : "meal",
+      "name" : "drinks",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64489,
+      "display_name" : "Lunch",
+      "root_tag_type" : "meal",
+      "name" : "lunch",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64493,
+      "display_name" : "Deep-Fry",
+      "root_tag_type" : "cooking_style",
+      "name" : "deep_fry",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 64500,
+      "display_name" : "Date Night",
+      "root_tag_type" : "seasonal",
+      "name" : "date_night",
+      "parent_tag_name" : "occasion",
+      "type" : "occasion"
+    },
+    {
+      "id" : 188967,
+      "display_name" : "Special Occasion",
+      "root_tag_type" : "seasonal",
+      "name" : "special_occasion",
+      "parent_tag_name" : "occasion",
+      "type" : "occasion"
+    },
+    {
+      "id" : 1247768,
+      "display_name" : "Cake Pan",
+      "root_tag_type" : "equipment",
+      "name" : "cake_pan",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247769,
+      "display_name" : "Cheese Grater",
+      "root_tag_type" : "equipment",
+      "name" : "cheese_grater",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247775,
+      "display_name" : "Oven Mitts",
+      "root_tag_type" : "equipment",
+      "name" : "oven_mitts",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247776,
+      "display_name" : "Paper Bowls",
+      "root_tag_type" : "equipment",
+      "name" : "paper_bowls",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247777,
+      "display_name" : "Paper Cups",
+      "root_tag_type" : "equipment",
+      "name" : "paper_cups",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247787,
+      "display_name" : "Saute Pan",
+      "root_tag_type" : "equipment",
+      "name" : "saute_pan",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247789,
+      "display_name" : "Strainer",
+      "root_tag_type" : "equipment",
+      "name" : "strainer",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247790,
+      "display_name" : "Tongs",
+      "root_tag_type" : "equipment",
+      "name" : "tongs",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247796,
+      "display_name" : "Zipper Storage Bags",
+      "root_tag_type" : "equipment",
+      "name" : "zipper_storage_bags",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280499,
+      "display_name" : "Baking Cups",
+      "root_tag_type" : "equipment",
+      "name" : "baking_cups",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280510,
+      "display_name" : "Mixing Bowl",
+      "root_tag_type" : "equipment",
+      "name" : "mixing_bowl",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1691103,
+      "display_name" : "One Top Friendly",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_friendly",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3527977,
+      "display_name" : "Holiday Cookie: Recipe",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_cookie_recipe",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 3527979,
+      "display_name" : "Holiday Cookie: Hacks",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_cookie_hacks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 5143247,
+      "display_name" : "McCormick Easy Dinner",
+      "root_tag_type" : "business_tags",
+      "name" : "mccormick_easy_dinner",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5812430,
+      "display_name" : "Quarantine Cooking: Recipe",
+      "root_tag_type" : "feature_page",
+      "name" : "qfp_recipes",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 5831533,
+      "display_name" : "Eko Video",
+      "root_tag_type" : "business_tags",
+      "name" : "eko_video",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5831534,
+      "display_name" : "Best of Tasty",
+      "root_tag_type" : "business_tags",
+      "name" : "best_of_tasty",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5993379,
+      "display_name" : "Tasty's 5th Birthday: Savory",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_s_5th_birthday_savory",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6117477,
+      "display_name" : "Tasty EWD Family",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_ewd_family",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6143339,
+      "display_name" : "Every Occasion",
+      "root_tag_type" : "business_tags",
+      "name" : "every_occasion",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6361701,
+      "display_name" : "3 Musketeers",
+      "root_tag_type" : "feature_page",
+      "name" : "3_musketeers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6361774,
+      "display_name" : "For Real Grapefruit",
+      "root_tag_type" : "business_tags",
+      "name" : "for_real_grapefruit",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6361812,
+      "display_name" : "Tasty Dinner Kits",
+      "root_tag_type" : "business_tags",
+      "name" : "tasty_dinner_kits",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6389771,
+      "display_name" : "Tasty Holiday: Thanksgiving",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_holiday_thanksgiving",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6389772,
+      "display_name" : "Tasty Holiday: Christmas",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_holiday_christmas",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6389775,
+      "display_name" : "Tasty Holiday: Festive Favorites",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_holiday_festive_favorites",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6477325,
+      "display_name" : "Frank's Vegetarian Snacks",
+      "root_tag_type" : "feature_page",
+      "name" : "frank_s_vegetarian_snacks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543462,
+      "display_name" : "NYNM Expert",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_expert",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6573766,
+      "display_name" : "Lunar New Year",
+      "root_tag_type" : "seasonal",
+      "name" : "lunar_new_year",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 6683350,
+      "display_name" : "MC Breakfast Sweet",
+      "root_tag_type" : "feature_page",
+      "name" : "mc_breakfast_sweet",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6683352,
+      "display_name" : "MC Breakfast Healthy",
+      "root_tag_type" : "feature_page",
+      "name" : "mc_breakfast_healthy",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6711300,
+      "display_name" : "St. Patrick's Day",
+      "root_tag_type" : "seasonal",
+      "name" : "st_patrick_s_day",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 6718870,
+      "display_name" : "Spring Drink",
+      "root_tag_type" : "feature_page",
+      "name" : "spring_drink",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718874,
+      "display_name" : "Spring Holiday",
+      "root_tag_type" : "feature_page",
+      "name" : "spring_holiday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6830252,
+      "display_name" : "Budget Four",
+      "root_tag_type" : "feature_page",
+      "name" : "budget_four",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6854261,
+      "display_name" : "Cinco de Mayo",
+      "root_tag_type" : "seasonal",
+      "name" : "cinco_de_mayo",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 6854262,
+      "display_name" : "Mother's Day",
+      "root_tag_type" : "seasonal",
+      "name" : "mothers_day",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 6953046,
+      "display_name" : "Laotian",
+      "root_tag_type" : "cuisine",
+      "name" : "laotian",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 6953048,
+      "display_name" : "Cuban",
+      "root_tag_type" : "cuisine",
+      "name" : "cuban",
+      "parent_tag_name" : "caribbean",
+      "type" : "caribbean"
+    },
+    {
+      "id" : 6953052,
+      "display_name" : "Venezuelan",
+      "root_tag_type" : "cuisine",
+      "name" : "venezuelan",
+      "parent_tag_name" : "central_south_american",
+      "type" : "central_south_american"
+    },
+    {
+      "id" : 6986104,
+      "display_name" : "McCormick UGC One Pot Winners",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_ugc_one_pot_winners",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041320,
+      "display_name" : "Summer Eat",
+      "root_tag_type" : "feature_page",
+      "name" : "summer_eat",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041323,
+      "display_name" : "Summer Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "summer_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041338,
+      "display_name" : "Fourth Drink",
+      "root_tag_type" : "feature_page",
+      "name" : "fourth_drink",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7145248,
+      "display_name" : "Latinx Heritage Month",
+      "root_tag_type" : "holiday",
+      "name" : "latinx_heritage_month",
+      "parent_tag_name" : null,
+      "type" : "holiday"
+    },
+    {
+      "id" : 7436544,
+      "display_name" : "Uber Game Day Appetizers",
+      "root_tag_type" : "feature_page",
+      "name" : "uber_game_day_appetizers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7510771,
+      "display_name" : "Thanksgiving Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "thanksgiving_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7510772,
+      "display_name" : "Thanksgiving Sips",
+      "root_tag_type" : "feature_page",
+      "name" : "thanksgiving_sips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7559500,
+      "display_name" : "Shoppable Recipes Holiday Dinners",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_holiday_dinners",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8030030,
+      "display_name" : "Charcuterie Sweetchuterie",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_sweetchuterie",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8030031,
+      "display_name" : "Charcuterie Appetizers",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_appetizers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8091747,
+      "display_name" : "Under 45 Minutes",
+      "root_tag_type" : "difficulty",
+      "name" : "under_45_minutes",
+      "parent_tag_name" : "difficulty",
+      "type" : "difficulty"
+    },
+    {
+      "id" : 8104111,
+      "display_name" : "McCormick World Hearty",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_world_hearty",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8104113,
+      "display_name" : "McCormick World Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_world_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8227134,
+      "display_name" : "Juneteenth",
+      "root_tag_type" : "holiday",
+      "name" : "juneteenth",
+      "parent_tag_name" : null,
+      "type" : "holiday"
+    },
+    {
+      "id" : 8322951,
+      "display_name" : "Pink",
+      "root_tag_type" : "feature_page",
+      "name" : "pink",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8719451,
+      "display_name" : "Dole Hearty Meals",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_hearty_meals",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8874994,
+      "display_name" : "Ghana African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "ghana_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875005,
+      "display_name" : "Kenya African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "kenya_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875006,
+      "display_name" : "Haiti African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "haiti_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875007,
+      "display_name" : "Trinidad African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "trinidad_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875016,
+      "display_name" : "East Africa African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "east_africa_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9104326,
+      "display_name" : "Country Crock Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "country_crock_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9104329,
+      "display_name" : "Country Crock Veggies",
+      "root_tag_type" : "feature_page",
+      "name" : "country_crock_veggies",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9295810,
+      "display_name" : "Cooking Style",
+      "root_tag_type" : "cooking_style",
+      "name" : "cooking_style",
+      "parent_tag_name" : null,
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 9295813,
+      "display_name" : "Meal",
+      "root_tag_type" : "meal",
+      "name" : "meal",
+      "parent_tag_name" : null,
+      "type" : "meal"
+    },
+    {
+      "id" : 9295816,
+      "display_name" : "Difficulty",
+      "root_tag_type" : "difficulty",
+      "name" : "difficulty",
+      "parent_tag_name" : null,
+      "type" : "difficulty"
+    },
+    {
+      "id" : 9299360,
+      "display_name" : "Picnic",
+      "root_tag_type" : "seasonal",
+      "name" : "picnic",
+      "parent_tag_name" : "occasion",
+      "type" : "occasion"
+    },
+    {
+      "id" : 9299361,
+      "display_name" : "New Years",
+      "root_tag_type" : "seasonal",
+      "name" : "new_years",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 9299368,
+      "display_name" : "Smoothies & Smoothie Bowls",
+      "root_tag_type" : "meal",
+      "name" : "smoothies_smoothie_bowls",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 9299397,
+      "display_name" : "Pancakes",
+      "root_tag_type" : "meal",
+      "name" : "pancakes",
+      "parent_tag_name" : "sweet_breakfasts",
+      "type" : "sweet_breakfasts"
+    },
+    {
+      "id" : 9299495,
+      "display_name" : "Salads",
+      "root_tag_type" : "meal",
+      "name" : "salads",
+      "parent_tag_name" : "lunch",
+      "type" : "lunch"
+    },
+    {
+      "id" : 9299512,
+      "display_name" : "Dressings",
+      "root_tag_type" : "meal",
+      "name" : "dressings",
+      "parent_tag_name" : "salads",
+      "type" : "salads"
+    },
+    {
+      "id" : 9299516,
+      "display_name" : "Pork",
+      "root_tag_type" : "meal",
+      "name" : "pork",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299524,
+      "display_name" : "Pot Roast",
+      "root_tag_type" : "meal",
+      "name" : "pot_roast",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299526,
+      "display_name" : "Soups",
+      "root_tag_type" : "meal",
+      "name" : "soups",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299686,
+      "display_name" : "Cupcakes",
+      "root_tag_type" : "meal",
+      "name" : "cupcakes",
+      "parent_tag_name" : "cakes",
+      "type" : "cakes"
+    },
+    {
+      "id" : 9299687,
+      "display_name" : "Ice Cream Cakes",
+      "root_tag_type" : "meal",
+      "name" : "ice_cream_cakes",
+      "parent_tag_name" : "ice_cream",
+      "type" : "ice_cream"
+    },
+    {
+      "id" : 9299797,
+      "display_name" : "Rum",
+      "root_tag_type" : "meal",
+      "name" : "rum",
+      "parent_tag_name" : "cocktails",
+      "type" : "cocktails"
+    },
+    {
+      "id" : 9345545,
+      "display_name" : "Kings Hawaiian On the Grill",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_on_the_grill",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9345546,
+      "display_name" : "Kings Hawaiian Perfect Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_perfect_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10032068,
+      "display_name" : "Kings Hawaiian Nachos",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_nachos",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10032071,
+      "display_name" : "Kings Hawaiian Dips",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_dips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10080870,
+      "display_name" : "ghoulishly_good_desserts",
+      "root_tag_type" : "business_tags",
+      "name" : "ghoulishly_good_desserts",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10089785,
+      "display_name" : "Walmart Meal Planning October",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_meal_planning_october",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10219607,
+      "display_name" : "Shoppable Sips",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_sips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10274844,
+      "display_name" : "zelle_matcha_sesame",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_matcha_sesame",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10296624,
+      "display_name" : "Holiday Mains",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_mains",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10315445,
+      "display_name" : "Slow Cooker Scores",
+      "root_tag_type" : "feature_page",
+      "name" : "slow_cooker_scores",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10623590,
+      "display_name" : "Soy",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "soy",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10640006,
+      "display_name" : "Tree nuts",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "tree_nuts",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10912079,
+      "display_name" : "Tillamook Chicken",
+      "root_tag_type" : "feature_page",
+      "name" : "tillamook_chicken",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11024936,
+      "display_name" : "KH Cheesy Delights",
+      "root_tag_type" : "feature_page",
+      "name" : "kh_cheesy_delights",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11085392,
+      "display_name" : "Thomas Meal Planning 4",
+      "root_tag_type" : "business_tags",
+      "name" : "thomas_meal_planning_4",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 11230778,
+      "display_name" : "Kelly",
+      "root_tag_type" : "feature_page",
+      "name" : "kelly",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 64446,
+      "display_name" : "Brazilian",
+      "root_tag_type" : "cuisine",
+      "name" : "brazilian",
+      "parent_tag_name" : "central_south_american",
+      "type" : "central_south_american"
+    },
+    {
+      "id" : 64447,
+      "display_name" : "British",
+      "root_tag_type" : "cuisine",
+      "name" : "british",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 64448,
+      "display_name" : "Chinese",
+      "root_tag_type" : "cuisine",
+      "name" : "chinese",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 64450,
+      "display_name" : "German",
+      "root_tag_type" : "cuisine",
+      "name" : "german",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 64452,
+      "display_name" : "Indian",
+      "root_tag_type" : "cuisine",
+      "name" : "indian",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 64457,
+      "display_name" : "Mexican",
+      "root_tag_type" : "cuisine",
+      "name" : "mexican",
+      "parent_tag_name" : "north_american",
+      "type" : "north_american"
+    },
+    {
+      "id" : 64459,
+      "display_name" : "Seafood",
+      "root_tag_type" : "meal",
+      "name" : "seafood",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 64462,
+      "display_name" : "Comfort Food",
+      "root_tag_type" : "cooking_style",
+      "name" : "comfort_food",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 64468,
+      "display_name" : "Vegan",
+      "root_tag_type" : "dietary",
+      "name" : "vegan",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 64470,
+      "display_name" : "5 Ingredients or Less",
+      "root_tag_type" : "difficulty",
+      "name" : "5_ingredients_or_less",
+      "parent_tag_name" : "difficulty",
+      "type" : "difficulty"
+    },
+    {
+      "id" : 64475,
+      "display_name" : "4th of July",
+      "root_tag_type" : "seasonal",
+      "name" : "4th_of_july",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 64492,
+      "display_name" : "Baking",
+      "root_tag_type" : "appliance",
+      "name" : "baking",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 64509,
+      "display_name" : "Spring",
+      "root_tag_type" : "seasonal",
+      "name" : "spring",
+      "parent_tag_name" : "seasonal",
+      "type" : "seasonal"
+    },
+    {
+      "id" : 64511,
+      "display_name" : "Winter",
+      "root_tag_type" : "seasonal",
+      "name" : "winter",
+      "parent_tag_name" : "seasonal",
+      "type" : "seasonal"
+    },
+    {
+      "id" : 65839,
+      "display_name" : "Broiler",
+      "root_tag_type" : "appliance",
+      "name" : "broiler",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65840,
+      "display_name" : "Cast Iron Pan",
+      "root_tag_type" : "appliance",
+      "name" : "cast_iron_pan",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65847,
+      "display_name" : "Slow Cooker",
+      "root_tag_type" : "appliance",
+      "name" : "slow_cooker",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65849,
+      "display_name" : "Wok",
+      "root_tag_type" : "appliance",
+      "name" : "wok",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65852,
+      "display_name" : "Mashup",
+      "root_tag_type" : "cooking_style",
+      "name" : "mashup",
+      "parent_tag_name" : null,
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 65854,
+      "display_name" : "No Bake Desserts",
+      "root_tag_type" : "cooking_style",
+      "name" : "no_bake_desserts",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 1247778,
+      "display_name" : "Paper Napkins",
+      "root_tag_type" : "equipment",
+      "name" : "paper_napkins",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247780,
+      "display_name" : "Parchment Paper",
+      "root_tag_type" : "equipment",
+      "name" : "parchment_paper",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247792,
+      "display_name" : "Wax Paper",
+      "root_tag_type" : "equipment",
+      "name" : "wax_paper",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280498,
+      "display_name" : "Cooking Kit",
+      "root_tag_type" : "business_tags",
+      "name" : "cooking_kit",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 1280506,
+      "display_name" : "Liquid Measuring Cup",
+      "root_tag_type" : "equipment",
+      "name" : "liquid_measuring_cup",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280507,
+      "display_name" : "Dry Measuring Cups",
+      "root_tag_type" : "equipment",
+      "name" : "dry_measuring_cups",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280512,
+      "display_name" : "Rolling Pin",
+      "root_tag_type" : "equipment",
+      "name" : "rolling_pin",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280514,
+      "display_name" : "Spider",
+      "root_tag_type" : "equipment",
+      "name" : "spider",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 2651752,
+      "display_name" : "Main Feed",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_main_feed",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651756,
+      "display_name" : "Veggies",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_veggies",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651757,
+      "display_name" : "Sides",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_sides",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651761,
+      "display_name" : "Steak",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_steak",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3801551,
+      "display_name" : "Ice Cream Social",
+      "root_tag_type" : "business_tags",
+      "name" : "ice_cream_social",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3802078,
+      "display_name" : "Pride Month",
+      "root_tag_type" : "holiday",
+      "name" : "pride_month",
+      "parent_tag_name" : null,
+      "type" : "holiday"
+    },
+    {
+      "id" : 4202175,
+      "display_name" : "Sponsored Recipe",
+      "root_tag_type" : "business_tags",
+      "name" : "sponsored_recipe",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5923246,
+      "display_name" : "Beyond Red Blend",
+      "root_tag_type" : "business_tags",
+      "name" : "beyond_red_blend",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5923247,
+      "display_name" : "Oh So Rosé",
+      "root_tag_type" : "business_tags",
+      "name" : "oh_so_rose",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6117476,
+      "display_name" : "Tasty EWD Healthy",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_ewd_healthy",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6117478,
+      "display_name" : "Tasty EWD Fall",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_ewd_fall",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6117479,
+      "display_name" : "Tasty EWD Fifteen",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_ewd_fifteen",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6207870,
+      "display_name" : "Walmart Plus Holiday 2020",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_plus_holiday_2020",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6361700,
+      "display_name" : "Snickers",
+      "root_tag_type" : "feature_page",
+      "name" : "snickers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6361740,
+      "display_name" : "Hershey's",
+      "root_tag_type" : "feature_page",
+      "name" : "hershey_s",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6361741,
+      "display_name" : "Peppermint Pattie",
+      "root_tag_type" : "feature_page",
+      "name" : "peppermint_pattie",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6361773,
+      "display_name" : "Deeply Blood Orange",
+      "root_tag_type" : "business_tags",
+      "name" : "deeply_blood_orange",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6361809,
+      "display_name" : "Raspberry Rosé",
+      "root_tag_type" : "business_tags",
+      "name" : "raspberry_rose",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6477317,
+      "display_name" : "Frank's Cheesy Apps",
+      "root_tag_type" : "feature_page",
+      "name" : "frank_s_cheesy_apps",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718864,
+      "display_name" : "Tips Basics",
+      "root_tag_type" : "feature_page",
+      "name" : "tips_basics",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718866,
+      "display_name" : "Tips Pros",
+      "root_tag_type" : "feature_page",
+      "name" : "tips_pros",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718868,
+      "display_name" : "Tips Culinary",
+      "root_tag_type" : "feature_page",
+      "name" : "tips_culinary",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718876,
+      "display_name" : "Spring Kitchen",
+      "root_tag_type" : "feature_page",
+      "name" : "spring_kitchen",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6807663,
+      "display_name" : "Tasty EWD Comfort",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_ewd_comfort",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6830248,
+      "display_name" : "Budget 10",
+      "root_tag_type" : "feature_page",
+      "name" : "budget_10",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6830251,
+      "display_name" : "Budget Shop",
+      "root_tag_type" : "feature_page",
+      "name" : "budget_shop",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6953012,
+      "display_name" : "Hawaiian",
+      "root_tag_type" : "cuisine",
+      "name" : "hawaiian",
+      "parent_tag_name" : "north_american",
+      "type" : "north_american"
+    },
+    {
+      "id" : 6953047,
+      "display_name" : "Dominican",
+      "root_tag_type" : "cuisine",
+      "name" : "dominican",
+      "parent_tag_name" : "caribbean",
+      "type" : "caribbean"
+    },
+    {
+      "id" : 6953050,
+      "display_name" : "Puerto Rican",
+      "root_tag_type" : "cuisine",
+      "name" : "puerto_rican",
+      "parent_tag_name" : "caribbean",
+      "type" : "caribbean"
+    },
+    {
+      "id" : 7041321,
+      "display_name" : "Summer Drink",
+      "root_tag_type" : "feature_page",
+      "name" : "summer_drink",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041322,
+      "display_name" : "Summer Holiday",
+      "root_tag_type" : "feature_page",
+      "name" : "summer_holiday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041324,
+      "display_name" : "Summer Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "summer_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7336055,
+      "display_name" : "Shoppable Recipes Meal Prep",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_meal_prep",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7510744,
+      "display_name" : "Thanksgiving Classics",
+      "root_tag_type" : "feature_page",
+      "name" : "thanksgiving_classics",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7510780,
+      "display_name" : "Thanksgiving Slow",
+      "root_tag_type" : "feature_page",
+      "name" : "thanksgiving_slow",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7559501,
+      "display_name" : "Shoppable Recipes Seasonal Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_seasonal_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7584483,
+      "display_name" : "Live Upcoming",
+      "root_tag_type" : "feature_page",
+      "name" : "live_upcoming",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7723148,
+      "display_name" : "Franks Spicy Bites",
+      "root_tag_type" : "feature_page",
+      "name" : "franks_spicy_bites",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7783333,
+      "display_name" : "Butterfinger Runner Up Bark",
+      "root_tag_type" : "feature_page",
+      "name" : "butterfinger_runner_up_bark",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7783334,
+      "display_name" : "Butterfinger Other Recipes",
+      "root_tag_type" : "feature_page",
+      "name" : "butterfinger_other_recipes",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7987316,
+      "display_name" : "Charcuterie Recipes",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_recipes",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8029893,
+      "display_name" : "Tasty Charcuterie Quizzes",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_charcuterie_quizzes",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8091756,
+      "display_name" : "Keto",
+      "root_tag_type" : "dietary",
+      "name" : "keto",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 8091917,
+      "display_name" : "High-Protein",
+      "root_tag_type" : "healthy",
+      "name" : "high_protein",
+      "parent_tag_name" : "healthy",
+      "type" : "healthy"
+    },
+    {
+      "id" : 8104112,
+      "display_name" : "McCormick World Vegetarian",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_world_vegetarian",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8322948,
+      "display_name" : "Rainbow",
+      "root_tag_type" : "feature_page",
+      "name" : "rainbow",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8322952,
+      "display_name" : "Green",
+      "root_tag_type" : "feature_page",
+      "name" : "green",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8600867,
+      "display_name" : "Dole Morning Starters",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_morning_starters",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8600868,
+      "display_name" : "Dole Easy Appetizers",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_easy_appetizers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8683062,
+      "display_name" : "McCormick Holiday Appetizers",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_holiday_appetizers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8719452,
+      "display_name" : "Dole Beverages",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_beverages",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8860915,
+      "display_name" : "Kings Hawaiian Finger Foods",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_finger_foods",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875011,
+      "display_name" : "Jamaica African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "jamaica_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875013,
+      "display_name" : "PR African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "pr_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8907401,
+      "display_name" : "Incredible Egg Breakfasts",
+      "root_tag_type" : "feature_page",
+      "name" : "incredible_egg_breakfasts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8907403,
+      "display_name" : "Incredible Egg Dinners",
+      "root_tag_type" : "feature_page",
+      "name" : "incredible_egg_dinners",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9164153,
+      "display_name" : "Ooni Classics",
+      "root_tag_type" : "feature_page",
+      "name" : "ooni_classics",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9164154,
+      "display_name" : "Ooni Pizza",
+      "root_tag_type" : "feature_page",
+      "name" : "ooni_pizza",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9295814,
+      "display_name" : "Dietary",
+      "root_tag_type" : "dietary",
+      "name" : "dietary",
+      "parent_tag_name" : null,
+      "type" : "dietary"
+    },
+    {
+      "id" : 9299355,
+      "display_name" : "Southwestern",
+      "root_tag_type" : "cuisine",
+      "name" : "southwestern",
+      "parent_tag_name" : "north_american",
+      "type" : "north_american"
+    },
+    {
+      "id" : 9299363,
+      "display_name" : "Rolls",
+      "root_tag_type" : "appliance",
+      "name" : "rolls",
+      "parent_tag_name" : "baking",
+      "type" : "baking"
+    },
+    {
+      "id" : 9299367,
+      "display_name" : "Breakfast Sandwiches",
+      "root_tag_type" : "meal",
+      "name" : "breakfast_sandwiches",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 9299369,
+      "display_name" : "Breads & Pastries",
+      "root_tag_type" : "meal",
+      "name" : "breads_pastries",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 9299371,
+      "display_name" : "Cocktails",
+      "root_tag_type" : "meal",
+      "name" : "cocktails",
+      "parent_tag_name" : "drinks",
+      "type" : "drinks"
+    },
+    {
+      "id" : 9299372,
+      "display_name" : "Coffee",
+      "root_tag_type" : "meal",
+      "name" : "coffee",
+      "parent_tag_name" : "drinks",
+      "type" : "drinks"
+    },
+    {
+      "id" : 9299494,
+      "display_name" : "Sandwiches",
+      "root_tag_type" : "meal",
+      "name" : "sandwiches",
+      "parent_tag_name" : "lunch",
+      "type" : "lunch"
+    },
+    {
+      "id" : 9299517,
+      "display_name" : "Casseroles",
+      "root_tag_type" : "meal",
+      "name" : "casseroles",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299523,
+      "display_name" : "Pizza",
+      "root_tag_type" : "meal",
+      "name" : "pizza",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299621,
+      "display_name" : "Baked Pasta",
+      "root_tag_type" : "meal",
+      "name" : "baked_pasta",
+      "parent_tag_name" : "pasta",
+      "type" : "pasta"
+    },
+    {
+      "id" : 9299650,
+      "display_name" : "Shellfish",
+      "root_tag_type" : "meal",
+      "name" : "shellfish",
+      "parent_tag_name" : "seafood",
+      "type" : "seafood"
+    },
+    {
+      "id" : 9299664,
+      "display_name" : "Sliders",
+      "root_tag_type" : "meal",
+      "name" : "sliders",
+      "parent_tag_name" : "appetizers",
+      "type" : "appetizers"
+    },
+    {
+      "id" : 9299679,
+      "display_name" : "Cookies",
+      "root_tag_type" : "meal",
+      "name" : "cookies",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299682,
+      "display_name" : "Pastries",
+      "root_tag_type" : "meal",
+      "name" : "pastries",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299796,
+      "display_name" : "Tequila",
+      "root_tag_type" : "meal",
+      "name" : "tequila",
+      "parent_tag_name" : "cocktails",
+      "type" : "cocktails"
+    },
+    {
+      "id" : 9299832,
+      "display_name" : "Shakes",
+      "root_tag_type" : "meal",
+      "name" : "shakes",
+      "parent_tag_name" : "drinks",
+      "type" : "drinks"
+    },
+    {
+      "id" : 9345544,
+      "display_name" : "Kings Hawaiian Sliders",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_sliders",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9345547,
+      "display_name" : "Kings Hawaiian BBQ Dessert",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_bbq_dessert",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10011614,
+      "display_name" : "Walmart Meal Planning September",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_meal_planning_september",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10219603,
+      "display_name" : "Shoppable Big Bird",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_big_bird",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10219604,
+      "display_name" : "Shoppable Potatoes",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_potatoes",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10274846,
+      "display_name" : "zelle_pay_you",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_pay_you",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10296619,
+      "display_name" : "Crispy Cookies",
+      "root_tag_type" : "feature_page",
+      "name" : "crispy_cookies",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10296623,
+      "display_name" : "Holiday Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10315442,
+      "display_name" : "Weekday Meals",
+      "root_tag_type" : "feature_page",
+      "name" : "weekday_meals",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10554046,
+      "display_name" : "Satiating Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "satiating_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10554047,
+      "display_name" : "Delectable Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "delectable_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10603775,
+      "display_name" : "English Muffins",
+      "root_tag_type" : "meal",
+      "name" : "english_muffins",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 10623611,
+      "display_name" : "Beef",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "beef",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10623612,
+      "display_name" : "Chicken",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "chicken",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10742776,
+      "display_name" : "Alcohol-Free",
+      "root_tag_type" : "dietary",
+      "name" : "alcohol_free",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 10874300,
+      "display_name" : "Thomas Meal Planning 2",
+      "root_tag_type" : "business_tags",
+      "name" : "thomas_meal_planning_2",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10912099,
+      "display_name" : "Tillamook Mozz Sticks",
+      "root_tag_type" : "feature_page",
+      "name" : "tillamook_mozz_sticks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10945404,
+      "display_name" : "Mccormick Sunday",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_sunday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10945405,
+      "display_name" : "Mccormick Monday",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_monday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10945406,
+      "display_name" : "Mccormick Tuesday",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_tuesday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10945409,
+      "display_name" : "Mccormick Friday ",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_friday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11024932,
+      "display_name" : "KH Roll Paradise",
+      "root_tag_type" : "feature_page",
+      "name" : "kh_roll_paradise",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11024935,
+      "display_name" : "KH Wings",
+      "root_tag_type" : "feature_page",
+      "name" : "kh_wings",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11036620,
+      "display_name" : "Better Breakfast",
+      "root_tag_type" : "meal",
+      "name" : "better_breakfast",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 11196928,
+      "display_name" : "Sandwiches For Every Taste",
+      "root_tag_type" : "meal",
+      "name" : "sandwiches_for_every_taste",
+      "parent_tag_name" : "lunch",
+      "type" : "lunch"
+    },
+    {
+      "id" : 11230773,
+      "display_name" : "Ronica",
+      "root_tag_type" : "feature_page",
+      "name" : "ronica",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 64444,
+      "display_name" : "North American",
+      "root_tag_type" : "cuisine",
+      "name" : "north_american",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 64461,
+      "display_name" : "Vietnamese",
+      "root_tag_type" : "cuisine",
+      "name" : "vietnamese",
+      "parent_tag_name" : "asian",
+      "type" : "asian"
+    },
+    {
+      "id" : 64471,
+      "display_name" : "Easy",
+      "root_tag_type" : "difficulty",
+      "name" : "easy",
+      "parent_tag_name" : "difficulty",
+      "type" : "difficulty"
+    },
+    {
+      "id" : 64473,
+      "display_name" : "Christmas",
+      "root_tag_type" : "seasonal",
+      "name" : "christmas",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 64474,
+      "display_name" : "Easter",
+      "root_tag_type" : "seasonal",
+      "name" : "easter",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 64479,
+      "display_name" : "Thanksgiving",
+      "root_tag_type" : "seasonal",
+      "name" : "thanksgiving",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 64491,
+      "display_name" : "Snacks",
+      "root_tag_type" : "meal",
+      "name" : "snacks",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64498,
+      "display_name" : "Steam",
+      "root_tag_type" : "cooking_style",
+      "name" : "steam",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 64504,
+      "display_name" : "BBQ",
+      "root_tag_type" : "seasonal",
+      "name" : "bbq",
+      "parent_tag_name" : "occasion",
+      "type" : "occasion"
+    },
+    {
+      "id" : 65841,
+      "display_name" : "Dutch Oven",
+      "root_tag_type" : "appliance",
+      "name" : "dutch_oven",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65842,
+      "display_name" : "Food Processor",
+      "root_tag_type" : "appliance",
+      "name" : "food_processor",
+      "parent_tag_name" : null,
+      "type" : "appliance"
+    },
+    {
+      "id" : 65853,
+      "display_name" : "Meal Prep",
+      "root_tag_type" : "cooking_style",
+      "name" : "meal_prep",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 65856,
+      "display_name" : "Stuffed",
+      "root_tag_type" : "cooking_style",
+      "name" : "stuffed",
+      "parent_tag_name" : null,
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 1036859,
+      "display_name" : "Licensed Video",
+      "root_tag_type" : "business_tags",
+      "name" : "licensed_video",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 1247771,
+      "display_name" : "Cupcake Pan",
+      "root_tag_type" : "equipment",
+      "name" : "cupcake_pan",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247773,
+      "display_name" : "Ice Cube Tray",
+      "root_tag_type" : "equipment",
+      "name" : "ice_cube_tray",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247782,
+      "display_name" : "Pie Dish",
+      "root_tag_type" : "equipment",
+      "name" : "pie_dish",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247783,
+      "display_name" : "Plastic Utensils",
+      "root_tag_type" : "equipment",
+      "name" : "plastic_utensils",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280500,
+      "display_name" : "Baking Pan",
+      "root_tag_type" : "equipment",
+      "name" : "baking_pan",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280503,
+      "display_name" : "Cutting Board",
+      "root_tag_type" : "equipment",
+      "name" : "cutting_board",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280511,
+      "display_name" : "Offset Spatula",
+      "root_tag_type" : "equipment",
+      "name" : "offset_spatula",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 2651753,
+      "display_name" : "Meat",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_meat",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651755,
+      "display_name" : "Seafood",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_seafood",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651760,
+      "display_name" : "Sauces",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_sauces",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3801553,
+      "display_name" : "African",
+      "root_tag_type" : "cuisine",
+      "name" : "african",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 3956651,
+      "display_name" : "McCormick Seasoned Pro",
+      "root_tag_type" : "business_tags",
+      "name" : "mccormick_seasoned_pro",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3956652,
+      "display_name" : "Schwartz Seasoned Pro",
+      "root_tag_type" : "business_tags",
+      "name" : "schwartz_seasoned_pro",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3956653,
+      "display_name" : "Club House Seasoned Pro",
+      "root_tag_type" : "business_tags",
+      "name" : "club_house_seasoned_pro",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 4708980,
+      "display_name" : "Walmart Holiday Bundle",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_holiday_bundle",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5923248,
+      "display_name" : "Srsly Sauv Blanc",
+      "root_tag_type" : "business_tags",
+      "name" : "srsly_sauv_blanc",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5923249,
+      "display_name" : "Tasty's 5th Birthday: Recipe",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_s_5th_birthday_recipe",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 5949791,
+      "display_name" : "Light Bites",
+      "root_tag_type" : "business_tags",
+      "name" : "light_bites",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5993378,
+      "display_name" : "Tasty's 5th Birthday: Sweet",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_s_5th_birthday_sweet",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6117480,
+      "display_name" : "Tasty EWD Tips",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_ewd_tips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6337137,
+      "display_name" : "Holiday Treats",
+      "root_tag_type" : "business_tags",
+      "name" : "holiday_treats",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6389774,
+      "display_name" : "Tasty Holiday: NYE",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_holiday_nye",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543465,
+      "display_name" : "NYNM Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6683353,
+      "display_name" : "MC Breakfast Easy",
+      "root_tag_type" : "feature_page",
+      "name" : "mc_breakfast_easy",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6830249,
+      "display_name" : "Budget Plans",
+      "root_tag_type" : "feature_page",
+      "name" : "budget_plans",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6953014,
+      "display_name" : "Kenyan",
+      "root_tag_type" : "cuisine",
+      "name" : "kenyan",
+      "parent_tag_name" : "african",
+      "type" : "african"
+    },
+    {
+      "id" : 6953015,
+      "display_name" : "South African",
+      "root_tag_type" : "cuisine",
+      "name" : "south_african",
+      "parent_tag_name" : "african",
+      "type" : "african"
+    },
+    {
+      "id" : 6953041,
+      "display_name" : "Haitian",
+      "root_tag_type" : "cuisine",
+      "name" : "haitian",
+      "parent_tag_name" : "caribbean",
+      "type" : "caribbean"
+    },
+    {
+      "id" : 6953042,
+      "display_name" : "Persian",
+      "root_tag_type" : "cuisine",
+      "name" : "persian",
+      "parent_tag_name" : "middle_eastern",
+      "type" : "middle_eastern"
+    },
+    {
+      "id" : 6953049,
+      "display_name" : "Jamaican",
+      "root_tag_type" : "cuisine",
+      "name" : "jamaican",
+      "parent_tag_name" : "caribbean",
+      "type" : "caribbean"
+    },
+    {
+      "id" : 6953051,
+      "display_name" : "Soul Food",
+      "root_tag_type" : "cuisine",
+      "name" : "soul_food",
+      "parent_tag_name" : "north_american",
+      "type" : "north_american"
+    },
+    {
+      "id" : 6986105,
+      "display_name" : "McCormick UGC One Pot Pasta",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_ugc_one_pot_pasta",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041336,
+      "display_name" : "Fourth Picks",
+      "root_tag_type" : "feature_page",
+      "name" : "fourth_picks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041339,
+      "display_name" : "Fourth Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "fourth_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7041340,
+      "display_name" : "Fourth Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "fourth_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7436546,
+      "display_name" : "Uber Game Day Ribs",
+      "root_tag_type" : "feature_page",
+      "name" : "uber_game_day_ribs",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7436547,
+      "display_name" : "Uber Game Day Sliders",
+      "root_tag_type" : "feature_page",
+      "name" : "uber_game_day_sliders",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7510745,
+      "display_name" : "Thanksgiving Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "thanksgiving_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7510773,
+      "display_name" : "Thanksgiving Vegetarian",
+      "root_tag_type" : "feature_page",
+      "name" : "thanksgiving_vegetarian",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7560083,
+      "display_name" : "Live Shop All",
+      "root_tag_type" : "feature_page",
+      "name" : "live_shop_all",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7723150,
+      "display_name" : "Franks Dips",
+      "root_tag_type" : "feature_page",
+      "name" : "franks_dips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7987314,
+      "display_name" : "Charcuterie Inspiration",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_inspiration",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8030029,
+      "display_name" : "Charcuterie Dips",
+      "root_tag_type" : "feature_page",
+      "name" : "charcuterie_dips",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8091748,
+      "display_name" : "Under 1 Hour",
+      "root_tag_type" : "difficulty",
+      "name" : "under_1_hour",
+      "parent_tag_name" : "difficulty",
+      "type" : "difficulty"
+    },
+    {
+      "id" : 8091918,
+      "display_name" : "Low-Sugar",
+      "root_tag_type" : "healthy",
+      "name" : "low_sugar",
+      "parent_tag_name" : "healthy",
+      "type" : "healthy"
+    },
+    {
+      "id" : 8683063,
+      "display_name" : "McCormick Holiday Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_holiday_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8683065,
+      "display_name" : "McCormick Holiday Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_holiday_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8747851,
+      "display_name" : "Homemade Holiday",
+      "root_tag_type" : "feature_page",
+      "name" : "homemade_holiday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8860916,
+      "display_name" : "Kings Hawaiian Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8874991,
+      "display_name" : "Ethiopia African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "ethiopia_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8874993,
+      "display_name" : "CapeVerde African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "capeverde_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875009,
+      "display_name" : "SouthernUS African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "southernus_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875010,
+      "display_name" : "DR African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "dr_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875012,
+      "display_name" : "Brazil African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "brazil_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8907404,
+      "display_name" : "Incredible Egg Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "incredible_egg_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9104327,
+      "display_name" : "Country Crock Brunch",
+      "root_tag_type" : "feature_page",
+      "name" : "country_crock_brunch",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9295811,
+      "display_name" : "Appliance",
+      "root_tag_type" : "appliance",
+      "name" : "appliance",
+      "parent_tag_name" : null,
+      "type" : "appliance"
+    },
+    {
+      "id" : 9295812,
+      "display_name" : "Seasonal",
+      "root_tag_type" : "seasonal",
+      "name" : "seasonal",
+      "parent_tag_name" : null,
+      "type" : "seasonal"
+    },
+    {
+      "id" : 9299370,
+      "display_name" : "Beverages",
+      "root_tag_type" : "meal",
+      "name" : "beverages",
+      "parent_tag_name" : "breakfast",
+      "type" : "breakfast"
+    },
+    {
+      "id" : 9299396,
+      "display_name" : "Waffles",
+      "root_tag_type" : "meal",
+      "name" : "waffles",
+      "parent_tag_name" : "sweet_breakfasts",
+      "type" : "sweet_breakfasts"
+    },
+    {
+      "id" : 9299496,
+      "display_name" : "Wraps",
+      "root_tag_type" : "meal",
+      "name" : "wraps",
+      "parent_tag_name" : "lunch",
+      "type" : "lunch"
+    },
+    {
+      "id" : 9299510,
+      "display_name" : "Fruit Salads",
+      "root_tag_type" : "meal",
+      "name" : "fruit_salads",
+      "parent_tag_name" : "salads",
+      "type" : "salads"
+    },
+    {
+      "id" : 9299511,
+      "display_name" : "Pasta Salads",
+      "root_tag_type" : "meal",
+      "name" : "pasta_salads",
+      "parent_tag_name" : "salads",
+      "type" : "salads"
+    },
+    {
+      "id" : 9299514,
+      "display_name" : "Chicken",
+      "root_tag_type" : "meal",
+      "name" : "chicken",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299519,
+      "display_name" : "Meat Loaf",
+      "root_tag_type" : "meal",
+      "name" : "meat_loaf",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299520,
+      "display_name" : "Burgers",
+      "root_tag_type" : "meal",
+      "name" : "burgers",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299521,
+      "display_name" : "Kabobs",
+      "root_tag_type" : "meal",
+      "name" : "kabobs",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299525,
+      "display_name" : "Quiches",
+      "root_tag_type" : "meal",
+      "name" : "quiches",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299529,
+      "display_name" : "Tacos & Burritos",
+      "root_tag_type" : "meal",
+      "name" : "tacos_burritos",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299624,
+      "display_name" : "Seafood Pasta",
+      "root_tag_type" : "meal",
+      "name" : "seafood_pasta",
+      "parent_tag_name" : "pasta",
+      "type" : "pasta"
+    },
+    {
+      "id" : 9299663,
+      "display_name" : "Dips",
+      "root_tag_type" : "meal",
+      "name" : "dips",
+      "parent_tag_name" : "appetizers",
+      "type" : "appetizers"
+    },
+    {
+      "id" : 9299681,
+      "display_name" : "Brownies",
+      "root_tag_type" : "meal",
+      "name" : "brownies",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299834,
+      "display_name" : "Mocktails",
+      "root_tag_type" : "meal",
+      "name" : "mocktails",
+      "parent_tag_name" : "drinks",
+      "type" : "drinks"
+    },
+    {
+      "id" : 9299957,
+      "display_name" : "Jewish",
+      "root_tag_type" : "cuisine",
+      "name" : "jewish",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 9835360,
+      "display_name" : "Bush's Meal Planning",
+      "root_tag_type" : "business_tags",
+      "name" : "bushs_meal_planning",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10032067,
+      "display_name" : "Kings Hawaiian Roll Bites",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_roll_bites",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10032072,
+      "display_name" : "Kings Hawaiian Sweets",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_sweets",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10080868,
+      "display_name" : "spooky_sips",
+      "root_tag_type" : "business_tags",
+      "name" : "spooky_sips",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10274843,
+      "display_name" : "zelle_kimchi_grilled_cheese",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_kimchi_grilled_cheese",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10274898,
+      "display_name" : "zelle_peppermint_cocoa",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_peppermint_cocoa",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10296617,
+      "display_name" : "Chocolate Lovers",
+      "root_tag_type" : "feature_page",
+      "name" : "chocolate_lovers",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10296618,
+      "display_name" : "Jammy Cookies",
+      "root_tag_type" : "feature_page",
+      "name" : "jammy_cookies",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10296620,
+      "display_name" : "Decorative Cookies",
+      "root_tag_type" : "feature_page",
+      "name" : "decorative_cookies",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10296622,
+      "display_name" : "Holiday Apps Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "holiday_apps_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10315443,
+      "display_name" : "One Dish Wonders",
+      "root_tag_type" : "feature_page",
+      "name" : "one_dish_wonders",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10554045,
+      "display_name" : "easter mains",
+      "root_tag_type" : "feature_page",
+      "name" : "easter_mains",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10623588,
+      "display_name" : "Eggs",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "eggs",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10623608,
+      "display_name" : "Dairy",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "dairy",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10674958,
+      "display_name" : "Ingredients to avoid",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "ingredients_to_avoid",
+      "parent_tag_name" : null,
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10742774,
+      "display_name" : "Halal",
+      "root_tag_type" : "dietary",
+      "name" : "halal",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 10912080,
+      "display_name" : "Tillamook Noodles",
+      "root_tag_type" : "feature_page",
+      "name" : "tillamook_noodles",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10945408,
+      "display_name" : "Mccormick Thursday",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_thursday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11173646,
+      "display_name" : "Cap One Mains",
+      "root_tag_type" : "feature_page",
+      "name" : "cap_one_mains",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11173647,
+      "display_name" : "Cap One Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "cap_one_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11230771,
+      "display_name" : "Sarah",
+      "root_tag_type" : "feature_page",
+      "name" : "sarah",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11230777,
+      "display_name" : "Joelle",
+      "root_tag_type" : "feature_page",
+      "name" : "joelle",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 64449,
+      "display_name" : "French",
+      "root_tag_type" : "cuisine",
+      "name" : "french",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 64510,
+      "display_name" : "Summer",
+      "root_tag_type" : "seasonal",
+      "name" : "summer",
+      "parent_tag_name" : "seasonal",
+      "type" : "seasonal"
+    },
+    {
+      "id" : 64456,
+      "display_name" : "Central & South American",
+      "root_tag_type" : "cuisine",
+      "name" : "central_south_american",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 64458,
+      "display_name" : "Middle Eastern",
+      "root_tag_type" : "cuisine",
+      "name" : "middle_eastern",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 64465,
+      "display_name" : "Gluten-Free",
+      "root_tag_type" : "dietary",
+      "name" : "gluten_free",
+      "parent_tag_name" : "dietary",
+      "type" : "dietary"
+    },
+    {
+      "id" : 64466,
+      "display_name" : "Healthy",
+      "root_tag_type" : "healthy",
+      "name" : "healthy",
+      "parent_tag_name" : null,
+      "type" : "healthy"
+    },
+    {
+      "id" : 64467,
+      "display_name" : "Low-Carb",
+      "root_tag_type" : "healthy",
+      "name" : "low_carb",
+      "parent_tag_name" : "healthy",
+      "type" : "healthy"
+    },
+    {
+      "id" : 64476,
+      "display_name" : "Halloween",
+      "root_tag_type" : "seasonal",
+      "name" : "halloween",
+      "parent_tag_name" : "holidays",
+      "type" : "holidays"
+    },
+    {
+      "id" : 64490,
+      "display_name" : "Sides",
+      "root_tag_type" : "meal",
+      "name" : "sides",
+      "parent_tag_name" : "meal",
+      "type" : "meal"
+    },
+    {
+      "id" : 64494,
+      "display_name" : "Grill",
+      "root_tag_type" : "cooking_style",
+      "name" : "grill",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 64501,
+      "display_name" : "Game Day",
+      "root_tag_type" : "seasonal",
+      "name" : "game_day",
+      "parent_tag_name" : "occasion",
+      "type" : "occasion"
+    },
+    {
+      "id" : 64505,
+      "display_name" : "Weeknight",
+      "root_tag_type" : "meal",
+      "name" : "weeknight",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 64507,
+      "display_name" : "Tasty Junior Cookbook",
+      "root_tag_type" : "business_tags",
+      "name" : "tasty_junior_cookbook",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 64508,
+      "display_name" : "Fall",
+      "root_tag_type" : "seasonal",
+      "name" : "fall",
+      "parent_tag_name" : "seasonal",
+      "type" : "seasonal"
+    },
+    {
+      "id" : 65410,
+      "display_name" : "Fusion",
+      "root_tag_type" : "cuisine",
+      "name" : "fusion",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 65843,
+      "display_name" : "Freezer Friendly",
+      "root_tag_type" : "appliance",
+      "name" : "freezer_friendly",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 65855,
+      "display_name" : "One-Pot or Pan",
+      "root_tag_type" : "cooking_style",
+      "name" : "one_pot_or_pan",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 65857,
+      "display_name" : "Bakery Goods",
+      "root_tag_type" : "appliance",
+      "name" : "bakery_goods",
+      "parent_tag_name" : "appliance",
+      "type" : "appliance"
+    },
+    {
+      "id" : 1247784,
+      "display_name" : "Plastic Wrap",
+      "root_tag_type" : "equipment",
+      "name" : "plastic_wrap",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247788,
+      "display_name" : "Spatula",
+      "root_tag_type" : "equipment",
+      "name" : "spatula",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1247791,
+      "display_name" : "Tupperware",
+      "root_tag_type" : "equipment",
+      "name" : "tupperware",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280497,
+      "display_name" : "Baking Kit",
+      "root_tag_type" : "business_tags",
+      "name" : "baking_kit",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 1280501,
+      "display_name" : "Chef's Knife",
+      "root_tag_type" : "equipment",
+      "name" : "chefs_knife",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280504,
+      "display_name" : "Fish Spatula",
+      "root_tag_type" : "equipment",
+      "name" : "fish_spatula",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280505,
+      "display_name" : "Kitchen Shears",
+      "root_tag_type" : "equipment",
+      "name" : "kitchen_shears",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280508,
+      "display_name" : "Measuring Spoons",
+      "root_tag_type" : "equipment",
+      "name" : "measuring_spoons",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280509,
+      "display_name" : "Microplane",
+      "root_tag_type" : "equipment",
+      "name" : "microplane",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1280513,
+      "display_name" : "Sieve",
+      "root_tag_type" : "equipment",
+      "name" : "sieve",
+      "parent_tag_name" : null,
+      "type" : "equipment"
+    },
+    {
+      "id" : 1691104,
+      "display_name" : "Epoca-Walmart",
+      "root_tag_type" : "business_tags",
+      "name" : "epoca_walmart",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651754,
+      "display_name" : "Eggs",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_eggs",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651758,
+      "display_name" : "Dessert",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_dessert",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 2651759,
+      "display_name" : "Grains",
+      "root_tag_type" : "business_tags",
+      "name" : "one_top_app_grains",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 3028912,
+      "display_name" : "Chop Champ",
+      "root_tag_type" : "business_tags",
+      "name" : "chop_champ",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 4767335,
+      "display_name" : "Pressure Cooker",
+      "root_tag_type" : "appliance",
+      "name" : "pressure_cooker",
+      "parent_tag_name" : null,
+      "type" : "appliance"
+    },
+    {
+      "id" : 4767341,
+      "display_name" : "tastyjunior",
+      "root_tag_type" : "business_tags",
+      "name" : "tastyjunior",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5143246,
+      "display_name" : "McCormick Game Day",
+      "root_tag_type" : "business_tags",
+      "name" : "mccormick_game_day",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 5812431,
+      "display_name" : "Quarantine Cooking: Baking",
+      "root_tag_type" : "feature_page",
+      "name" : "qfp_baking",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6361777,
+      "display_name" : "Perf Pinot Noir",
+      "root_tag_type" : "business_tags",
+      "name" : "perf_pinot_noir",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6361810,
+      "display_name" : "Sparkling Rosé",
+      "root_tag_type" : "business_tags",
+      "name" : "sparkling_rose",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 6389773,
+      "display_name" : "Tasty Holiday: Hanukkah",
+      "root_tag_type" : "feature_page",
+      "name" : "tasty_holiday_hanukkah",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6477316,
+      "display_name" : "Frank's Chicken Bites",
+      "root_tag_type" : "feature_page",
+      "name" : "frank_s_chicken_bites",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543442,
+      "display_name" : "NYNM Money",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_money",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543461,
+      "display_name" : "NYNM Veggie",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_veggie",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6543463,
+      "display_name" : "NYNM Instant Pot",
+      "root_tag_type" : "feature_page",
+      "name" : "nynm_instant_pot",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718867,
+      "display_name" : "Tips Viral",
+      "root_tag_type" : "feature_page",
+      "name" : "tips_viral",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718869,
+      "display_name" : "Spring Eat",
+      "root_tag_type" : "feature_page",
+      "name" : "spring_eat",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6718875,
+      "display_name" : "Spring Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "spring_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6830250,
+      "display_name" : "Budget Expert",
+      "root_tag_type" : "feature_page",
+      "name" : "budget_expert",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 6953013,
+      "display_name" : "Ethiopian",
+      "root_tag_type" : "cuisine",
+      "name" : "ethiopian",
+      "parent_tag_name" : "african",
+      "type" : "african"
+    },
+    {
+      "id" : 6953016,
+      "display_name" : "West African",
+      "root_tag_type" : "cuisine",
+      "name" : "west_african",
+      "parent_tag_name" : "african",
+      "type" : "african"
+    },
+    {
+      "id" : 6953044,
+      "display_name" : "Peruvian",
+      "root_tag_type" : "cuisine",
+      "name" : "peruvian",
+      "parent_tag_name" : "central_south_american",
+      "type" : "central_south_american"
+    },
+    {
+      "id" : 6953045,
+      "display_name" : "Indigenous",
+      "root_tag_type" : "cuisine",
+      "name" : "indigenous",
+      "parent_tag_name" : "cuisine",
+      "type" : "cuisine"
+    },
+    {
+      "id" : 6986107,
+      "display_name" : "McCormick UGC One Pot Others",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_ugc_one_pot_others",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7336056,
+      "display_name" : "Shoppable Recipes Family Dinner",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_family_dinner",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7336057,
+      "display_name" : "Shoppable Recipes Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7559499,
+      "display_name" : "Shoppable Recipes Thanksgiving",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_recipes_thanksgiving",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7560082,
+      "display_name" : "Live Past Lives",
+      "root_tag_type" : "feature_page",
+      "name" : "live_past_lives",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7723149,
+      "display_name" : "Franks Nachos",
+      "root_tag_type" : "feature_page",
+      "name" : "franks_nachos",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 7783331,
+      "display_name" : "Butterfinger Winner",
+      "root_tag_type" : "feature_page",
+      "name" : "butterfinger_winner",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8091744,
+      "display_name" : "Under 15 Minutes",
+      "root_tag_type" : "difficulty",
+      "name" : "under_15_minutes",
+      "parent_tag_name" : "difficulty",
+      "type" : "difficulty"
+    },
+    {
+      "id" : 8091919,
+      "display_name" : "Low-Fat",
+      "root_tag_type" : "healthy",
+      "name" : "low_fat",
+      "parent_tag_name" : "healthy",
+      "type" : "healthy"
+    },
+    {
+      "id" : 8104110,
+      "display_name" : "McCormick World Sides",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_world_sides",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8322949,
+      "display_name" : "Blue",
+      "root_tag_type" : "feature_page",
+      "name" : "blue",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8323092,
+      "display_name" : "Walmart Meal Planning",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_meal_planning",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 8600870,
+      "display_name" : "Dole Sweet Treats",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_sweet_treats",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8683064,
+      "display_name" : "McCormick Holiday Mains",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_holiday_mains",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8719450,
+      "display_name" : "Dole Snacks",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_snacks",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8719453,
+      "display_name" : "Dole Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "dole_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8757513,
+      "display_name" : "Cuisine",
+      "root_tag_type" : "cuisine",
+      "name" : "cuisine",
+      "parent_tag_name" : null,
+      "type" : "cuisine"
+    },
+    {
+      "id" : 8860912,
+      "display_name" : "Kings Hawaiian Roll Sliders",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_roll_sliders",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8860913,
+      "display_name" : "Kings Hawaiian Savory Wings",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_savory_wings",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8874992,
+      "display_name" : "Nigeria African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "nigeria_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875008,
+      "display_name" : "Cuba African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "cuba_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 8875015,
+      "display_name" : "West Africa African Cuisine",
+      "root_tag_type" : "feature_page",
+      "name" : "west_africa_african_cuisine",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9164155,
+      "display_name" : "Ooni Other",
+      "root_tag_type" : "feature_page",
+      "name" : "ooni_other",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 9299304,
+      "display_name" : "Polish",
+      "root_tag_type" : "cuisine",
+      "name" : "polish",
+      "parent_tag_name" : "european",
+      "type" : "european"
+    },
+    {
+      "id" : 9299518,
+      "display_name" : "Chilis",
+      "root_tag_type" : "meal",
+      "name" : "chilis",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299522,
+      "display_name" : "Pasta",
+      "root_tag_type" : "meal",
+      "name" : "pasta",
+      "parent_tag_name" : "dinner",
+      "type" : "dinner"
+    },
+    {
+      "id" : 9299665,
+      "display_name" : "Cakes",
+      "root_tag_type" : "meal",
+      "name" : "cakes",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299683,
+      "display_name" : "Ice Cream",
+      "root_tag_type" : "meal",
+      "name" : "ice_cream",
+      "parent_tag_name" : "desserts",
+      "type" : "desserts"
+    },
+    {
+      "id" : 9299685,
+      "display_name" : "Cheesecakes",
+      "root_tag_type" : "meal",
+      "name" : "cheesecakes",
+      "parent_tag_name" : "cakes",
+      "type" : "cakes"
+    },
+    {
+      "id" : 9299688,
+      "display_name" : "Ice Cream Sandwiches",
+      "root_tag_type" : "meal",
+      "name" : "ice_cream_sandwiches",
+      "parent_tag_name" : "ice_cream",
+      "type" : "ice_cream"
+    },
+    {
+      "id" : 9299794,
+      "display_name" : "Vodka",
+      "root_tag_type" : "meal",
+      "name" : "vodka",
+      "parent_tag_name" : "cocktails",
+      "type" : "cocktails"
+    },
+    {
+      "id" : 9299795,
+      "display_name" : "Whiskey",
+      "root_tag_type" : "meal",
+      "name" : "whiskey",
+      "parent_tag_name" : "cocktails",
+      "type" : "cocktails"
+    },
+    {
+      "id" : 9299833,
+      "display_name" : "Juices",
+      "root_tag_type" : "meal",
+      "name" : "juices",
+      "parent_tag_name" : "drinks",
+      "type" : "drinks"
+    },
+    {
+      "id" : 9835858,
+      "display_name" : "Walmart Meal Planning July",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_meal_planning_july",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 9921873,
+      "display_name" : "Walmart Meal Planning August",
+      "root_tag_type" : "business_tags",
+      "name" : "walmart_meal_planning_august",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10032070,
+      "display_name" : "Kings Hawaiian Vegetarian",
+      "root_tag_type" : "feature_page",
+      "name" : "kings_hawaiian_vegetarian",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10080869,
+      "display_name" : "spine_chilling_savories",
+      "root_tag_type" : "business_tags",
+      "name" : "spine_chilling_savories",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10219606,
+      "display_name" : "Shoppable Desserts",
+      "root_tag_type" : "feature_page",
+      "name" : "shoppable_desserts",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10274845,
+      "display_name" : "zelle_miso_brown_butter",
+      "root_tag_type" : "business_tags",
+      "name" : "zelle_miso_brown_butter",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10296621,
+      "display_name" : "Chewy Cookies",
+      "root_tag_type" : "feature_page",
+      "name" : "chewy_cookies",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10623586,
+      "display_name" : "Shellfish",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "shellfish",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10623589,
+      "display_name" : "Gluten",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "gluten",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10623613,
+      "display_name" : "Pork",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "pork",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10640007,
+      "display_name" : "Peanuts",
+      "root_tag_type" : "ingredients_to_avoid",
+      "name" : "peanuts",
+      "parent_tag_name" : "ingredients_to_avoid",
+      "type" : "ingredients_to_avoid"
+    },
+    {
+      "id" : 10688655,
+      "display_name" : "Thomas Meal Planning",
+      "root_tag_type" : "business_tags",
+      "name" : "thomas_meal_planning",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10742773,
+      "display_name" : "Budget",
+      "root_tag_type" : "cooking_style",
+      "name" : "budget",
+      "parent_tag_name" : "cooking_style",
+      "type" : "cooking_style"
+    },
+    {
+      "id" : 10912100,
+      "display_name" : "Tillamook Bag",
+      "root_tag_type" : "feature_page",
+      "name" : "tillamook_bag",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10919556,
+      "display_name" : "BJs Meal Planning",
+      "root_tag_type" : "business_tags",
+      "name" : "bjs_meal_planning",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 10945407,
+      "display_name" : "Mccormick Wednesday",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_wednesday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10945410,
+      "display_name" : "Mccormick Saturday",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_saturday",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 10956868,
+      "display_name" : "McCormick More Inspiration",
+      "root_tag_type" : "feature_page",
+      "name" : "mccormick_more_inspiration",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11002783,
+      "display_name" : "Thomas Meal Planning 3",
+      "root_tag_type" : "business_tags",
+      "name" : "thomas_meal_planning_3",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 11003772,
+      "display_name" : "McCormick Meal Planning",
+      "root_tag_type" : "business_tags",
+      "name" : "mccormick_meal_planning",
+      "parent_tag_name" : null,
+      "type" : "business_tags"
+    },
+    {
+      "id" : 11024934,
+      "display_name" : "KH Dippin",
+      "root_tag_type" : "feature_page",
+      "name" : "kh_dippin",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11173648,
+      "display_name" : "Cap One Starters",
+      "root_tag_type" : "feature_page",
+      "name" : "cap_one_starters",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11173649,
+      "display_name" : "Cap One Sweets",
+      "root_tag_type" : "feature_page",
+      "name" : "cap_one_sweets",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11173651,
+      "display_name" : "Cap One Breakfast",
+      "root_tag_type" : "feature_page",
+      "name" : "cap_one_breakfast",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    },
+    {
+      "id" : 11230774,
+      "display_name" : "Brandon",
+      "root_tag_type" : "feature_page",
+      "name" : "brandon",
+      "parent_tag_name" : null,
+      "type" : "feature_page"
+    }
+]
