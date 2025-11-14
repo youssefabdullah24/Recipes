@@ -6,8 +6,10 @@ import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
 import app.cash.paging.map
 import co.touchlab.kermit.Logger
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,11 +19,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.Recipe
+import org.example.recipes.core.model.Tag
 
 
 sealed class SuggestionsState {
@@ -30,6 +33,11 @@ sealed class SuggestionsState {
     data class Error(val error: Throwable) : SuggestionsState()
 }
 
+data class TagsState(
+    val tags: HashMap<String, List<Tag>> = hashMapOf(),
+    val error: String? = null
+)
+
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() {
     private val _favoriteIds = MutableStateFlow<Set<String>>(emptySet())
@@ -37,11 +45,70 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
     private val _suggestionQueryFlow = MutableStateFlow("")
     val suggestionsQueryFlow: StateFlow<String> = _suggestionQueryFlow.asStateFlow()
 
-    private val _searchQueryFlow = MutableStateFlow("")
-    val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
+    private val _searchQueryFlow = MutableStateFlow(Pair("", emptyList<Tag>()))
+    val searchQueryFlow: StateFlow<Pair<String, List<Tag>>> = _searchQueryFlow.asStateFlow()
 
     private val _isActive = MutableStateFlow(true)
     val isActive = _isActive.asStateFlow()
+
+    private var _tagsState = MutableStateFlow(TagsState())
+    val tagsState = _tagsState.asStateFlow()
+
+
+    val recipes: Flow<PagingData<Recipe>> = searchQueryFlow
+        .debounce(2000L)
+        .filter { searchQueryFlow.value.first.isNotBlank() }
+        .flatMapLatest {
+            repository.getRecipesPage(searchQueryFlow.value.first, searchQueryFlow.value.second.run {
+                val tagsString = StringBuilder("")
+                forEach { tagsString.append("${it.name},") }
+                tagsString.toString()
+            })
+        }
+        .cachedIn(viewModelScope)
+        .combine(_favoriteIds) { pagingData, favorites ->
+            pagingData.map { item -> item.copy(isFavorite = favorites.contains(item.id.toString())) }
+        }
+        .catch {
+            emit(PagingData.empty())
+            Logger.e(it.stackTraceToString(), it)
+        }
+
+    val suggestions: Flow<SuggestionsState> = suggestionsQueryFlow
+        .debounce(2000L)
+        .filter { it.isNotBlank() }
+        .transformLatest { query ->
+            emit(SuggestionsState.Loading)
+            repository.getSuggestions(query).onSuccess { suggestions ->
+                emit(SuggestionsState.Success(suggestions))
+            }.onFailure { throwable ->
+                emit(SuggestionsState.Error(throwable))
+                Logger.e(throwable.stackTraceToString(), throwable)
+            }
+        }
+
+
+    init {
+        val hash = hashMapOf<String, List<Tag>>()
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllTags()
+                .onSuccess { tags ->
+                    tags.forEach { tag ->
+                        hash.put(tag.rootTagName.replace('_', ' ').capitalize(), tags.filter { it.rootTagName == tag.rootTagName })
+                    }
+
+                    _tagsState.update {
+                        it.copy(
+                            tags = hash,
+                            error = null
+                        )
+                    }
+                }.onFailure { throwable ->
+                    _tagsState.update { it.copy(error = throwable.message) }
+                    Logger.e(throwable.stackTraceToString(), throwable)
+                }
+        }
+    }
 
     fun setFavorites(favorites: List<String>) {
         _favoriteIds.value = favorites.toSet()
@@ -56,7 +123,7 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
     }
 
     fun searchRecipes(newQuery: String) {
-        _searchQueryFlow.value = newQuery
+        _searchQueryFlow.update { it.copy(first = newQuery, second = emptyList()) }
         _suggestionQueryFlow.value = newQuery
     }
 
@@ -64,34 +131,24 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
         _isActive.value = isActive
     }
 
-    val recipes: Flow<PagingData<Recipe>> = searchQueryFlow
-        .debounce(2000L)
-        .filter { it.isNotBlank() }
-        .flatMapLatest {
-            repository.getRecipesPage(it)
-        }.cachedIn(viewModelScope)
-        .combine(_favoriteIds) { pagingData, favorites ->
-            pagingData.map { item ->
-                item.copy(isFavorite = favorites.contains(item.id.toString()))
-            }
-        }
-        .catch {
-            flowOf(PagingData.empty<Recipe>())
-            Logger.e(it.stackTraceToString(), it)
+
+    fun filterRecipes() {
+        val selectedTags = tagsState.value.tags.values.flatten().filter { it.isSelected }
+        _searchQueryFlow.update { it.copy(second = selectedTags) }
+    }
+
+    fun removeFilter(tag: Tag) {
+        _searchQueryFlow.update {
+            it.copy(second = searchQueryFlow.value.second - tag)
         }
 
-    val suggestions: Flow<SuggestionsState> = suggestionsQueryFlow
-        .debounce(2000L)
-        .filter { it.isNotBlank() }
-        .mapLatest { query ->
-            SuggestionsState.Loading
-            repository.getSuggestions(query).onSuccess { suggestions ->
-                return@mapLatest SuggestionsState.Success(suggestions)
-            }.onFailure { throwable ->
-                return@mapLatest SuggestionsState.Error(throwable)
-            }
-            return@mapLatest SuggestionsState.Error(Throwable())
+        _tagsState.update {
+            it.copy(tags = it.tags.apply {
+                it.tags.values.flatten().first { it == tag }.isSelected = false
+            })
         }
+
+    }
 
 }
 

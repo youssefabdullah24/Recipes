@@ -170,16 +170,6 @@ fun App() {
                                 }, onRegistered = {
                                     navController.navigate(
                                         BottomNavigationItem.Profile.route,
-                                        /*navOptions = NavOptions.Builder().
-                                           */
-                                        /* .Builder()
-                                                                                    .setPopUpTo(
-                                                                                        route = BottomNavigationItem.Recipes.route,
-                                                                                        inclusive = false,
-                                                                                        saveState = false
-                                                                                    )*/
-                                        /*
-                                                                                    .build()*/
                                     )
                                 }
                             )

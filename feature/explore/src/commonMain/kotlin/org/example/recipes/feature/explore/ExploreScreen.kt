@@ -51,7 +51,6 @@ fun ExploreScreen(
     onQuickSearchItemClick: (QuickSearchTag) -> Unit
 ) {
     val scrollState = rememberScrollState()
-    // TODO: add cuisine row
     Column(modifier = modifier.verticalScroll(scrollState)) {
         Text(
             text = "Explore",

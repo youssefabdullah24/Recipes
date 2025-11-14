@@ -160,7 +160,6 @@ internal fun CookRecipeScreen(
                     Text(text = "Previous")
                 }
             }
-            //TODO: smooth animate
             ElevatedButton(
                 modifier = Modifier
                     .weight(0.5f)

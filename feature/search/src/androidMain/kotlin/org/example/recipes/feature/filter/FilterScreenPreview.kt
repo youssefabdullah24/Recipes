@@ -1,3 +1,4 @@
+/*
 package org.example.recipes.feature.filter
 
 import androidx.compose.foundation.layout.padding
@@ -6,15 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.example.recipes.feature.search.FilterScreen
+import org.example.recipes.feature.search.FilterSection
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun FilterScreenPreview() {
     Surface {
-        org.example.recipes.feature.search.FilterScreen(
+        FilterScreen(
             modifier = Modifier.padding(16.dp),
             filterSections = listOf(
-                org.example.recipes.feature.search.FilterSection(
+                FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -27,7 +30,7 @@ fun FilterScreenPreview() {
                         "British"
                     )
                 ),
-                org.example.recipes.feature.search.FilterSection(
+                FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -39,7 +42,7 @@ fun FilterScreenPreview() {
                         "British"
                     )
                 ),
-                org.example.recipes.feature.search.FilterSection(
+                FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -51,7 +54,7 @@ fun FilterScreenPreview() {
                         "British"
                     )
                 ),
-                org.example.recipes.feature.search.FilterSection(
+                FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -62,7 +65,7 @@ fun FilterScreenPreview() {
                         "Mexican",
                         "British"
                     )
-                ), org.example.recipes.feature.search.FilterSection(
+                ), FilterSection(
                     "Cuisine",
                     listOf(
                         "Italian",
@@ -78,3 +81,4 @@ fun FilterScreenPreview() {
         )
     }
 }
+*/

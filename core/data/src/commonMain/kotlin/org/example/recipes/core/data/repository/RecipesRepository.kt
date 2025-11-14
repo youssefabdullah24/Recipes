@@ -6,13 +6,18 @@ import androidx.paging.map
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.data.RecipesPagingSource
 import org.example.recipes.core.data.mapper.toDomain
 import org.example.recipes.core.model.QuickSearchTag
 import org.example.recipes.core.model.Recipe
+import org.example.recipes.core.model.Tag
 import org.example.recipes.core.model.Tip
 import org.example.recipes.core.network.IApiService
+import org.example.recipes.core.network.model.TagDto
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import recipes.core.data.generated.resources.Res
 
 class RecipesRepository(private val apiService: IApiService) : IRecipesRepository {
 
@@ -35,10 +40,10 @@ class RecipesRepository(private val apiService: IApiService) : IRecipesRepositor
         return Result.failure(Throwable())
     }
 
-    override fun getRecipesPage(query: String): Flow<PagingData<Recipe>> {
+    override fun getRecipesPage(query: String, tags: String): Flow<PagingData<Recipe>> {
         return Pager(
             config = PagingConfig(pageSize = 5),
-            pagingSourceFactory = { RecipesPagingSource(apiService::getRecipesPage, query) }
+            pagingSourceFactory = { RecipesPagingSource(apiService::getRecipesPage, query, tags) }
         ).flow.map { it.map { it.toDomain() } }
     }
 
@@ -49,16 +54,17 @@ class RecipesRepository(private val apiService: IApiService) : IRecipesRepositor
     ): Flow<PagingData<Tip>> {
         return Pager(
             config = PagingConfig(pageSize = 5),
-            pagingSourceFactory = { RecipesPagingSource(apiService::getRecipeTipsPage, recipeId) }
+            pagingSourceFactory = { RecipesPagingSource(apiService::getRecipeTipsPage, recipeId, "") }
         ).flow.map { it.map { it.toDomain() } }
     }
 
     override suspend fun getRecipeTips(recipeId: String): Result<List<Tip>> {
-        apiService.getRecipeTips(recipeId).onSuccess {
-            return Result.success(it.results?.map { it.toDomain() } ?: emptyList())
-        }.onFailure {
-            return Result.failure(it)
-        }
+        apiService.getRecipeTips(recipeId)
+            .onSuccess {
+                return Result.success(it.results?.map { it.toDomain() } ?: emptyList())
+            }.onFailure {
+                return Result.failure(it)
+            }
         return Result.success(emptyList())
     }
 
@@ -116,23 +122,38 @@ class RecipesRepository(private val apiService: IApiService) : IRecipesRepositor
     }
 
     override suspend fun getSuggestions(query: String): Result<List<String>> {
-        apiService.getSuggestions(query).onSuccess {
-            return Result.success(it.autoCompleteList?.mapNotNull { it?.display } ?: emptyList())
+        apiService.getSuggestions(query)
+            .onSuccess {
+                return Result.success(it.autoCompleteList?.mapNotNull { it?.display } ?: emptyList())
 
-        }.onFailure {
-            return Result.failure(it)
-        }
+            }.onFailure {
+                return Result.failure(it)
+            }
         return Result.success(emptyList())
 
     }
 
 
     override suspend fun getSimilarRecipes(recipeId: String): Result<List<Recipe>> {
-        apiService.getSimilarRecipes(recipeId).onSuccess {
-            return Result.success(it.results.map { it.toDomain() })
-        }.onFailure {
-            return Result.failure(it)
-        }
+        apiService.getSimilarRecipes(recipeId)
+            .onSuccess {
+                return Result.success(it.results.map { it.toDomain() })
+            }.onFailure {
+                return Result.failure(it)
+            }
         return Result.success(emptyList())
+    }
+
+    @OptIn(ExperimentalResourceApi::class)
+    override suspend fun getAllTags(): Result<List<Tag>> {
+        return try {
+            val file = Res.readBytes("files/tags.json").decodeToString()
+            val res = Json.decodeFromString<List<TagDto>>(file).map { it.toDomain() }
+            Result.success(res)
+        } catch (e: Exception) {
+            Result.failure(e)
+
+        }
+
     }
 }

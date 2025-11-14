@@ -1,5 +1,6 @@
 package org.example.recipes.core.network.api
 
+import co.touchlab.kermit.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -19,15 +20,18 @@ class ApiService(
 ) : IApiService {
     override suspend fun getRecipesPage(
         query: String,
+        tags: String,
         from: Int,
         size: Int
     ): RecipesPagingResponseDto {
+        Logger.d("Recipe params: query:$query , tags:$tags , ")
         return try {
             client.get {
                 url(BuildKonfig.baseUrl + "/recipes/list")
                 parameter("from", from)
                 parameter("size", size)
                 parameter("q", query)
+                parameter("tags", tags)
             }.body<RecipesPagingResponseDto>()
         } catch (e: Exception) {
             throw e
@@ -97,6 +101,7 @@ class ApiService(
 
     override suspend fun getRecipeTipsPage(
         recipeId: String,
+        tags: String,
         from: Int,
         size: Int
     ): RecipeTipsPagingResponseDto {
