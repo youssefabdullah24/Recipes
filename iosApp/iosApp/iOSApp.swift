@@ -6,7 +6,9 @@ struct iOSApp: App {
     init() {
         AppModulesKt.doInitKoin()
     }
-	var body: some Scene {
+
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    var body: some Scene {
 		WindowGroup {
 			ContentView()
 		}
