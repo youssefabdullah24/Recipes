@@ -6,8 +6,6 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrainsCompose)
-
-
 }
 
 
@@ -39,6 +37,7 @@ kotlin {
         }
 
         commonMain.dependencies {
+            implementation(project(":core:db"))
             implementation(project(":core:network"))
             implementation(project(":core:model"))
             implementation(libs.koin.core)

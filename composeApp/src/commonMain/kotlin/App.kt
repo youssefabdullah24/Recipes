@@ -66,7 +66,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun App() {
+fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
     AppTheme {
         var appBarTitle by rememberSaveable { mutableStateOf<String?>(null) }
         var appBarShowBackground by rememberSaveable { mutableStateOf(false) }
@@ -74,7 +74,6 @@ fun App() {
         val navStack by navController.currentBackStackEntryAsState()
         val currentRoute = navStack?.destination?.route
         var isVisible by rememberSaveable { mutableStateOf(false) }
-        val profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>()
         val profileUiState by profileViewModel.profileUiState.collectAsState()
         val uid by profileViewModel.uid.collectAsState()
         val favorites = profileUiState.favorites

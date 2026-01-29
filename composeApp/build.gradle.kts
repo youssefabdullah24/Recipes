@@ -7,8 +7,15 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinSerialization)
     id("com.google.gms.google-services")
+
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
 kotlin {
     androidTarget {
         compilerOptions {
@@ -39,6 +46,12 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.foundation.android)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.koin.android)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
 
         }
 
@@ -55,6 +68,7 @@ kotlin {
             implementation(project(":feature:cook_recipe"))
             implementation(project(":feature:profile"))
 
+            implementation(project(":core:db"))
             implementation(project(":core:network"))
             implementation(project(":core:data"))
             implementation(project(":core:model"))
@@ -82,6 +96,10 @@ kotlin {
             implementation(libs.kermit)
 
             implementation(libs.bundles.firebase)
+
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
 
         }
     }
@@ -125,3 +143,9 @@ android {
     }
 }
 
+dependencies{
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosX64", libs.androidx.room.compiler)
+    implementation(libs.koin.android)
+
+}

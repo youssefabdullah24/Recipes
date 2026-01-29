@@ -24,6 +24,10 @@ kotlin-compose-plugin = "1.9.0"
 cupertino = "2.3.1" #0.1.0-alpha04
 firebase = "2.1.0"
 composeResources = "1.9.0"
+room = "2.8.4"
+sqlite = "2.6.2"
+ksp = "2.3.2"
+
 
 [libraries]
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
@@ -55,6 +59,8 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+
 
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 
@@ -78,6 +84,10 @@ firebase-storage = { group = "dev.gitlive", name = "firebase-storage", version.r
 
 compose-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "composeResources" }
 
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -87,6 +97,9 @@ buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig"
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "kotlin-compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+androidx-room = { id = "androidx.room", version.ref = "room" }
+
 
 [bundles]
 media3 = ["media3-core", "media3-common", "media3-ui", "media3-dash"]

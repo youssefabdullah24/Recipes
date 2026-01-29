@@ -4,12 +4,16 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.paging.PagingData
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.data.RecipesPagingSource
 import org.example.recipes.core.data.mapper.toDomain
+import org.example.recipes.core.data.mapper.toEntity
+import org.example.recipes.core.db.dao.RecipeDao
+import org.example.recipes.core.db.entity.RecipeTagCrossRef
 import org.example.recipes.core.model.QuickSearchTag
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.model.Tag
@@ -19,11 +23,26 @@ import org.example.recipes.core.network.model.TagDto
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import recipes.core.data.generated.resources.Res
 
-class RecipesRepository(private val apiService: IApiService) : IRecipesRepository {
+class RecipesRepository(
+    private val apiService: IApiService,
+    private val recipesDao: RecipeDao,
+) : IRecipesRepository {
 
     override suspend fun getHomeRecipes(): Result<List<Recipe>> {
         apiService.getRecipes().onSuccess {
-            return Result.success(it.results.map { it.toDomain() })
+            val recipeEntities = it.results.map { it.toEntity() }
+            val tagEntities = it.results.map { it.tags!! }.flatten().map { it.toEntity() }
+            recipesDao.insertTags(*tagEntities.toTypedArray())
+            recipesDao.insertRecipes(*recipeEntities.toTypedArray())
+            it.results.forEach { recipeDto ->
+                recipeDto.tags?.forEach { tagDto ->
+                    recipesDao.insertRecipeTagCrossRef(RecipeTagCrossRef(
+                        id = recipeDto.id,
+                        displayName = tagDto.displayName!!
+                    ))
+                }
+            }
+            return Result.success(recipeEntities.map { it.toDomain() })
         }.onFailure {
             return Result.failure(it)
         }
