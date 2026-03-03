@@ -135,9 +135,9 @@ internal fun RecipeDetailsScreen(
                 modifier = Modifier.size(48.dp)
                     .align(Alignment.Center)
             )
-        } else if (uiState.error != null) {
+        } else if (uiState.recipeError != null) {
             Text(
-                text = uiState.error,
+                text = uiState.recipeError,
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
@@ -246,12 +246,18 @@ internal fun RecipeDetailsScreen(
                             }
                         }
                     }
-                    item{
+                    item {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                               // .height(500.dp)
+                            // .height(500.dp)
                         ) {
+                            if (uiState.similarRecipesError != null) {
+                                Text(
+                                    text = uiState.similarRecipesError,
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
+                            }
                             if (uiState.isSimilarRecipesLoading) {
                                 AdaptiveCircularProgressIndicator(
                                     modifier = Modifier
@@ -295,6 +301,19 @@ internal fun RecipeDetailsScreen(
                         }
                     }
                     item {
+                        if (uiState.tipsError != null) {
+                            Text(
+                                text = uiState.tipsError,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        if (uiState.areTipsLoading) {
+                            AdaptiveCircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
                         if (uiState.recipeTips.isNotEmpty()) {
                             Column(modifier = Modifier.wrapContentSize()) {
                                 Row(
@@ -309,7 +328,12 @@ internal fun RecipeDetailsScreen(
                                         ),
                                         style = MaterialTheme.typography.headlineMedium
                                     )
-                                    TextButton(onClick = { onViewAllReviewsClicked(recipe.id.toString(), recipe.title) }) {
+                                    TextButton(onClick = {
+                                        onViewAllReviewsClicked(
+                                            recipe.id.toString(),
+                                            recipe.title
+                                        )
+                                    }) {
                                         Text(text = "View all")
                                     }
 

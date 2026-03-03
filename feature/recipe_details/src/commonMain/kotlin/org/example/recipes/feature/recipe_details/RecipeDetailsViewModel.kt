@@ -11,7 +11,6 @@ import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.model.Tip
 
-
 data class RecipeDetailsUiState(
     val isSimilarRecipesLoading: Boolean = true,
     val isRecipeLoading: Boolean = true,
@@ -19,7 +18,9 @@ data class RecipeDetailsUiState(
     val recipe: Recipe? = null,
     val similarRecipes: List<Recipe> = emptyList(),
     val recipeTips: List<Tip> = emptyList(),
-    val error: String? = null,
+    val recipeError: String? = null,
+    val similarRecipesError: String? = null,
+    val tipsError: String? = null,
 )
 
 class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel() {
@@ -41,6 +42,7 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                     it.copy(
                         isRecipeLoading = false,
                         recipe = recipe,
+                        recipeError = null
                     )
                 }
             }.onFailure { throwable ->
@@ -52,7 +54,7 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                 _uiState.update {
                     it.copy(
                         isRecipeLoading = false,
-                        error = throwable.message.toString()
+                        recipeError = throwable.message.toString()
                     )
                 }
             }
@@ -67,6 +69,7 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                     it.copy(
                         isSimilarRecipesLoading = false,
                         similarRecipes = recipes,
+                        similarRecipesError = null
                     )
                 }
             }.onFailure { throwable ->
@@ -78,7 +81,7 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                 _uiState.update {
                     it.copy(
                         isSimilarRecipesLoading = false,
-                        error = throwable.message
+                        similarRecipesError = throwable.message
                     )
                 }
             }
@@ -93,6 +96,7 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                     it.copy(
                         areTipsLoading = false,
                         recipeTips = tips,
+                        tipsError = null
                     )
                 }
             }.onFailure { throwable ->
@@ -103,12 +107,11 @@ class RecipeDetailsViewModel(private val repo: IRecipesRepository) : ViewModel()
                 )
                 _uiState.update {
                     it.copy(
-                        isSimilarRecipesLoading = false,
-                        error = throwable.message
+                        areTipsLoading = false,
+                        tipsError = throwable.message
                     )
                 }
             }
-
         }
     }
 }

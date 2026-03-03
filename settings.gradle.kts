@@ -15,6 +15,9 @@ pluginManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 
 dependencyResolutionManagement {
     repositories {
@@ -42,3 +45,4 @@ include(":feature:search")
 include(":feature:cook_recipe")
 include(":feature:profile")
 include(":feature:recipe_reviews")
+include(":core:db")

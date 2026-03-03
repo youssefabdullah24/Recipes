@@ -9,7 +9,7 @@ import org.example.recipes.core.data.repository.ProfileRepository
 import org.koin.dsl.module
 
 val dataModule = module {
-    single<IRecipesRepository> { RecipesRepository(get()) }
+    single<IRecipesRepository> { RecipesRepository(get(), get()) }
 
     single<IAuthRepository> { AuthRepository(get()) }
 

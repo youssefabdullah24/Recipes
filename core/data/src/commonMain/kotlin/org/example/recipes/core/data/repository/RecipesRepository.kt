@@ -4,12 +4,17 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.paging.PagingData
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 import org.example.recipes.core.data.IRecipesRepository
 import org.example.recipes.core.data.RecipesPagingSource
 import org.example.recipes.core.data.mapper.toDomain
+import org.example.recipes.core.data.mapper.toEntity
+import org.example.recipes.core.db.dao.RecipeDao
+import org.example.recipes.core.db.entity.IngredientEntity
+import org.example.recipes.core.db.entity.RecipeTagCrossRef
 import org.example.recipes.core.model.QuickSearchTag
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.model.Tag
@@ -19,13 +24,43 @@ import org.example.recipes.core.network.model.TagDto
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import recipes.core.data.generated.resources.Res
 
-class RecipesRepository(private val apiService: IApiService) : IRecipesRepository {
+class RecipesRepository(
+    private val apiService: IApiService,
+    private val recipesDao: RecipeDao,
+) : IRecipesRepository {
 
     override suspend fun getHomeRecipes(): Result<List<Recipe>> {
         apiService.getRecipes().onSuccess {
-            return Result.success(it.results.map { it.toDomain() })
+            val recipeEntities = it.results.map { it.toEntity() }
+            val tagEntities = it.results.flatMap { it.tags!! }.map { it.toEntity() }
+
+            recipesDao.insertTags(*tagEntities.toTypedArray())
+            recipesDao.insertRecipes(*recipeEntities.toTypedArray())
+            it.results.forEach { recipeDto ->
+                val ingredientsList = arrayListOf<IngredientEntity>()
+                recipeDto.sections?.firstOrNull { it.position == 1 }?.components?.forEach { ingredient ->
+                    ingredientsList.add(ingredient.toEntity(recipeDto.id))
+                }
+                recipesDao.insertIngredient(*ingredientsList.toTypedArray())
+                recipeDto.instructions?.forEach { instructionDto ->
+                    recipesDao.insertDirection(instructionDto.toEntity(recipeDto.id))
+                }
+                recipeDto.tags?.forEach { tagDto ->
+                    recipesDao.insertRecipeTagCrossRef(
+                        RecipeTagCrossRef(
+                            id = recipeDto.id,
+                            displayName = tagDto.displayName!!
+                        )
+                    )
+                }
+            }
+            return Result.success(recipeEntities.map { it.toDomain() })
         }.onFailure {
-            return Result.failure(it)
+            // TODO: check if empty.. observe connection
+            val recipes = recipesDao.getAllRecipes().map { it.recipe }.map { it.toDomain() }
+            return if (recipes.isEmpty())
+                Result.failure(Exception("Please check your internet connection"))
+            else Result.success(recipes)
         }
         return Result.success(emptyList())
     }
@@ -35,7 +70,16 @@ class RecipesRepository(private val apiService: IApiService) : IRecipesRepositor
         apiService.getRecipe(recipeId).onSuccess {
             return Result.success(it.toDomain())
         }.onFailure {
-            return Result.failure(it)
+            val recipeDetails = recipesDao.getRecipe(recipeId.toInt())
+            val recipe = recipeDetails.recipe.toDomain(
+                recipeDetails.directions,
+                recipeDetails.ingredients,
+                recipeDetails.tags
+            )
+
+            Logger.d("recipe: $recipe")
+            return Result.success(recipe)
+
         }
         return Result.failure(Throwable())
     }
@@ -43,18 +87,23 @@ class RecipesRepository(private val apiService: IApiService) : IRecipesRepositor
     override fun getRecipesPage(query: String, tags: String): Flow<PagingData<Recipe>> {
         return Pager(
             config = PagingConfig(pageSize = 5),
-            pagingSourceFactory = { RecipesPagingSource(apiService::getRecipesPage, query, tags) }
-        ).flow.map { it.map { it.toDomain() } }
+            pagingSourceFactory = {
+                RecipesPagingSource(
+                    apiService::getRecipesPage,
+                    query,
+                    tags
+                )
+            }).flow.map { it.map { it.toDomain() } }
     }
 
     override fun getRecipeTipsPage(
-        recipeId: String,
-        from: Int,
-        size: Int
+        recipeId: String, from: Int, size: Int
     ): Flow<PagingData<Tip>> {
         return Pager(
             config = PagingConfig(pageSize = 5),
-            pagingSourceFactory = { RecipesPagingSource(apiService::getRecipeTipsPage, recipeId, "") }
+            pagingSourceFactory = {
+                RecipesPagingSource(apiService::getRecipeTipsPage, recipeId, "")
+            }
         ).flow.map { it.map { it.toDomain() } }
     }
 
@@ -124,13 +173,12 @@ class RecipesRepository(private val apiService: IApiService) : IRecipesRepositor
     override suspend fun getSuggestions(query: String): Result<List<String>> {
         apiService.getSuggestions(query)
             .onSuccess {
-                return Result.success(it.autoCompleteList?.mapNotNull { it?.display } ?: emptyList())
-
+                return Result.success(it.autoCompleteList?.mapNotNull { it?.display }
+                    ?: emptyList())
             }.onFailure {
                 return Result.failure(it)
             }
         return Result.success(emptyList())
-
     }
 
 

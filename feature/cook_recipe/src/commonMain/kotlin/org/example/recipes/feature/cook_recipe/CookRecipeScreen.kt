@@ -105,6 +105,7 @@ internal fun CookRecipeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(directions) {
+                    // TODO: try to make current step on screen/centered
                     Step(
                         modifier = Modifier.size(32.dp),
                         stepNumber = it.position,
