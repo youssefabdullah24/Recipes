@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
 import org.example.recipes.core.db.entity.DirectionEntity
 import org.example.recipes.core.db.entity.IngredientEntity
 import org.example.recipes.core.db.entity.RecipeDetails
@@ -40,7 +39,11 @@ interface RecipeDao {
 
     @Transaction
     @Query("select * from recipes")
-    fun getAllRecipes(): Flow<List<RecipeDetails>>
+    suspend fun getAllRecipes(): List<RecipeDetails>
+
+    @Transaction
+    @Query("select * from recipes where id = :recipeId")
+    suspend fun getRecipe(recipeId: Int): RecipeDetails
 
 
 }

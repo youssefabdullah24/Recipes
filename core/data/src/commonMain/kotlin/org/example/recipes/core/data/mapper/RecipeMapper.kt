@@ -1,11 +1,15 @@
 package org.example.recipes.core.data.mapper
 
+import org.example.recipes.core.db.entity.DirectionEntity
+import org.example.recipes.core.db.entity.IngredientEntity
 import org.example.recipes.core.db.entity.RecipeEntity
+import org.example.recipes.core.db.entity.TagEntity
 import org.example.recipes.core.model.Direction
 import org.example.recipes.core.model.Ingredient
 import org.example.recipes.core.model.Measurement
 import org.example.recipes.core.model.Nutrition
 import org.example.recipes.core.model.Recipe
+import org.example.recipes.core.model.Tag
 import org.example.recipes.core.network.model.RecipeDto
 
 fun RecipeDto.toDomain(): Recipe {
@@ -70,6 +74,7 @@ fun RecipeDto.toDomain(): Recipe {
         numServings = this.numServings ?: 0
     )
 }
+
 fun RecipeDto.toEntity(): RecipeEntity {
     return RecipeEntity(
         id = this.id,
@@ -103,7 +108,11 @@ fun RecipeDto.toEntity(): RecipeEntity {
     )
 }
 
-fun RecipeEntity.toDomain(): Recipe {
+fun RecipeEntity.toDomain(
+    directionEntities: List<DirectionEntity> = emptyList(),
+    ingredientEntities: List<IngredientEntity> = emptyList(),
+    tagEntities: List<TagEntity> = emptyList()
+): Recipe {
     return Recipe(
         id = this.id,
         title = this.title,
@@ -131,9 +140,37 @@ fun RecipeEntity.toDomain(): Recipe {
         numServings = this.numServings,
         isFavorite = this.isFavorite,
         hasCooked = this.hasCooked,
-        directions = emptyList(),
-        ingredients = emptyList(),
-        tags = emptyList(),
+        directions = directionEntities.map {
+            Direction(
+                it.id,
+                it.position,
+                it.startTime,
+                it.endTime,
+                it.appliance,
+                it.temperature,
+                it.text
+            )
+        },
+        ingredients = ingredientEntities.map {
+            Ingredient(
+                it.position,
+                Measurement(
+                    it.measurementName,
+                    it.measurementAbbreviation,
+                    it.measurementQuantity
+                ),
+                name = it.name,
+                extraComment = it.extraComment
+            )
+        },
+        tags = tagEntities.map {
+            Tag(
+                it.displayName,
+                it.name,
+                it.rootTagName,
+                false
+            )
+        },
     )
 }
 
