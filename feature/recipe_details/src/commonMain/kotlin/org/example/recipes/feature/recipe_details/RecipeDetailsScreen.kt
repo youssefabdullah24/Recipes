@@ -71,6 +71,7 @@ fun RecipeDetailsRoute(
     recipeId: String,
     modifier: Modifier = Modifier,
     favorites: List<String>,
+    isConnected: Boolean,
     viewModel: RecipeDetailsViewModel = koinViewModel<RecipeDetailsViewModel>(),
     onRecipeClick: (Recipe) -> Unit,
     onViewAllReviewsClicked: (recipeId: String, recipeName: String) -> Unit,
@@ -87,6 +88,7 @@ fun RecipeDetailsRoute(
         modifier = modifier,
         uiState = uiState,
         favorites = favorites,
+        isConnected = isConnected,
         onRecipeClick = onRecipeClick,
         onViewAllReviewsClicked = onViewAllReviewsClicked,
         onSaveRecipeClick = onSaveRecipeClick,
@@ -100,6 +102,7 @@ internal fun RecipeDetailsScreen(
     modifier: Modifier = Modifier,
     uiState: RecipeDetailsUiState,
     favorites: List<String>,
+    isConnected: Boolean,
     onRecipeClick: (Recipe) -> Unit,
     onViewAllReviewsClicked: (recipeId: String, recipeName: String) -> Unit,
     onSaveRecipeClick: (String) -> Unit,
@@ -369,6 +372,8 @@ internal fun RecipeDetailsScreen(
                             .wrapContentHeight()
                             .padding(16.dp),
                         isFavorite = favorites.contains(recipe.id.toString()),
+                        videoUrl = recipe.videoUrl,
+                        isConnected = isConnected,
                         onSaveRecipeClick = { onSaveRecipeClick(recipe.id.toString()) },
                         onCookRecipeClick = { onCookRecipeClick(recipe) })
                 }
@@ -382,6 +387,8 @@ internal fun RecipeDetailsScreen(
 fun BoxScope.BottomTab(
     modifier: Modifier,
     isFavorite: Boolean,
+    videoUrl: String?,
+    isConnected: Boolean,
     onSaveRecipeClick: () -> Unit,
     onCookRecipeClick: () -> Unit
 ) {
@@ -397,21 +404,22 @@ fun BoxScope.BottomTab(
         ) {
             Text(text = if (isFavorite) "Unfavorite" else "Favorite")
         }
-        Spacer(modifier = Modifier.width(16.dp))
-        ElevatedButton(
-            modifier = Modifier
-                .weight(1f)
-                .height(48.dp),
-            onClick = onCookRecipeClick
-        ) {
-            Text(text = "Cook This Dish")
-            Spacer(modifier = Modifier.width(8.dp))
-            Icon(
-                modifier = Modifier.height(24.dp),
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = "Cook This Dish"
-            )
+        if (videoUrl != null && isConnected) {
+            Spacer(modifier = Modifier.width(16.dp))
+            ElevatedButton(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
+                onClick = onCookRecipeClick
+            ) {
+                Text(text = "Cook This Dish")
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    modifier = Modifier.height(24.dp),
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = "Cook This Dish"
+                )
+            }
         }
     }
-
 }

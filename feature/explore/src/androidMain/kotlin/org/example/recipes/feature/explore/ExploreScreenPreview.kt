@@ -18,6 +18,7 @@ fun ExploreScreenPreview() {
     MaterialTheme(colorScheme = darkColorScheme()) {
         Surface {
             ExploreScreen(
+                isConnected = true,
                 quickSearchTags = listOf(
                     QuickSearchTag("Test", "Test"),
                     QuickSearchTag("Test", "Test"),

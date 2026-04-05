@@ -1,13 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    id("com.google.gms.google-services")
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinSerialization)
-    id("com.google.gms.google-services")
-
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
 }
@@ -51,7 +50,6 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-
 
         }
 
@@ -100,6 +98,8 @@ kotlin {
 
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+
+            implementation(libs.bundles.connectivity)
 
         }
     }

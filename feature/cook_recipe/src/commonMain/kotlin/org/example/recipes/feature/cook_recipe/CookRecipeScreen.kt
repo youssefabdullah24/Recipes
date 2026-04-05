@@ -44,7 +44,7 @@ import org.example.recipes.core.ui.VideoPlayer
 
 @Composable
 fun CookRecipeRoute(
-    videoUrl: String?,
+    videoUrl: String,
     directions: List<Direction>,
     onFinishCooking: () -> Unit,
     modifier: Modifier = Modifier
@@ -59,32 +59,31 @@ fun CookRecipeRoute(
 
 @Composable
 internal fun CookRecipeScreen(
-    videoUrl: String?,
+    videoUrl: String,
     directions: List<Direction>,
     onFinishCooking: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    // TODO: download video (TopAppBar option button)
     var currentStep by rememberSaveable { mutableStateOf(1) }
     val lastStep by rememberSaveable { mutableStateOf(directions.size) }
     var currentDirection by remember { mutableStateOf(directions[currentStep - 1]) }
     var seekTo by rememberSaveable { mutableStateOf(0.0) }
     Box(modifier = modifier) {
-        videoUrl?.let {
-            VideoPlayer(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.5f),
-                seekTo = seekTo,
-                url = it
-            ) { progress ->
-                directions.forEach {
-                    if (progress >= it.startTime && progress < it.endTime) {
-                        currentDirection = it
-                    }
+        VideoPlayer(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f),
+            seekTo = seekTo,
+            url = videoUrl
+        ) { progress ->
+            directions.forEach {
+                if (progress >= it.startTime && progress < it.endTime) {
+                    currentDirection = it
                 }
-                currentStep = currentDirection.position
             }
+            currentStep = currentDirection.position
         }
         Column(
             modifier = Modifier
