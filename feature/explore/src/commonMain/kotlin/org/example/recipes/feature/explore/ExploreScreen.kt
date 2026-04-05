@@ -1,5 +1,6 @@
 package org.example.recipes.feature.explore
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.recipes.core.model.QuickSearchTag
@@ -27,6 +29,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ExploreRoute(
+    isConnected: Boolean,
     viewModel: ExploreViewModel = koinViewModel(),
     onNavigate: () -> Unit,
     onQuickSearchItemClick: (String) -> Unit
@@ -34,6 +37,7 @@ fun ExploreRoute(
     val quickSearchTags by viewModel.state.collectAsState()
 
     ExploreScreen(
+        isConnected = isConnected,
         modifier = Modifier.fillMaxSize(),
         quickSearchTags = quickSearchTags,
         onSearchBarClick = onNavigate,
@@ -45,54 +49,68 @@ fun ExploreRoute(
 
 @Composable
 fun ExploreScreen(
+    isConnected: Boolean,
     modifier: Modifier = Modifier,
     quickSearchTags: List<QuickSearchTag>,
     onSearchBarClick: () -> Unit,
     onQuickSearchItemClick: (QuickSearchTag) -> Unit
 ) {
     val scrollState = rememberScrollState()
-    Column(modifier = modifier.verticalScroll(scrollState)) {
-        Text(
-            text = "Explore",
-            modifier = Modifier.padding(
-                start = 16.dp,
-                top = 32.dp
-            ),
-            style = MaterialTheme.typography.headlineMedium
-        )
-        SearchBarComposable(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            onClick = onSearchBarClick
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(
-            text = "Quick search",
-            modifier = Modifier.padding(
-                start = 16.dp,
-                top = 8.dp
-            ),
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        LazyVerticalGrid(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 800.dp),
-            columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(8.dp)
+    if (!isConnected) {
+        Box(
+            modifier = modifier,
+            contentAlignment = Alignment.Center
         ) {
-            items(quickSearchTags.size) {
-                QuickSearchCard(
-                    modifier = Modifier.wrapContentSize()
-                        .padding(
-                            8.dp,
-                            12.dp
-                        ),
-                    quickSearchTag = quickSearchTags[it],
-                    onClick = onQuickSearchItemClick
-                )
+            Text(
+                text = "You are offline",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    } else {
+        Column(modifier = modifier.verticalScroll(scrollState)) {
+            Text(
+                text = "Explore",
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    top = 32.dp
+                ),
+                style = MaterialTheme.typography.headlineMedium
+            )
+            SearchBarComposable(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                onClick = onSearchBarClick
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            Text(
+                text = "Quick search",
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    top = 8.dp
+                ),
+                style = MaterialTheme.typography.headlineMedium
+            )
+
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 800.dp),
+                columns = GridCells.Fixed(3),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(quickSearchTags.size) {
+                    QuickSearchCard(
+                        modifier = Modifier.wrapContentSize()
+                            .padding(
+                                8.dp,
+                                12.dp
+                            ),
+                        quickSearchTag = quickSearchTags[it],
+                        onClick = onQuickSearchItemClick
+                    )
+                }
             }
         }
     }

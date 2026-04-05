@@ -46,6 +46,7 @@ import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
 import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
 import com.slapps.cupertino.adaptive.AdaptiveScaffold
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -79,6 +80,29 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
         val favorites = profileUiState.favorites
         val snackbarHostState = remember { SnackbarHostState() }
         val scope = rememberCoroutineScope()
+        val connectivity = Connectivity {
+            autoStart = true
+        }
+
+        val connectionState by connectivity.statusUpdates.collectAsState(initial = Connectivity.Status.Disconnected)
+        LaunchedEffect(connectionState) {
+            when (connectionState) {
+                is Connectivity.Status.Connected -> {
+                    Logger.d(tag = "Connectivity", messageString = "Connected")
+                }
+
+                is Connectivity.Status.Disconnected -> {
+                    Logger.d(tag = "Connectivity", messageString = "Disconnected")
+                    showSnackBar(
+                        snackbarHostState,
+                        scope,
+                        "You're Offline",
+                        duration = SnackbarDuration.Indefinite,
+                        dismissable = true
+                    )
+                }
+            }
+        }
 
         LaunchedEffect(currentRoute) {
             isVisible = !isTopLevelDestination(currentRoute)
@@ -100,7 +124,9 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                     navController.navigate(route) {
                         launchSingleTop = true
                         restoreState = true
-                        popUpTo(navController.graph.startDestinationRoute!!) { saveState = true }
+                        popUpTo(navController.graph.startDestinationRoute!!) {
+                            saveState = true
+                        }
                     }
                 }
             }
@@ -124,7 +150,11 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                                     navController.navigate(RecipeDetailsScreenRoute(it))
                                 }, onAddToFavoritesClicked = { recipeId ->
                                     if (uid == null) {
-                                        showSnackBar(snackbarHostState, scope, "Please login first.")
+                                        showSnackBar(
+                                            snackbarHostState,
+                                            scope,
+                                            "Please login first."
+                                        )
                                     } else {
                                         profileViewModel.toggleFavoriteRecipe(recipeId)
                                     }
@@ -135,6 +165,7 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                             appBarTitle = ""
                             appBarShowBackground = false
                             ExploreRoute(
+                                isConnected = connectionState.isConnected,
                                 onNavigate = {
                                     navController.navigate(SearchScreenRoute(null))
                                 },
@@ -174,7 +205,10 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                             )
                         }
                         composable<SearchScreenRoute> { backStackEntry ->
-                            Logger.d(tag = "SearchScreenRoute", messageString = currentRoute.toString())
+                            Logger.d(
+                                tag = "SearchScreenRoute",
+                                messageString = currentRoute.toString()
+                            )
                             val args: SearchScreenRoute = backStackEntry.toRoute()
 
                             appBarTitle = ""
@@ -187,7 +221,11 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                                 },
                                 onAddToFavoritesClicked = {
                                     if (uid == null) {
-                                        showSnackBar(snackbarHostState, scope, "Please login first.")
+                                        showSnackBar(
+                                            snackbarHostState,
+                                            scope,
+                                            "Please login first."
+                                        )
                                     } else {
                                         profileViewModel.toggleFavoriteRecipe(it)
                                     }
@@ -205,7 +243,12 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                                 modifier = Modifier.fillMaxSize(),
                                 recipeId = args.recipeId.toString(),
                                 favorites = favorites.map { it.id.toString() },
-                                onRecipeClick = { navController.navigate(RecipeDetailsScreenRoute(it.id)) },
+                                isConnected = connectionState.isConnected,
+                                onRecipeClick = {
+                                    navController.navigate(
+                                        RecipeDetailsScreenRoute(it.id)
+                                    )
+                                },
                                 onCookRecipeClick = {
                                     navController.navigate(
                                         CookRecipeScreenRoute(
@@ -219,7 +262,11 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                                     navController.navigate(RecipeReviewsScreenRoute(id, name))
                                 }, onSaveRecipeClick = { recipe ->
                                     if (uid == null) {
-                                        showSnackBar(snackbarHostState, scope, "Please login first.")
+                                        showSnackBar(
+                                            snackbarHostState,
+                                            scope,
+                                            "Please login first."
+                                        )
                                     } else {
                                         profileViewModel.toggleFavoriteRecipe(recipe)
                                     }
@@ -240,12 +287,13 @@ fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
                         }
                         composable<CookRecipeScreenRoute> { backStackEntry ->
                             val args: CookRecipeScreenRoute = backStackEntry.toRoute()
-                            val directions = Json.decodeFromString<List<Direction>>(args.directions)
+                            val directions =
+                                Json.decodeFromString<List<Direction>>(args.directions)
                             appBarTitle = ""
                             appBarShowBackground = false
                             CookRecipeRoute(
                                 modifier = Modifier.fillMaxSize(),
-                                videoUrl = args.videoUrl,
+                                videoUrl = args.videoUrl!!,
                                 directions = directions,
                                 onFinishCooking = {
                                     navController.navigate(BottomNavigationItem.Recipes.route)
@@ -414,12 +462,15 @@ data class SearchScreenRoute(val query: String?)
 fun showSnackBar(
     snackbarHostState: SnackbarHostState,
     scope: CoroutineScope,
-    message: String
+    message: String,
+    duration: SnackbarDuration = SnackbarDuration.Short,
+    dismissable: Boolean = false
 ) {
     scope.launch {
         snackbarHostState.showSnackbar(
             message = message,
-            duration = SnackbarDuration.Short
+            duration = duration,
+            withDismissAction = if (dismissable) true else false,
         )
     }
 }
