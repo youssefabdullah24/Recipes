@@ -18,7 +18,6 @@ data class RecipesUiState(
     val error: String? = null
 )
 
-// todo: add UseCase
 class RecipesViewModel(private val recipesRepo: IRecipesRepository) : ViewModel() {
     private var _recipesUiState = MutableStateFlow(RecipesUiState())
     val recipesUiState = _recipesUiState.asStateFlow()

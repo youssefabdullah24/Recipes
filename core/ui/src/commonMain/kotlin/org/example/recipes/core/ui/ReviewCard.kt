@@ -22,8 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.example.recipes.core.model.Tip
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun ReviewCard(
     modifier: Modifier,
@@ -94,7 +99,9 @@ fun ReviewCard(
             Row(modifier = Modifier.padding(top = 8.dp)) {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = "TODO TIME" //TODO: fix
+                    text = Instant.fromEpochSeconds(tip.timestamp.toLong())
+                        .toLocalDateTime(TimeZone.currentSystemDefault())
+                        .date.toString()
                 )
                 Text(
                     modifier = Modifier.alpha(0.6f),

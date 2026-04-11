@@ -8,5 +8,6 @@ expect fun VideoPlayer(
     url: String,
     seekTo: Double,
     modifier: Modifier = Modifier,
-    onProgressChanged: (Long) -> Unit,
+    onFullScreenPressed: (Boolean) -> Unit,
+    onProgressChanged: (Long) -> Unit
 )

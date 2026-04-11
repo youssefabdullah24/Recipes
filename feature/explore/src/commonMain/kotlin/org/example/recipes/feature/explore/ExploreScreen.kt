@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import org.example.recipes.core.model.QuickSearchTag
 import org.example.recipes.core.ui.QuickSearchCard
 import org.example.recipes.core.ui.SearchBarComposable
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -34,6 +36,11 @@ fun ExploreRoute(
     onNavigate: () -> Unit,
     onQuickSearchItemClick: (String) -> Unit
 ) {
+    val appBarState = LocalAppBarState.current
+
+    LaunchedEffect(Unit){
+        appBarState.isVisible = false
+    }
     val quickSearchTags by viewModel.state.collectAsState()
 
     ExploreScreen(

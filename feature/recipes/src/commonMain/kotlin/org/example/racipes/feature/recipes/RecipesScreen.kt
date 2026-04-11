@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TrendingItem
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -34,6 +36,11 @@ fun RecipesRoute(
     onRecipeClicked: (Int) -> Unit,
     onAddToFavoritesClicked: (String) -> Unit
 ) {
+    val appBarState = LocalAppBarState.current
+    LaunchedEffect(Unit){
+        appBarState.isVisible = false
+    }
+
     val uiState by recipesViewModel.recipesUiState.collectAsState()
     recipesViewModel.submitFavoriteList(favorites)
 
@@ -94,16 +101,17 @@ fun RecipesScreen(
                 ) {
                     items(uiState.recipes) { recipe ->
                         RecipeItem(
-                            modifier = Modifier.width(280.dp,),
+                            modifier = Modifier.width(280.dp),
                             recipe = recipe,
-                            onClick = { onRecipeClicked(recipe.id) },
-                            onAddToFavoritesClicked = { onAddToFavoritesClicked(recipe.id.toString()) }
+                            onClick = { onRecipeClicked(it.id) },
+                            onAddToFavoritesClicked = {
+                                onAddToFavoritesClicked(recipe.id.toString())
+                            },
                         )
                     }
                 }
             }
             item { Spacer(modifier = Modifier.height(8.dp)) }
-
             item {
                 Text(
                     text = "Trending now",

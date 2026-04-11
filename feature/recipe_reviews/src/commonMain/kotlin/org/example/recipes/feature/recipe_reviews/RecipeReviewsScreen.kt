@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import com.slapps.cupertino.adaptive.AdaptiveCircularProgressIndicator
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.example.recipes.core.model.Tip
 import org.example.recipes.core.ui.ReviewCard
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -30,12 +32,22 @@ fun RecipeReviewsRoute(
     modifier: Modifier,
     recipeName: String,
     recipeId: String,
+    onBackPressed: () -> Unit
 ) {
+    val appBarState = LocalAppBarState.current
+
+    LaunchedEffect(Unit){
+        appBarState.isVisible = true
+        appBarState.showBackground = true
+        appBarState.title = recipeName
+        appBarState.onBackPressed = onBackPressed
+
+    }
+
     val viewModel: RecipeReviewsViewModel = koinViewModel(parameters = { parametersOf(recipeId) })
     val reviewsUiState = viewModel.reviewsPagingFLow.collectAsLazyPagingItems()
     RecipeReviewsScreen(
         modifier,
-        recipeName,
         reviewsUiState
     )
 }
@@ -44,7 +56,6 @@ fun RecipeReviewsRoute(
 @Composable
 fun RecipeReviewsScreen(
     modifier: Modifier,
-    recipeName: String,
     tips: LazyPagingItems<Tip>,
 ) {
     Box(

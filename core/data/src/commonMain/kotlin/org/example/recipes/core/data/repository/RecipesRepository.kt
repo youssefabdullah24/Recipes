@@ -56,7 +56,6 @@ class RecipesRepository(
             }
             return Result.success(recipeEntities.map { it.toDomain() })
         }.onFailure {
-            // TODO: check if empty.. observe connection
             val recipes = recipesDao.getAllRecipes().map { it.recipe }.map { it.toDomain() }
             return if (recipes.isEmpty())
                 Result.failure(Exception("Please check your internet connection"))

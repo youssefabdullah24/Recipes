@@ -57,7 +57,7 @@ fun RecipeItem(
         }
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier.fillMaxSize()
         ) {
             Box(
                 modifier = Modifier
@@ -78,6 +78,25 @@ fun RecipeItem(
                         )
                     }
                 )
+
+                AdaptiveIconButton(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .size(24.dp),
+                    onClick = {
+                        onAddToFavoritesClicked(recipe.id.toString())
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier.fillMaxSize(),
+                        imageVector = if (recipe.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        tint = Color.Red,
+                        contentDescription = "Add to Favorites"
+                    )
+                }
+
+
                 recipe.videoUrl?.let {
                     Icon(
                         modifier = Modifier
@@ -112,30 +131,12 @@ fun RecipeItem(
                     value = recipe.servings
                 )
                 Spacer(modifier = Modifier.padding(vertical = 4.dp))
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    RecipeDetailRow(
-                        modifier = Modifier.weight(1f),
-                        icon = FontAwesomeIcons.Regular.Bookmark,
-                        label = "Type",
-                        value = recipe.type
-                    )
-                    AdaptiveIconButton(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .size(24.dp),
-                        onClick = {
-                            onAddToFavoritesClicked(recipe.id.toString())
-                        }
-                    ) {
-                        Icon(
-                            modifier = Modifier.fillMaxSize(),
-                            imageVector = if (recipe.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            tint = Color.Red,
-                            contentDescription = "Add to Favorites"
-                        )
-                    }
-
-                }
+                RecipeDetailRow(
+                    icon = FontAwesomeIcons.Regular.Bookmark,
+                    label = "Type",
+                    value = recipe.type
+                )
+                Spacer(modifier = Modifier.padding(vertical = 4.dp))
             }
         }
     }
@@ -150,7 +151,7 @@ fun RecipeDetailRow(
     value: String
 ) {
     Row(
-        modifier = modifier.height(18.dp),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

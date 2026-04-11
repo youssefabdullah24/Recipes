@@ -46,6 +46,7 @@ import org.example.recipes.core.data.ProfileUiState
 import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.ui.ProfileHeader
 import org.example.recipes.core.ui.RecipeItem
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -56,7 +57,12 @@ fun ProfileRoute(
     onRegisterClicked: () -> Unit,
     viewModel: ProfileViewModel = koinViewModel<ProfileViewModel>()
 ) {
-    Logger.d("ProfileRoute")
+    val appBarState = LocalAppBarState.current
+
+    LaunchedEffect(Unit){
+        appBarState.isVisible = false
+    }
+
     val profileUiState by viewModel.profileUiState.collectAsState()
     val uid by viewModel.uid.collectAsState()
     if (uid == null) {

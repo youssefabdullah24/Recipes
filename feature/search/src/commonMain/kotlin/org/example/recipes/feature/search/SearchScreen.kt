@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,7 +20,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Filter
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -31,7 +29,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -46,6 +43,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
@@ -60,6 +58,7 @@ import org.example.recipes.core.model.Recipe
 import org.example.recipes.core.model.Tag
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.TagsList
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -71,6 +70,12 @@ fun SearchRoute(
     onAddToFavoritesClicked: (String) -> Unit,
     onBackPressed: () -> Unit
 ) {
+    val appBarState = LocalAppBarState.current
+
+    LaunchedEffect(Unit) {
+        appBarState.isVisible = false
+    }
+
     searchViewModel.setFavorites(favorites)
 
     val suggestionQuery by searchViewModel.suggestionsQueryFlow.collectAsState()
@@ -118,8 +123,7 @@ fun SearchRoute(
         onRetryLoadSuggestions = {},
         onRetryLoadRecipes = { recipes.retry() },
         onFilterClicked = { searchViewModel.filterRecipes() },
-        onRemoveTagClicked = { searchViewModel.removeFilter(it) }
-    )
+        onRemoveTagClicked = { searchViewModel.removeFilter(it) })
 }
 
 @OptIn(
@@ -160,135 +164,134 @@ fun SearchScreen(
     val padding by animateDpAsState(if (isActive) 8.dp else 16.dp)
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
-            modifier = Modifier.padding(top = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(top = 16.dp), verticalAlignment = Alignment.CenterVertically
         ) {
-            AdaptiveWidget(
-                material = {
-                    DockedSearchBar(
-                        inputField = {
-                            SearchBarDefaults.InputField(
-                                modifier = Modifier.fillMaxWidth(),
-                                query = suggestionQuery,
-                                onQueryChange = onSuggestionQueryChange,
-                                onSearch = {
-                                    onActiveChange(false)
-                                    onSearch(it)
-                                },
-                                expanded = isActive,
-                                onExpandedChange = { onActiveChange(it) },
-                                placeholder = { Text("Search") },
-                                trailingIcon = {
-                                    AnimatedVisibility(visible = isActive && suggestionQuery.isNotBlank()) {
-                                        IconButton(onClick = onClearSuggestionQuery) {
-                                            Icon(
-                                                imageVector = Icons.Default.Clear,
-                                                contentDescription = "Clear search query"
-                                            )
-                                        }
-                                    }
-                                },
-                                leadingIcon = {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        IconButton(onClick = onBackPressed) {
-                                            Icon(
-                                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                contentDescription = "Cancel"
-                                            )
-                                        }
+            AdaptiveWidget(material = {
+                DockedSearchBar(
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            modifier = Modifier.fillMaxWidth(),
+                            query = suggestionQuery,
+                            onQueryChange = onSuggestionQueryChange,
+                            onSearch = {
+                                onActiveChange(false)
+                                onSearch(it)
+                            },
+                            expanded = isActive,
+                            onExpandedChange = { onActiveChange(it) },
+                            placeholder = { Text("Search...") },
+                            trailingIcon = {
+                                AnimatedVisibility(visible = isActive && suggestionQuery.isNotBlank()) {
+                                    IconButton(onClick = onClearSuggestionQuery) {
                                         Icon(
-                                            imageVector = Icons.Default.Search,
-                                            contentDescription = "Search"
+                                            imageVector = Icons.Default.Clear,
+                                            contentDescription = "Clear search query"
                                         )
                                     }
-                                },
-                            )
-                        },
-                        expanded = isActive,
-                        onExpandedChange = { onActiveChange(true) },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(padding),
-                    ) {
-                        when (suggestions) {
-                            SuggestionsState.Loading -> {
-                                if (suggestionQuery.isNotBlank()) {
-                                    Box(modifier = Modifier.fillMaxSize()) {
-                                        AdaptiveCircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                                }
+                            },
+                            leadingIcon = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    IconButton(onClick = onBackPressed) {
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                            contentDescription = "Cancel"
+                                        )
                                     }
-                                }
-                            }
-
-                            is SuggestionsState.Error -> {
-                                TextButton(
-                                    modifier = Modifier,
-                                    onClick = onRetryLoadSuggestions
-                                ) {
-                                    Text(text = "Failed to load, tap to retry")
-                                }
-                            }
-
-                            is SuggestionsState.Success -> {
-                                val suggestionsData = suggestions.suggestions
-                                if (suggestionsData.isEmpty()) {
-                                    Text(text = "No suggestions found")
-                                } else {
-                                    LazyColumn(
-                                        modifier = Modifier
-                                            .padding(16.dp)
-                                            .fillMaxWidth()
-                                    ) {
-                                        items(suggestionsData) {
-                                            TextButton(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(48.dp),
-                                                onClick = {
-                                                    onActiveChange(false)
-                                                    onSearch(it)
-
-                                                }
-                                            ) {
-                                                Text(text = it)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-
-                },
-                cupertino = {
-                    CupertinoSearchTextField(
-                        modifier = Modifier.padding(top = 8.dp),
-                        onValueChange = onSearch,
-                        value = searchQuery.first,
-                        leadingIcon = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                IconButton(onClick = {
-                                    onBackPressed()
-                                }) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = "Cancel"
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = "Search"
+                                    )
+                                }
+                            },
+                        )
+                    },
+                    expanded = isActive,
+                    onExpandedChange = { onActiveChange(true) },
+                    modifier = Modifier.weight(1f).padding(padding),
+                ) {
+                    when (suggestions) {
+                        SuggestionsState.Loading -> {
+                            if (suggestionQuery.isNotBlank()) {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    AdaptiveCircularProgressIndicator(
+                                        modifier = Modifier.align(
+                                            Alignment.Center
+                                        )
                                     )
                                 }
                             }
-                        }, trailingIcon = {
-                            IconButton(onClick = {
-                                showFilterModal = true
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.FilterList,
-                                    contentDescription = "Filter"
+                        }
+
+                        is SuggestionsState.Error -> {
+                            TextButton(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                onClick = onRetryLoadSuggestions
+                            ) {
+                                Text(
+                                    text = "Failed to load, tap to retry",
+                                    textAlign = TextAlign.Center
                                 )
                             }
                         }
-                    )
+
+                        is SuggestionsState.Success -> {
+                            val suggestionsData = suggestions.suggestions
+                            if (suggestionsData.isEmpty()) {
+                                Text(
+                                    text = "No suggestions found",
+                                    textAlign = TextAlign.Center
+                                )
+                            } else {
+                                LazyColumn(
+                                    modifier = Modifier.padding(16.dp).fillMaxWidth()
+                                ) {
+                                    items(suggestionsData) {
+                                        TextButton(
+                                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                                            onClick = {
+                                                onActiveChange(false)
+                                                onSearch(it)
+
+                                            }) {
+                                            Text(text = it)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
-            )
+
+            }, cupertino = {
+                CupertinoSearchTextField(
+                    modifier = Modifier.padding(top = 8.dp),
+                    onValueChange = onSearch,
+                    value = searchQuery.first,
+                    leadingIcon = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(onClick = {
+                                onBackPressed()
+                            }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Cancel"
+                                )
+                            }
+                        }
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            showFilterModal = true
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.FilterList,
+                                contentDescription = "Filter"
+                            )
+                        }
+                    })
+            })
 
 
         }
@@ -309,14 +312,13 @@ fun SearchScreen(
                                 contentDescription = "Remove filter"
                             )
                         },
-                        label = { Text(text = it.displayName) }
-                    )
+                        label = { Text(text = it.displayName) })
                 }
             }
         }
         when (recipes.loadState.refresh) {
             is LoadState.Loading -> {
-                if (suggestionQuery.isNotBlank()) {
+                if (suggestionQuery.isNotBlank() && !isActive) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         AdaptiveCircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
@@ -324,17 +326,22 @@ fun SearchScreen(
             }
 
             is LoadState.Error -> {
-                TextButton(
-                    modifier = Modifier,
-                    onClick = onRetryLoadRecipes
-                ) {
-                    Text(text = "Failed to load, tap to retry")
+                if (!isActive) {
+                    TextButton(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        onClick = onRetryLoadRecipes
+                    ) {
+                        Text(
+                            text = "Failed to load, tap to retry",
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
 
             else -> {
                 LazyColumn(
-                    contentPadding = PaddingValues(horizontal =8.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(recipes.itemCount) {
@@ -343,15 +350,18 @@ fun SearchScreen(
                             onClick = { recipe -> onRecipeClick(recipe.id) },
                             onAddToFavoritesClicked = { recipeId ->
                                 onAddToFavoritesClicked(recipeId)
-                            }
-                        )
+                            })
                     }
 
                     when (recipes.loadState.append) {
                         is LoadState.Loading -> {
                             item {
                                 Box(modifier = Modifier.fillMaxWidth()) {
-                                    AdaptiveCircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                                    AdaptiveCircularProgressIndicator(
+                                        modifier = Modifier.align(
+                                            Alignment.Center
+                                        )
+                                    )
                                 }
                             }
                         }
@@ -359,15 +369,15 @@ fun SearchScreen(
                         is LoadState.Error -> {
                             item {
                                 Box(
-                                    modifier = Modifier.fillMaxWidth().height(48.dp)
+                                    modifier = Modifier.align(Alignment.CenterHorizontally)
                                 ) {
                                     TextButton(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .align(Alignment.Center),
                                         onClick = onRetryLoadRecipes
                                     ) {
-                                        Text(text = "Failed to load, tap to retry")
+                                        Text(
+                                            text = "Failed to load, tap to retry",
+                                            textAlign = TextAlign.Center
+                                        )
                                     }
                                 }
                             }
@@ -387,18 +397,14 @@ fun SearchScreen(
             onDismissRequest = {
                 scope.launch {
                     modalSheetState.hide()
-                }.invokeOnCompletion {
-                    if (!modalSheetState.isVisible) showFilterModal = false
                 }
-            }
-        ) {
+            }) {
             Button(
-                modifier = Modifier.align(Alignment.End),
-                onClick = {
+                modifier = Modifier.align(Alignment.End), onClick = {
                     scope.launch {
                         modalSheetState.hide()
                     }.invokeOnCompletion {
-                        if (!modalSheetState.isVisible) showFilterModal = false
+                        if (!modalSheetState.isVisible)
                         onFilterClicked()
                     }
 

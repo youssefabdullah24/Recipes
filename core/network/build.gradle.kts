@@ -67,10 +67,17 @@ kotlin {
     }
 }
 
+android {
+    namespace = "org.example.recipes.core.network"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
 buildkonfig {
     packageName = "org.example.recipes.core.network"
-    // objectName = "YourAwesomeConfig"
-    // exposeObjectWithName = "YourAwesomePublicConfig"
 
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "baseUrl", getLocalProperty("baseUrl"))
@@ -79,15 +86,5 @@ buildkonfig {
         buildConfigField(FieldSpec.Type.STRING, "apiKeyHeader", getLocalProperty("keyHeader"))
         buildConfigField(FieldSpec.Type.STRING, "apiHostHeader", getLocalProperty("hostHeader"))
 
-    }
-}
-
-
-android {
-    namespace = "org.example.recipes.core.network"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }

@@ -48,7 +48,7 @@ class SearchViewModel(private val repository: IRecipesRepository) : ViewModel() 
     private val _searchQueryFlow = MutableStateFlow(Pair("", emptyList<Tag>()))
     val searchQueryFlow: StateFlow<Pair<String, List<Tag>>> = _searchQueryFlow.asStateFlow()
 
-    private val _isActive = MutableStateFlow(true)
+    private val _isActive = MutableStateFlow(false)
     val isActive = _isActive.asStateFlow()
 
     private var _tagsState = MutableStateFlow(TagsState())

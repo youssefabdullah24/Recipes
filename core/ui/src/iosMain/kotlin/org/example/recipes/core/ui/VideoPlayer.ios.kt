@@ -1,5 +1,7 @@
 package org.example.recipes.core.ui
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +33,7 @@ actual fun VideoPlayer(
     url: String,
     seekTo: Double,
     modifier: Modifier,
+    onFullScreenPressed: (Boolean) -> Unit,
     onProgressChanged: (Long) -> Unit,
 ) {
     val player = remember { AVPlayer(uRL = NSURL.URLWithString(url)!!) }
@@ -39,7 +42,7 @@ actual fun VideoPlayer(
     avPlayerViewController.player = player
     avPlayerViewController.setAdditionalSafeAreaInsets(UIEdgeInsetsMake(52.0, 50.0, 0.0, 0.0))
     avPlayerViewController.showsPlaybackControls = true
-    LaunchedEffect(seekTo){
+    LaunchedEffect(seekTo) {
         player.seekToTime(CMTimeMakeWithSeconds(seekTo / 1000, 1000))
     }
     playerLayer.player = player
@@ -59,10 +62,10 @@ actual fun VideoPlayer(
         }
     }
 
-
-
     UIKitView(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.5f),
         factory = {
             val playerContainer = UIView()
             avPlayerViewController.view.setFrame(playerContainer.bounds)

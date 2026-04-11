@@ -1,13 +1,11 @@
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,14 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -55,6 +51,8 @@ import org.example.racipes.feature.recipes.RecipesRoute
 import org.example.recipes.core.data.ProfileViewModel
 import org.example.recipes.core.model.Direction
 import org.example.recipes.core.model.Profile
+import org.example.recipes.core.ui.appbar.AppbarState
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.example.recipes.feature.cook_recipe.CookRecipeRoute
 import org.example.recipes.feature.explore.ExploreRoute
 import org.example.recipes.feature.profile.ProfileRoute
@@ -64,255 +62,240 @@ import org.example.recipes.feature.recipe_reviews.RecipeReviewsRoute
 import org.example.recipes.feature.search.SearchRoute
 import org.koin.compose.viewmodel.koinViewModel
 
-
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun App(profileViewModel: ProfileViewModel = koinViewModel()) {
+fun App(
+    profileViewModel: ProfileViewModel = koinViewModel(),
+    onFullScreenPressed: (Boolean) -> Unit
+) {
+    val appBarState = remember { AppbarState() }
     AppTheme {
-        var appBarTitle by rememberSaveable { mutableStateOf<String?>(null) }
-        var appBarShowBackground by rememberSaveable { mutableStateOf(false) }
-        val navController = rememberNavController()
-        val navStack by navController.currentBackStackEntryAsState()
-        val currentRoute = navStack?.destination?.route
-        var isVisible by rememberSaveable { mutableStateOf(false) }
-        val profileUiState by profileViewModel.profileUiState.collectAsState()
-        val uid by profileViewModel.uid.collectAsState()
-        val favorites = profileUiState.favorites
-        val snackbarHostState = remember { SnackbarHostState() }
-        val scope = rememberCoroutineScope()
-        val connectivity = Connectivity {
-            autoStart = true
-        }
-
-        val connectionState by connectivity.statusUpdates.collectAsState(initial = Connectivity.Status.Disconnected)
-        LaunchedEffect(connectionState) {
-            when (connectionState) {
-                is Connectivity.Status.Connected -> {
-                    Logger.d(tag = "Connectivity", messageString = "Connected")
-                }
-
-                is Connectivity.Status.Disconnected -> {
-                    Logger.d(tag = "Connectivity", messageString = "Disconnected")
-                    showSnackBar(
-                        snackbarHostState,
-                        scope,
-                        "You're Offline",
-                        duration = SnackbarDuration.Indefinite,
-                        dismissable = true
-                    )
-                }
+        CompositionLocalProvider(LocalAppBarState provides appBarState) {
+            val navController = rememberNavController()
+            val navStack by navController.currentBackStackEntryAsState()
+            val currentRoute = navStack?.destination?.route
+            val profileUiState by profileViewModel.profileUiState.collectAsState()
+            val uid by profileViewModel.uid.collectAsState()
+            val favorites = profileUiState.favorites
+            val snackbarHostState = remember { SnackbarHostState() }
+            val scope = rememberCoroutineScope()
+            val connectivity = Connectivity {
+                autoStart = true
             }
-        }
 
-        LaunchedEffect(currentRoute) {
-            isVisible = !isTopLevelDestination(currentRoute)
-        }
-        AdaptiveScaffold(
-            // containerColor = Color.Transparent,
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState)
-            },
-            bottomBar = {
-                BottomNavigationBar(
-                    topLevelDestinations = listOf(
-                        BottomNavigationItem.Recipes,
-                        BottomNavigationItem.Explore,
-                        BottomNavigationItem.Profile
-                    ),
-                    currentRoute = currentRoute
-                ) { route ->
-                    navController.navigate(route) {
-                        launchSingleTop = true
-                        restoreState = true
-                        popUpTo(navController.graph.startDestinationRoute!!) {
-                            saveState = true
-                        }
+            val connectionState by connectivity.statusUpdates.collectAsState(initial = Connectivity.Status.Disconnected)
+            LaunchedEffect(connectionState) {
+                when (connectionState) {
+                    is Connectivity.Status.Connected -> {
+                        Logger.d(tag = "Connectivity", messageString = "Connected")
+                    }
+
+                    is Connectivity.Status.Disconnected -> {
+                        Logger.d(tag = "Connectivity", messageString = "Disconnected")
+                        showSnackBar(
+                            snackbarHostState,
+                            scope,
+                            "You're Offline",
+                            duration = SnackbarDuration.Indefinite,
+                            dismissable = true
+                        )
                     }
                 }
             }
-        ) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = it.calculateBottomPadding())
+
+            AdaptiveScaffold(
+                snackbarHost = {
+                    SnackbarHost(hostState = snackbarHostState)
+                },
+                bottomBar = {
+                    BottomNavigationBar(
+                        topLevelDestinations = listOf(
+                            BottomNavigationItem.Recipes,
+                            BottomNavigationItem.Explore,
+                            BottomNavigationItem.Profile
+                        ),
+                        currentRoute = currentRoute
+                    ) { route ->
+                        navController.navigate(route) {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(navController.graph.startDestinationRoute!!) {
+                                saveState = true
+                            }
+                        }
+                    }
+                }
             ) {
-                Box {
-                    NavHost(
-                        navController = navController,
-                        startDestination = BottomNavigationItem.Recipes.route
-                    ) {
-                        composable(BottomNavigationItem.Recipes.route) {
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            RecipesRoute(
-                                favorites = favorites,
-                                onRecipeClicked = {
-                                    navController.navigate(RecipeDetailsScreenRoute(it))
-                                }, onAddToFavoritesClicked = { recipeId ->
-                                    if (uid == null) {
-                                        showSnackBar(
-                                            snackbarHostState,
-                                            scope,
-                                            "Please login first."
-                                        )
-                                    } else {
-                                        profileViewModel.toggleFavoriteRecipe(recipeId)
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = it.calculateBottomPadding())
+                ) {
+                    Box {
+                        NavHost(
+                            navController = navController,
+                            startDestination = BottomNavigationItem.Recipes.route
+                        ) {
+                            composable(BottomNavigationItem.Recipes.route) {
+                                RecipesRoute(
+                                    favorites = favorites,
+                                    onRecipeClicked = {
+                                        navController.navigate(RecipeDetailsScreenRoute(it))
+                                    }, onAddToFavoritesClicked = { recipeId ->
+                                        if (uid == null) {
+                                            showSnackBar(
+                                                snackbarHostState,
+                                                scope,
+                                                "Please login first."
+                                            )
+                                        } else {
+                                            profileViewModel.toggleFavoriteRecipe(recipeId)
+                                        }
                                     }
-                                }
-                            )
-                        }
-                        composable(BottomNavigationItem.Explore.route) {
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            ExploreRoute(
-                                isConnected = connectionState.isConnected,
-                                onNavigate = {
-                                    navController.navigate(SearchScreenRoute(null))
-                                },
-                                onQuickSearchItemClick = {
-                                    navController.navigate(SearchScreenRoute(it))
-                                })
-                        }
-                        composable(BottomNavigationItem.Profile.route) {
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            ProfileRoute(
-                                viewModel = profileViewModel,
-                                onRecipeClicked = {
-                                    navController.navigate(RecipeDetailsScreenRoute(it))
-                                }, onUpdateProfileClicked = {
+                                )
+                            }
+                            composable(BottomNavigationItem.Explore.route) {
+                                ExploreRoute(
+                                    isConnected = connectionState.isConnected,
+                                    onNavigate = {
+                                        navController.navigate(SearchScreenRoute(null))
+                                    },
+                                    onQuickSearchItemClick = {
+                                        navController.navigate(SearchScreenRoute(it))
+                                    })
+                            }
+                            composable(BottomNavigationItem.Profile.route) {
+                                ProfileRoute(
+                                    viewModel = profileViewModel,
+                                    onRecipeClicked = {
+                                        navController.navigate(RecipeDetailsScreenRoute(it))
+                                    }, onUpdateProfileClicked = {
 
-                                }, onRegisterClicked = {
-                                    navController.navigate(RegisterRoute)
-                                })
-                        }
-                        composable<RegisterRoute> {
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            RegisterScreen(
-                                modifier = Modifier.fillMaxSize(),
-                                viewModel = profileViewModel,
-                                onRegisterClicked = { name, email, password ->
-                                    profileViewModel.registerUser(
-                                        Profile(name, email, null, emptyList(), emptyList()),
-                                        password
-                                    )
-                                }, onRegistered = {
-                                    navController.navigate(
-                                        BottomNavigationItem.Profile.route,
-                                    )
-                                }
-                            )
-                        }
-                        composable<SearchScreenRoute> { backStackEntry ->
-                            Logger.d(
-                                tag = "SearchScreenRoute",
-                                messageString = currentRoute.toString()
-                            )
-                            val args: SearchScreenRoute = backStackEntry.toRoute()
+                                    }, onRegisterClicked = {
+                                        navController.navigate(RegisterRoute)
+                                    })
+                            }
+                            composable<RegisterRoute> {
+                                RegisterScreen(
+                                    modifier = Modifier.fillMaxSize(),
+                                    viewModel = profileViewModel,
+                                    onRegisterClicked = { name, email, password ->
+                                        profileViewModel.registerUser(
+                                            Profile(name, email, null, emptyList(), emptyList()),
+                                            password
+                                        )
+                                    }, onRegistered = {
+                                        navController.navigate(
+                                            BottomNavigationItem.Profile.route,
+                                        )
+                                    }
+                                )
+                            }
+                            composable<SearchScreenRoute> { backStackEntry ->
+                                val args: SearchScreenRoute = backStackEntry.toRoute()
+                                SearchRoute(
+                                    quickSearchQuery = args.query,
+                                    favorites = favorites.map { it.id.toString() },
+                                    onRecipeClick = {
+                                        navController.navigate(RecipeDetailsScreenRoute(it))
+                                    },
+                                    onAddToFavoritesClicked = {
+                                        if (uid == null) {
+                                            showSnackBar(
+                                                snackbarHostState,
+                                                scope,
+                                                "Please login first."
+                                            )
+                                        } else {
+                                            profileViewModel.toggleFavoriteRecipe(it)
+                                        }
+                                    },
+                                    onBackPressed = {
+                                        navController.navigateUp()
+                                    }
+                                )
+                            }
+                            composable<RecipeDetailsScreenRoute> { backStackEntry ->
+                                val args: RecipeDetailsScreenRoute = backStackEntry.toRoute()
+                                RecipeDetailsRoute(
+                                    modifier = Modifier.fillMaxSize(),
+                                    recipeId = args.recipeId.toString(),
+                                    favorites = favorites.map { it.id.toString() },
+                                    isConnected = connectionState.isConnected,
+                                    onRecipeClick = {
+                                        navController.navigate(
+                                            RecipeDetailsScreenRoute(it.id)
+                                        )
+                                    },
+                                    onCookRecipeClick = {
+                                        navController.navigate(
+                                            CookRecipeScreenRoute(
+                                                it.id,
+                                                it.videoUrl,
+                                                Json.encodeToString(it.directions),
+                                            )
+                                        )
+                                    },
+                                    onViewAllReviewsClicked = { id, name ->
+                                        navController.navigate(RecipeReviewsScreenRoute(id, name))
+                                    }, onSaveRecipeClick = { recipe ->
+                                        if (uid == null) {
+                                            showSnackBar(
+                                                snackbarHostState,
+                                                scope,
+                                                "Please login first."
+                                            )
+                                        } else {
+                                            profileViewModel.toggleFavoriteRecipe(recipe)
+                                        }
+                                    }, onBackPressed = {
+                                        navController.navigateUp()
+                                    }
+                                )
+                            }
+                            composable<RecipeReviewsScreenRoute> { backStackEntry ->
+                                val args: RecipeReviewsScreenRoute = backStackEntry.toRoute()
+                                RecipeReviewsRoute(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(top = 56.dp),
+                                    recipeName = args.recipeName,
+                                    recipeId = args.recipeId,
+                                    onBackPressed = {
+                                        navController.navigateUp()
+                                    }
+                                )
+                            }
+                            composable<CookRecipeScreenRoute> { backStackEntry ->
+                                val args: CookRecipeScreenRoute = backStackEntry.toRoute()
+                                val directions =
+                                    Json.decodeFromString<List<Direction>>(args.directions)
+                                CookRecipeRoute(
+                                    modifier = Modifier.fillMaxSize(),
+                                    videoUrl = args.videoUrl!!,
+                                    directions = directions,
+                                    onFinishCooking = {
+                                        navController.navigate(BottomNavigationItem.Recipes.route)
+                                        profileViewModel.addToCookedRecipes(args.recipeId.toString())
+                                    }, onBackPressed = {
+                                        navController.navigateUp()
+                                    }, onDownloadVideoPressed = {
+                                        Logger.d("Download URL: ${it}")
+                                    },
+                                    onFullScreenPressed = onFullScreenPressed
 
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            SearchRoute(
-                                quickSearchQuery = args.query,
-                                favorites = favorites.map { it.id.toString() },
-                                onRecipeClick = {
-                                    navController.navigate(RecipeDetailsScreenRoute(it))
-                                },
-                                onAddToFavoritesClicked = {
-                                    if (uid == null) {
-                                        showSnackBar(
-                                            snackbarHostState,
-                                            scope,
-                                            "Please login first."
-                                        )
-                                    } else {
-                                        profileViewModel.toggleFavoriteRecipe(it)
-                                    }
-                                },
-                                onBackPressed = {
-                                    navController.navigateUp()
-                                }
+                                )
+                            }
+                        }
+
+                        if (appBarState.isVisible){
+                            AppBar(
+                                title = appBarState.title,
+                                showBackground = appBarState.showBackground,
+                                onBackPressed = { navController.navigateUp() },
+                                actions = appBarState.actions
                             )
                         }
-                        composable<RecipeDetailsScreenRoute> { backStackEntry ->
-                            val args: RecipeDetailsScreenRoute = backStackEntry.toRoute()
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            RecipeDetailsRoute(
-                                modifier = Modifier.fillMaxSize(),
-                                recipeId = args.recipeId.toString(),
-                                favorites = favorites.map { it.id.toString() },
-                                isConnected = connectionState.isConnected,
-                                onRecipeClick = {
-                                    navController.navigate(
-                                        RecipeDetailsScreenRoute(it.id)
-                                    )
-                                },
-                                onCookRecipeClick = {
-                                    navController.navigate(
-                                        CookRecipeScreenRoute(
-                                            it.id,
-                                            it.videoUrl,
-                                            Json.encodeToString(it.directions)
-                                        )
-                                    )
-                                },
-                                onViewAllReviewsClicked = { id, name ->
-                                    navController.navigate(RecipeReviewsScreenRoute(id, name))
-                                }, onSaveRecipeClick = { recipe ->
-                                    if (uid == null) {
-                                        showSnackBar(
-                                            snackbarHostState,
-                                            scope,
-                                            "Please login first."
-                                        )
-                                    } else {
-                                        profileViewModel.toggleFavoriteRecipe(recipe)
-                                    }
-                                }
-                            )
-                        }
-                        composable<RecipeReviewsScreenRoute> { backStackEntry ->
-                            val args: RecipeReviewsScreenRoute = backStackEntry.toRoute()
-                            appBarTitle = "${args.recipeName} Reviews"
-                            appBarShowBackground = true
-                            RecipeReviewsRoute(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 56.dp),
-                                recipeName = args.recipeName,
-                                recipeId = args.recipeId
-                            )
-                        }
-                        composable<CookRecipeScreenRoute> { backStackEntry ->
-                            val args: CookRecipeScreenRoute = backStackEntry.toRoute()
-                            val directions =
-                                Json.decodeFromString<List<Direction>>(args.directions)
-                            appBarTitle = ""
-                            appBarShowBackground = false
-                            CookRecipeRoute(
-                                modifier = Modifier.fillMaxSize(),
-                                videoUrl = args.videoUrl!!,
-                                directions = directions,
-                                onFinishCooking = {
-                                    navController.navigate(BottomNavigationItem.Recipes.route)
-                                    profileViewModel.addToCookedRecipes(args.recipeId.toString())
-                                }
-                            )
-                        }
-                    }
-                    //TODO: improve, do not hardcode
-                    AnimatedVisibility(
-                        visible = isVisible && currentRoute != "SearchScreenRoute/{query}",
-                        enter = fadeIn(),
-                        exit = fadeOut()
-                    ) {
-                        AppBar(
-                            title = appBarTitle,
-                            showBackground = appBarShowBackground,
-                            onBackPressed = { navController.navigateUp() },
-                            onOptionIconClicked = {})
                     }
                 }
             }
@@ -340,11 +323,15 @@ internal fun AppBar(
     title: String?,
     showBackground: Boolean,
     onBackPressed: () -> Unit,
-    onOptionIconClicked: (Int) -> Unit,
+    actions : @Composable (RowScope.() -> Unit) = {},
 ) {
     TopAppBar(
         modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = if (showBackground) MaterialTheme.colorScheme.onPrimaryContainer else Color.Transparent),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = if (showBackground)
+                MaterialTheme.colorScheme.onPrimaryContainer
+            else Color.Transparent
+        ),
         title = {
             title?.let {
                 Text(
@@ -356,25 +343,13 @@ internal fun AppBar(
         navigationIcon = {
             FilledIconButton(
                 onClick = onBackPressed,
-                //colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.White)
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = "Navigate Back"
                 )
             }
-        }, actions = {
-            FilledIconButton(
-                onClick = { onOptionIconClicked(0) },
-                //colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.White)
-
-            ) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = "REPLACE"
-                )
-            }
-        }
+        }, actions = actions
     )
 }
 
@@ -444,7 +419,7 @@ data class RecipeDetailsScreenRoute(val recipeId: Int)
 data class CookRecipeScreenRoute(
     val recipeId: Int,
     val videoUrl: String?,
-    val directions: String
+    val directions: String,
 )
 
 
@@ -458,7 +433,6 @@ data class RecipeReviewsScreenRoute(
 data class SearchScreenRoute(val query: String?)
 
 
-// TODO: handle actions
 fun showSnackBar(
     snackbarHostState: SnackbarHostState,
     scope: CoroutineScope,
@@ -470,7 +444,7 @@ fun showSnackBar(
         snackbarHostState.showSnackbar(
             message = message,
             duration = duration,
-            withDismissAction = if (dismissable) true else false,
+            withDismissAction = dismissable,
         )
     }
 }

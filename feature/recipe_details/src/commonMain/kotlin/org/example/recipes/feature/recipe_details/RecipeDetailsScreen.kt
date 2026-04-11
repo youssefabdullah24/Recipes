@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -64,8 +65,10 @@ import org.example.recipes.core.ui.IngredientItem
 import org.example.recipes.core.ui.InstructionItem
 import org.example.recipes.core.ui.RecipeItem
 import org.example.recipes.core.ui.ReviewCard
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetailsRoute(
     recipeId: String,
@@ -76,8 +79,18 @@ fun RecipeDetailsRoute(
     onRecipeClick: (Recipe) -> Unit,
     onViewAllReviewsClicked: (recipeId: String, recipeName: String) -> Unit,
     onCookRecipeClick: (Recipe) -> Unit,
-    onSaveRecipeClick: (String) -> Unit
+    onSaveRecipeClick: (String) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
+    val appBarState = LocalAppBarState.current
+
+    LaunchedEffect(Unit){
+        appBarState.isVisible = true
+        appBarState.onBackPressed = onBackPressed
+        appBarState.actions = {}
+
+    }
+
     val uiState by viewModel.uiState.collectAsState()
     if (uiState.recipe == null) {
         LaunchedEffect(recipeId) {

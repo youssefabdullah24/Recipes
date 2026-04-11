@@ -24,11 +24,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,18 +44,43 @@ import androidx.compose.ui.unit.dp
 import org.example.recipes.core.model.Direction
 import org.example.recipes.core.ui.Step
 import org.example.recipes.core.ui.VideoPlayer
+import org.example.recipes.core.ui.appbar.LocalAppBarState
 
 @Composable
 fun CookRecipeRoute(
     videoUrl: String,
     directions: List<Direction>,
     onFinishCooking: () -> Unit,
+    onBackPressed: () -> Unit,
+    onDownloadVideoPressed: (String) -> Unit,
+    onFullScreenPressed: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val appBarState = LocalAppBarState.current
+
+    LaunchedEffect(Unit) {
+        appBarState.isVisible = true
+        appBarState.onBackPressed = onBackPressed
+        appBarState.actions = {
+            FilledIconButton(
+                onClick = { onDownloadVideoPressed(videoUrl) },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Download,
+                    contentDescription = "Download video"
+                )
+            }
+        }
+
+    }
     CookRecipeScreen(
         videoUrl,
         directions,
         onFinishCooking,
+        onFullScreenPressed = {
+            appBarState.isVisible = !it
+            onFullScreenPressed(it)
+        },
         modifier,
     )
 }
@@ -62,9 +90,9 @@ internal fun CookRecipeScreen(
     videoUrl: String,
     directions: List<Direction>,
     onFinishCooking: () -> Unit,
+    onFullScreenPressed: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // TODO: download video (TopAppBar option button)
     var currentStep by rememberSaveable { mutableStateOf(1) }
     val lastStep by rememberSaveable { mutableStateOf(directions.size) }
     var currentDirection by remember { mutableStateOf(directions[currentStep - 1]) }
@@ -72,11 +100,10 @@ internal fun CookRecipeScreen(
     Box(modifier = modifier) {
         VideoPlayer(
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f),
+                .align(Alignment.TopCenter),
             seekTo = seekTo,
-            url = videoUrl
+            url = videoUrl,
+            onFullScreenPressed = onFullScreenPressed
         ) { progress ->
             directions.forEach {
                 if (progress >= it.startTime && progress < it.endTime) {
@@ -121,7 +148,7 @@ internal fun CookRecipeScreen(
                     .align(Alignment.CenterHorizontally)
                     .fillMaxSize()
                     .padding(16.dp),
-                targetState = currentDirection.text
+                targetState = currentDirection.text,
             ) {
                 Text(
                     modifier = Modifier.verticalScroll(state = rememberScrollState()),

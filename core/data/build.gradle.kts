@@ -1,3 +1,6 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
+import org.jetbrains.compose.internal.utils.getLocalProperty
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.buildKonfig)
 }
 
 
@@ -62,4 +66,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     sourceSets["main"].resources.srcDirs("src/commonMain/composeResources")
+}
+
+buildkonfig {
+    packageName = "org.example.recipes.core.data"
+
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.STRING, "avatarUrl", getLocalProperty("avatarUrl"))
+
+    }
 }

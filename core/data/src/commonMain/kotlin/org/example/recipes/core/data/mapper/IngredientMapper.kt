@@ -8,7 +8,6 @@ fun ComponentDto.toEntity(recipeId: Int) = IngredientEntity(
     recipeId = recipeId,
     position = position ?: -1,
     extraComment = extraComment ?: "",
-    // TODO: not needed...
     measurementName = if (measurements?.isNotEmpty() == true) measurements?.firstOrNull()?.measuringUnit?.name
         ?: "" else "",
     measurementAbbreviation = if (measurements?.isNotEmpty() == true) measurements?.firstOrNull()?.measuringUnit?.abbreviation
